@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { findDOMNode } from 'react-dom';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 enum SpendingCategory {
   Housing = 'HOUSING',
@@ -24,6 +24,12 @@ interface Spending {
 
 const Home: NextPage = () => {
   const [spendingList, setSpendingList] = useState<Spending[]>([]);
+  useEffect(()=> {
+    const stringifiedSpendingListFromLocalStorage = localStorage.getItem('spendingList');
+    if (!stringifiedSpendingListFromLocalStorage) return;
+    const spendingListFromLocalStorage = JSON.parse(stringifiedSpendingListFromLocalStorage);
+    setSpendingList(spendingListFromLocalStorage);
+  }, [])
   const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10));
   const [amount, setAmount] = useState<number>(0);
   const [category, setCategory] = useState<SpendingCategory>(SpendingCategory.Housing);
@@ -47,8 +53,11 @@ const Home: NextPage = () => {
               date,
               amount,
               category,
-            }
-            setSpendingList([...spendingList, currentSpending])
+            };
+            const newSpendingList = [...spendingList, currentSpending];
+            setSpendingList(newSpendingList);
+            const stringifiedNewSpendingList = JSON.stringify(newSpendingList);
+            localStorage.setItem('spendingList', stringifiedNewSpendingList);
           }}>
           <label>
               Date: <input name="date" type="date" value={date} onChange={(e) => setDate(e.target.value)}></input>
