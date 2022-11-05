@@ -79,8 +79,14 @@ const Home: NextPage = () => {
             <option value={SpendingCategory.Wasted}>Wasted</option>
           </select>
           <br />
-          <input type="submit" value="Add spending" />
+          <input type="submit" value="Add" />
         </form>
+        <button onClick={() => {
+          setSpendingList([]);
+          localStorage.removeItem('spendingList');
+        }}>
+          Clear
+        </button>
       </main>
     </div>
   )
