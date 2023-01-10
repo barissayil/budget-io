@@ -1,22 +1,7 @@
 import { useState, useEffect } from "react";
-
-enum SpendingCategory {
-  Housing = 'HOUSING',
-  Utilities = 'UTILITIES',
-  Food = 'FOOD',
-  Health = 'HEALTH',
-  Transport = 'TRANSPORT',
-  Fun = 'FUN',
-  Important = 'IMPORTANT',
-  Wasted = 'WASTED',
-}
-
-type Spending = {
-  id: number,
-  date: string,
-  amount: number,
-  category: SpendingCategory,
-}
+import { Spending } from "../modeling/spending";
+import { SpendingCategory } from "../modeling/spending-category";
+import SpendingTable from "./spending-table";
 
 const Layout = () => {
   const [spendingList, setSpendingList] = useState<Spending[]>([]);
@@ -31,11 +16,7 @@ const Layout = () => {
   const [category, setCategory] = useState<SpendingCategory>(SpendingCategory.Housing);
   return (
     <main>
-      <ul>
-        {
-          spendingList.map((spending) => <li key={spending.id}>{`${spending.date}: ${spending.amount}€ - ${spending.category}`}</li>)
-        }
-      </ul>
+      <SpendingTable spendingList={spendingList}/>
       <form onSubmit={(e) => {
           e.preventDefault();
           const currentSpending: Spending = {
