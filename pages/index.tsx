@@ -35,7 +35,7 @@ const Home: NextPage = () => {
   const [amount, setAmount] = useState<number>(0);
   const [category, setCategory] = useState<SpendingCategory>(SpendingCategory.Housing);
   return (
-    <div>
+    <>
       <Meta />
       <main>
         <ul>
@@ -85,7 +85,7 @@ const Home: NextPage = () => {
           Clear
         </button>
       </main>
-    </div>
+    </>
   )
 }
 
