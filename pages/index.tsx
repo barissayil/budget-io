@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { findDOMNode } from 'react-dom';
 import { useEffect, useState } from "react";
+import Meta from '../components/meta';
 
 enum SpendingCategory {
   Housing = 'HOUSING',
@@ -35,11 +36,7 @@ const Home: NextPage = () => {
   const [category, setCategory] = useState<SpendingCategory>(SpendingCategory.Housing);
   return (
     <div>
-      <Head>
-        <title>Budget IO</title>
-        <meta name="description" content="Budget information" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Meta />
       <main>
         <ul>
           {
