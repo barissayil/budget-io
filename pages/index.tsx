@@ -16,7 +16,7 @@ enum SpendingCategory {
   Wasted = 'WASTED',
 }
 
-interface Spending {
+type Spending = {
   id: number,
   date: string,
   amount: number,
