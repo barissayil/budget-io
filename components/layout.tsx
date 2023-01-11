@@ -40,14 +40,9 @@ const Layout = () => {
         <br />
         <label>Category: </label>
         <select name="category" value={category} onChange={(e) => setCategory(e.target.value as SpendingCategory)}>
-          <option value={SpendingCategory.Housing}>Housing</option>
-          <option value={SpendingCategory.Utilities}>Utilities</option>
-          <option value={SpendingCategory.Food}>Food</option>
-          <option value={SpendingCategory.Health}>Health</option>
-          <option value={SpendingCategory.Transport}>Transport</option>
-          <option value={SpendingCategory.Fun}>Fun</option>
-          <option value={SpendingCategory.Important}>Important</option>
-          <option value={SpendingCategory.Wasted}>Wasted</option>
+          {
+            Object.entries(SpendingCategory).map(([key, value], i) => <option value={value} key={i}>{key}</option>)
+          }
         </select>
         <br />
         <input type="submit" value="Add" />
