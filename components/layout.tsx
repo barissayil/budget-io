@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Spending } from "@modeling/spending";
 import { SpendingCategory } from "@modeling/spending-category";
-import SpendingTable from "./spending-table";
+import SpendingTable from "@components/spending-table";
 
 const Layout = () => {
   const [spendingList, setSpendingList] = useState<Spending[]>([]);
