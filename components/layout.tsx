@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Spending } from "../modeling/spending";
-import { SpendingCategory } from "../modeling/spending-category";
+import { Spending } from "@modeling/spending";
+import { SpendingCategory } from "@modeling/spending-category";
 import SpendingTable from "./spending-table";
 
 const Layout = () => {

@@ -1,4 +1,4 @@
-import { Spending } from "../modeling/spending";
+import { Spending } from "@modeling/spending";
 
 type Props = {
   spendingList: Spending[],
