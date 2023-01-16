@@ -1,6 +1,6 @@
 import { Spending } from "@modeling/spending";
 import { SpendingCategory } from "@modeling/spending-category";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
 type Props = {
   spendingList: Spending[],
@@ -11,20 +11,23 @@ const AddSpendingForm = ({ spendingList, setSpendingList }: Props) => {
   const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10));
   const [amount, setAmount] = useState<number>(0);
   const [category, setCategory] = useState<SpendingCategory>(SpendingCategory.Housing);
+
+  const handleAdd = (e: FormEvent) => {
+    e.preventDefault();
+    const currentSpending: Spending = {
+      id: spendingList.length,
+      date,
+      amount,
+      category,
+    };
+    const newSpendingList = [...spendingList, currentSpending];
+    setSpendingList(newSpendingList);
+    const stringifiedNewSpendingList = JSON.stringify(newSpendingList);
+    localStorage.setItem('spendingList', stringifiedNewSpendingList);
+  }
+
   return (
-    <form onSubmit={(e) => {
-      e.preventDefault();
-      const currentSpending: Spending = {
-        id: spendingList.length,
-        date,
-        amount,
-        category,
-      };
-      const newSpendingList = [...spendingList, currentSpending];
-      setSpendingList(newSpendingList);
-      const stringifiedNewSpendingList = JSON.stringify(newSpendingList);
-      localStorage.setItem('spendingList', stringifiedNewSpendingList);
-    }}>
+    <form onSubmit={handleAdd}>
       <label>
           Date: <input name="date" type="date" value={date} onChange={(e) => setDate(e.target.value)}></input>
       </label>
