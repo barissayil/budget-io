@@ -12,15 +12,17 @@ const ModifiableSpendingTable = () => {
     const spendingListFromLocalStorage = JSON.parse(stringifiedSpendingListFromLocalStorage);
     setSpendingList(spendingListFromLocalStorage);
   }, [])
-  
+
+  const handleClear = () => {
+    setSpendingList([]);
+    localStorage.removeItem('spendingList');
+  };
+
   return (
     <>
       <SpendingTable spendingList={spendingList} />
       <AddSpendingForm spendingList={spendingList} setSpendingList={setSpendingList} />
-      <button onClick={() => {
-        setSpendingList([]);
-        localStorage.removeItem('spendingList');
-      }}>
+      <button onClick={handleClear}>
         Clear
       </button>
     </>
