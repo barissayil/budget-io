@@ -1,51 +1,63 @@
-import { Spending } from "@modeling/spending";
-import { SpendingCategory } from "@modeling/spending-category";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import { TextInput, Checkbox, Button, Group, Box, NumberInput, Select } from '@mantine/core';
+import { DatePicker } from '@mantine/dates';
+import { useForm } from '@mantine/form';
+import { Spending } from '@modeling/spending';
+import { SpendingCategory } from '@modeling/spending-category';
+import { Dispatch, FormEvent, SetStateAction } from 'react';
 
 type Props = {
   spendingList: Spending[],
   setSpendingList: Dispatch<SetStateAction<Spending[]>>,
 }
 
-const AddSpendingForm = ({ spendingList, setSpendingList }: Props) => {
-  const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10));
-  const [amount, setAmount] = useState<number>(0);
-  const [category, setCategory] = useState<SpendingCategory>(SpendingCategory.Housing);
+type Values = {
+  date: Date,
+  amount?: number,
+  category?: SpendingCategory,
+}
 
-  const handleAdd = (e: FormEvent) => {
-    e.preventDefault();
+const AddSpendingForm = ({ spendingList, setSpendingList }: Props) => {
+  const form = useForm<Values>({
+    initialValues: {
+      date: new Date(),
+    },
+
+    validate: {
+      amount: (amount) => amount && (amount > 0) ? null : 'Invalid amount',
+      category: (category) => category ? null : 'Invalid category',
+    },
+  });
+
+  const handleSubmit = ({ date, amount, category }: Values) => {
     const currentSpending: Spending = {
       id: spendingList.length,
       date,
-      amount,
-      category,
+      amount: amount as number,
+      category: category as SpendingCategory,
     };
     const newSpendingList = [...spendingList, currentSpending];
     setSpendingList(newSpendingList);
-    const stringifiedNewSpendingList = JSON.stringify(newSpendingList);
-    localStorage.setItem('spendingList', stringifiedNewSpendingList);
   }
 
+
   return (
-    <form onSubmit={handleAdd}>
-      <label>
-          Date: <input name="date" type="date" value={date} onChange={(e) => setDate(e.target.value)}></input>
-      </label>
-      <br />
-      <label>
-          Amount: <input name="amount" type="number" value={amount} onChange={(e) => setAmount(+e.target.value)}></input>
-      </label>
-      <br />
-      <label>Category: </label>
-      <select name="category" value={category} onChange={(e) => setCategory(e.target.value as SpendingCategory)}>
-        {
-          Object.entries(SpendingCategory).map(([key, value], i) => <option value={value} key={i}>{key}</option>)
-        }
-      </select>
-      <br />
-      <input type="submit" value="Add" />
-    </form>
+    <Box sx={{ maxWidth: 300 }} mx="auto">
+      <form onSubmit={form.onSubmit(handleSubmit)}>
+        <DatePicker placeholder="Date" {...form.getInputProps('date')} />
+        <br/>
+        <NumberInput placeholder="Amount" {...form.getInputProps('amount')} />
+        <br/>
+        <Select
+          placeholder="Category"
+          data={Object.entries(SpendingCategory).map(([label, value]) => ({ label, value }))}
+          {...form.getInputProps('category')}
+        />
+        <Group position="right" mt="md">
+          <Button type="submit">Add</Button>
+        </Group>
+      </form>
+    </Box>
   );
 }
- 
+
 export default AddSpendingForm;
