@@ -2,13 +2,13 @@ import { Table } from "@mantine/core";
 import { Spending } from "@modeling/spending";
 
 type Props = {
-  spendingList: Spending[],
-}
+  spendingList: Spending[];
+};
 
 const SpendingTable = ({ spendingList }: Props) => {
   const rows = spendingList.map((spending) => (
     <tr key={spending.id}>
-      <td>{spending.date.toLocaleDateString('en-GB')}</td>
+      <td>{spending.date.toLocaleDateString("en-GB")}</td>
       <td>{spending.amount}€</td>
       <td>{spending.category}</td>
     </tr>
@@ -25,6 +25,6 @@ const SpendingTable = ({ spendingList }: Props) => {
       <tbody>{rows}</tbody>
     </Table>
   );
-}
- 
+};
+
 export default SpendingTable;

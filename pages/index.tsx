@@ -1,6 +1,6 @@
-import type { NextPage } from 'next'
-import Meta from '@components/meta';
-import Layout from '@components/layout';
+import type { NextPage } from "next";
+import Meta from "@components/meta";
+import Layout from "@components/layout";
 
 const Home: NextPage = () => {
   return (
@@ -8,7 +8,7 @@ const Home: NextPage = () => {
       <Meta />
       <Layout />
     </>
-  )
-}
+  );
+};
 
 export default Home;

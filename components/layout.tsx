@@ -6,6 +6,6 @@ const Layout = () => {
       <ModifiableSpendingTable />
     </main>
   );
-}
- 
+};
+
 export default Layout;
