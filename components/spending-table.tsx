@@ -14,7 +14,7 @@ const SpendingTable = ({ spendingList }: Props) => {
     </tr>
   ));
   return (
-    <Table>
+    <Table className="m-10 bg-teal-200">
       <thead>
         <tr>
           <th>Date</th>

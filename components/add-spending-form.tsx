@@ -48,12 +48,18 @@ const AddSpendingForm = ({ spendingList, setSpendingList }: Props) => {
   };
 
   return (
-    <Box sx={{ maxWidth: 300 }} mx="auto">
+    <div className="m-10 p-5 bg-teal-300">
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <DatePicker placeholder="Date" {...form.getInputProps("date")} />
-        <br />
-        <NumberInput placeholder="Amount" {...form.getInputProps("amount")} />
-        <br />
+        <DatePicker
+          placeholder="Date"
+          {...form.getInputProps("date")}
+          className="mb-3"
+        />
+        <NumberInput
+          placeholder="Amount"
+          {...form.getInputProps("amount")}
+          className="mb-3"
+        />
         <Select
           placeholder="Category"
           data={Object.entries(SpendingCategory).map(([label, value]) => ({
@@ -66,7 +72,7 @@ const AddSpendingForm = ({ spendingList, setSpendingList }: Props) => {
           <Button type="submit">Add</Button>
         </Group>
       </form>
-    </Box>
+    </div>
   );
 };
 
