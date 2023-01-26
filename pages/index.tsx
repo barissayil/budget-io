@@ -9,7 +9,11 @@ type Props = {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const spendings = await prisma.spending.findMany();
+  const spendings = await prisma.spending.findMany({
+    orderBy: {
+      date: "asc",
+    },
+  });
   console.log(spendings);
   return {
     props: { spendings },
@@ -20,7 +24,7 @@ const Home: NextPage<Props> = ({ spendings }: Props) => {
   return (
     <>
       <Meta />
-      <Layout spendings={spendings}/>
+      <Layout spendings={spendings} />
     </>
   );
 };
