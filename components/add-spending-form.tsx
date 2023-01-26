@@ -28,15 +28,21 @@ const AddSpendingForm = ({ spendings, setSpendings }: Props) => {
     },
   });
 
-  const handleSubmit = ({ date, amount, category }: Values) => {
-    const currentSpending: Spending = {
-      id: spendings.length + 1,
+  const handleSubmit = async ({ date, amount, category }: Values) => {
+    const body = {
       date: date.toISOString().substring(0, 10),
-      amount: amount as number,
-      category: category as SpendingCategory,
+      amount,
+      category,
     };
-    const newSpendingList = [...spendings, currentSpending];
-    setSpendings(newSpendingList);
+    const spending: Spending = await (
+      await fetch(`/api/spending`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+    ).json();
+    console.table(spending);
+    setSpendings([...spendings, spending]);
   };
 
   return (
