@@ -38,7 +38,7 @@ const AddSpendingForm = ({ spendings, setSpendings }: Props) => {
 
   const handleSubmit = ({ date, amount, category }: Values) => {
     const currentSpending: Spending = {
-      id: spendings.length,
+      id: spendings.length + 1,
       date: date.toISOString().substring(0, 10),
       amount: amount as number,
       category: category as SpendingCategory,

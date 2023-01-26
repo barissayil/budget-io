@@ -1,9 +1,14 @@
 import ModifiableSpendingTable from "@components/modifiable-spending-table";
+import { Spending } from "@modeling/spending";
 
-const Layout = () => {
+type Props = {
+  spendings: Spending[];
+};
+
+const Layout = ({ spendings }: Props) => {
   return (
     <main>
-      <ModifiableSpendingTable />
+      <ModifiableSpendingTable initialSpendings={spendings}/>
     </main>
   );
 };

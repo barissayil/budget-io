@@ -5,29 +5,12 @@ import AddSpendingForm from "@components/add-spending-form";
 import { Button, Group } from "@mantine/core";
 import { SpendingCategory } from "@modeling/spending-category";
 
-const initialSpendingList: Spending[] = [
-  {
-    id: 0,
-    date: "2023-01-01",
-    amount: 1000,
-    category: SpendingCategory.Housing,
-  },
-  {
-    id: 1,
-    date: "2023-01-02",
-    amount: 20,
-    category: SpendingCategory.Food,
-  },
-  {
-    id: 2,
-    date: "2023-01-05",
-    amount: 100,
-    category: SpendingCategory.Fun,
-  },
-];
+type Props = {
+  initialSpendings: Spending[];
+};
 
-const ModifiableSpendingTable = () => {
-  const [spendings, setSpendings] = useState<Spending[]>(initialSpendingList);
+const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
+  const [spendings, setSpendings] = useState<Spending[]>(initialSpendings);
 
   return (
     <div className="flex flex-col items-center m-10 bg-teal-100">
