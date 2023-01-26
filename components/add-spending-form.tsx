@@ -1,17 +1,9 @@
-import {
-  TextInput,
-  Checkbox,
-  Button,
-  Group,
-  Box,
-  NumberInput,
-  Select,
-} from "@mantine/core";
+import { Button, Group, NumberInput, Select } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { Spending } from "@prisma/client";
 import { SpendingCategory } from "@modeling/spending-category";
-import { Dispatch, FormEvent, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   spendings: Spending[];
