@@ -14,7 +14,7 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
 
   return (
     <div className="flex flex-col items-center m-10 bg-teal-100">
-      <SpendingTable spendings={spendings} />
+      <SpendingTable spendings={spendings} setSpendings={setSpendings} />
       <div className="flex m-10 bg-teal-200">
         <AddSpendingForm spendings={spendings} setSpendings={setSpendings} />
         <Button
