@@ -8,7 +8,7 @@ type Props = {
 const SpendingTable = ({ spendingList }: Props) => {
   const rows = spendingList.map((spending) => (
     <tr key={spending.id}>
-      <td>{spending.date.toLocaleDateString("en-GB")}</td>
+      <td>{spending.date}</td>
       <td>{spending.amount}€</td>
       <td>{spending.category}</td>
     </tr>

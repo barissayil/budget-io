@@ -8,20 +8,20 @@ import { SpendingCategory } from "@modeling/spending-category";
 const initialSpendingList: Spending[] = [
   {
     id: 0,
-    date: new Date(),
+    date: "2023-01-01",
     amount: 1000,
     category: SpendingCategory.Housing,
   },
   {
     id: 1,
-    date: new Date(),
+    date: "2023-01-02",
     amount: 20,
     category: SpendingCategory.Food,
   },
   {
     id: 2,
-    date: new Date(),
-    amount: 200,
+    date: "2023-01-05",
+    amount: 100,
     category: SpendingCategory.Fun,
   },
 ];
