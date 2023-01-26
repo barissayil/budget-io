@@ -2,11 +2,11 @@ import { Table } from "@mantine/core";
 import { Spending } from "@modeling/spending";
 
 type Props = {
-  spendingList: Spending[];
+  spendings: Spending[];
 };
 
-const SpendingTable = ({ spendingList }: Props) => {
-  const rows = spendingList.map((spending) => (
+const SpendingTable = ({ spendings }: Props) => {
+  const rows = spendings.map((spending) => (
     <tr key={spending.id}>
       <td>{spending.date}</td>
       <td>{spending.amount}€</td>

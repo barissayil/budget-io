@@ -14,8 +14,8 @@ import { SpendingCategory } from "@modeling/spending-category";
 import { Dispatch, FormEvent, SetStateAction } from "react";
 
 type Props = {
-  spendingList: Spending[];
-  setSpendingList: Dispatch<SetStateAction<Spending[]>>;
+  spendings: Spending[];
+  setSpendings: Dispatch<SetStateAction<Spending[]>>;
 };
 
 type Values = {
@@ -24,7 +24,7 @@ type Values = {
   category?: SpendingCategory;
 };
 
-const AddSpendingForm = ({ spendingList, setSpendingList }: Props) => {
+const AddSpendingForm = ({ spendings, setSpendings }: Props) => {
   const form = useForm<Values>({
     initialValues: {
       date: new Date(),
@@ -38,13 +38,13 @@ const AddSpendingForm = ({ spendingList, setSpendingList }: Props) => {
 
   const handleSubmit = ({ date, amount, category }: Values) => {
     const currentSpending: Spending = {
-      id: spendingList.length,
+      id: spendings.length,
       date: date.toISOString().substring(0, 10),
       amount: amount as number,
       category: category as SpendingCategory,
     };
-    const newSpendingList = [...spendingList, currentSpending];
-    setSpendingList(newSpendingList);
+    const newSpendingList = [...spendings, currentSpending];
+    setSpendings(newSpendingList);
   };
 
   return (

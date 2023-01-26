@@ -27,21 +27,17 @@ const initialSpendingList: Spending[] = [
 ];
 
 const ModifiableSpendingTable = () => {
-  const [spendingList, setSpendingList] =
-    useState<Spending[]>(initialSpendingList);
+  const [spendings, setSpendings] = useState<Spending[]>(initialSpendingList);
 
   return (
     <div className="flex flex-col items-center m-10 bg-teal-100">
-      <SpendingTable spendingList={spendingList} />
+      <SpendingTable spendings={spendings} />
       <div className="flex m-10 bg-teal-200">
-        <AddSpendingForm
-          spendingList={spendingList}
-          setSpendingList={setSpendingList}
-        />
+        <AddSpendingForm spendings={spendings} setSpendings={setSpendings} />
         <Button
-          onClick={() => setSpendingList([])}
+          onClick={() => setSpendings([])}
           color="red"
-          disabled={spendingList.length === 0}
+          disabled={spendings.length === 0}
           className="w-32 self-center m-10"
         >
           Clear
