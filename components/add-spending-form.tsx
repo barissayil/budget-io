@@ -4,6 +4,7 @@ import { useForm } from "@mantine/form";
 import { Spending } from "@prisma/client";
 import { SpendingCategory } from "@modeling/spending-category";
 import { Dispatch, SetStateAction } from "react";
+import { getISODate } from "lib/dates";
 
 type Props = {
   spendings: Spending[];
@@ -30,7 +31,7 @@ const AddSpendingForm = ({ spendings, setSpendings }: Props) => {
 
   const handleSubmit = async ({ date, amount, category }: Values) => {
     const body = {
-      date: date.toISOString().substring(0, 10),
+      date: getISODate(date),
       amount,
       category,
     };
