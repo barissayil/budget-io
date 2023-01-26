@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Spending } from "@modeling/spending";
+import { Spending } from "@prisma/client";
 import SpendingTable from "@components/spending-table";
 import AddSpendingForm from "@components/add-spending-form";
 import { Button, Group } from "@mantine/core";

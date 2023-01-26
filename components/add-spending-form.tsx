@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
-import { Spending } from "@modeling/spending";
+import { Spending } from "@prisma/client";
 import { SpendingCategory } from "@modeling/spending-category";
 import { Dispatch, FormEvent, SetStateAction } from "react";
 

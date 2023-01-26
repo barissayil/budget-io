@@ -1,5 +1,5 @@
 import ModifiableSpendingTable from "@components/modifiable-spending-table";
-import { Spending } from "@modeling/spending";
+import { Spending } from "@prisma/client";
 
 type Props = {
   spendings: Spending[];
@@ -8,7 +8,7 @@ type Props = {
 const Layout = ({ spendings }: Props) => {
   return (
     <main>
-      <ModifiableSpendingTable initialSpendings={spendings}/>
+      <ModifiableSpendingTable initialSpendings={spendings} />
     </main>
   );
 };

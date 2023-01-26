@@ -1,5 +1,5 @@
 import { Table } from "@mantine/core";
-import { Spending } from "@modeling/spending";
+import { Spending } from "@prisma/client";
 
 type Props = {
   spendings: Spending[];
