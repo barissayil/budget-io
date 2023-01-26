@@ -6,3 +6,10 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Spending {
+  id       Int    @id @default(autoincrement())
+  date     String @db.Char(10)
+  amount   Int
+  category String
+}
