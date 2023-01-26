@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       date: "asc",
     },
   });
-  console.log(spendings);
+  console.table(spendings);
   return {
     props: { spendings },
   };
