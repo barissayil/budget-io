@@ -21,6 +21,7 @@
     "@prisma/client": "^4.9.0",
     "dayjs": "^1.11.7",
     "lodash": "^4.17.21",
+    "mantine-datatable": "^1.7.35",
     "next": "^13.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
