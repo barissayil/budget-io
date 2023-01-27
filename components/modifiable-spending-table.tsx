@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { Spending } from "@prisma/client";
 import SpendingTable from "@components/spending-table";
 import AddSpendingForm from "@components/add-spending-form";
-import { Button, Group } from "@mantine/core";
-import { SpendingCategory } from "@modeling/spending-category";
+import { Button } from "@mantine/core";
 
 type Props = {
   initialSpendings: Spending[];
