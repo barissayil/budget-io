@@ -1,4 +1,4 @@
-export enum SpendingCategory {
+enum SpendingCategory {
   Housing = "HOUSING",
   Utilities = "UTILITIES",
   Food = "FOOD",
@@ -8,3 +8,5 @@ export enum SpendingCategory {
   Important = "IMPORTANT",
   Wasted = "WASTED",
 }
+
+export default SpendingCategory;

@@ -2,7 +2,7 @@ import { Button, Group, NumberInput, Select } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { Spending } from "@prisma/client";
-import { SpendingCategory } from "@modeling/spending-category";
+import SpendingCategory from "@modeling/spending-category";
 import { Dispatch, SetStateAction } from "react";
 import { getISODate } from "lib/dates";
 
