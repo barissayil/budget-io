@@ -17,9 +17,6 @@ const UpdateSpendingForm = ({
   spendings,
   setSpendings,
 }: Props) => {
-  console.table(spendingToUpdate);
-  console.log(spendingToUpdate.date);
-  console.log(new Date(spendingToUpdate.date));
   const form = useForm<SpendingFormValues>({
     initialValues: {
       date: new Date(spendingToUpdate.date),
@@ -50,7 +47,6 @@ const UpdateSpendingForm = ({
         body: JSON.stringify(body),
       })
     ).json();
-    console.table(updatedSpending);
     setSpendings([
       ...spendings.filter((spending) => spending.id !== spendingToUpdate.id),
       updatedSpending,

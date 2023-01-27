@@ -11,9 +11,7 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.table(req.body);
   const { date, amount, category } = req.body;
-
   const spending = await prisma.spending.create({
     data: {
       date,
@@ -21,8 +19,5 @@ export default async function handle(
       category,
     },
   });
-
-  console.table(spending);
-
   res.json(spending);
 }

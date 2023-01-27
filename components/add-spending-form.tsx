@@ -39,7 +39,6 @@ const AddSpendingForm = ({ spendings, setSpendings }: Props) => {
         body: JSON.stringify(body),
       })
     ).json();
-    console.table(spending);
     setSpendings([...spendings, spending]);
   };
 
