@@ -1,7 +1,8 @@
-import { TrashIcon } from "@heroicons/react/24/solid";
-import { Table } from "@mantine/core";
+import { ActionIcon, Group, Table, Text } from "@mantine/core";
 import { Spending } from "@prisma/client";
+import { DataTable } from "mantine-datatable";
 import { Dispatch, SetStateAction } from "react";
+import { Eye, Edit, Trash } from "tabler-icons-react";
 
 type Props = {
   spendings: Spending[];
@@ -20,32 +21,45 @@ const SpendingTable = ({ spendings, setSpendings }: Props) => {
     );
   };
 
-  const rows = spendings.map((spending) => (
-    <tr key={spending.id}>
-      <td>{spending.date}</td>
-      <td>{spending.amount}€</td>
-      <td>{spending.category}</td>
-      <td>
-        <TrashIcon
-          className="h-4 w-4 fill-red-600"
-          onClick={() => deleteSpending(spending.id)}
-        />
-      </td>
-    </tr>
-  ));
-
   return (
-    <Table className="m-10 bg-teal-200">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Amount</th>
-          <th>Category</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </Table>
+    <DataTable
+      withBorder
+      textSelectionDisabled
+      shadow="xs"
+      columns={[
+        { accessor: "date" },
+        { accessor: "amount" },
+        { accessor: "category" },
+        {
+          accessor: "actions",
+          title: <Text mr="xs"></Text>,
+          textAlignment: "right",
+          render: (spending) => (
+            <Group spacing={4} position="right" noWrap>
+              <ActionIcon
+                color="green"
+                onClick={() => console.log("show " + spending.id)}
+              >
+                <Eye size={16} />
+              </ActionIcon>
+              <ActionIcon
+                color="blue"
+                onClick={() => console.log("edit " + spending.id)}
+              >
+                <Edit size={16} />
+              </ActionIcon>
+              <ActionIcon
+                color="red"
+                onClick={() => deleteSpending(spending.id)}
+              >
+                <Trash size={16} />
+              </ActionIcon>
+            </Group>
+          ),
+        },
+      ]}
+      records={spendings}
+    />
   );
 };
 

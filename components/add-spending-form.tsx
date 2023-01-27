@@ -47,7 +47,7 @@ const AddSpendingForm = ({ spendings, setSpendings }: Props) => {
   };
 
   return (
-    <div className="m-10 p-5 bg-teal-300">
+    <div className="m-5 p-5 bg-teal-300">
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <DatePicker
           placeholder="Date"
