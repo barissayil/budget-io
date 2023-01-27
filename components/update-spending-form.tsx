@@ -1,21 +1,15 @@
-import { Button, Group, NumberInput, Select } from "@mantine/core";
-import { DatePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { Spending } from "@prisma/client";
 import SpendingCategory from "@modeling/spending-category";
 import { Dispatch, SetStateAction } from "react";
 import { getISODate } from "lib/dates";
+import SpendingForm from "@components/spending-form";
+import SpendingFormValues from "@modeling/spending-form-values";
 
 type Props = {
   spendingToUpdate: Spending;
   spendings: Spending[];
   setSpendings: Dispatch<SetStateAction<Spending[]>>;
-};
-
-type Values = {
-  date: Date;
-  amount?: number;
-  category?: SpendingCategory;
 };
 
 const UpdateSpendingForm = ({
@@ -26,7 +20,7 @@ const UpdateSpendingForm = ({
   console.table(spendingToUpdate);
   console.log(spendingToUpdate.date);
   console.log(new Date(spendingToUpdate.date));
-  const form = useForm<Values>({
+  const form = useForm<SpendingFormValues>({
     initialValues: {
       date: new Date(spendingToUpdate.date),
       amount: spendingToUpdate.amount,
@@ -39,7 +33,11 @@ const UpdateSpendingForm = ({
     },
   });
 
-  const handleSubmit = async ({ date, amount, category }: Values) => {
+  const handleSubmit = async ({
+    date,
+    amount,
+    category,
+  }: SpendingFormValues) => {
     const body = {
       date: getISODate(date),
       amount,
@@ -60,31 +58,11 @@ const UpdateSpendingForm = ({
   };
 
   return (
-    <div className="m-5 p-5 bg-teal-300">
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <DatePicker
-          placeholder="Date"
-          {...form.getInputProps("date")}
-          className="mb-3"
-        />
-        <NumberInput
-          placeholder="Amount"
-          {...form.getInputProps("amount")}
-          className="mb-3"
-        />
-        <Select
-          placeholder="Category"
-          data={Object.entries(SpendingCategory).map(([label, value]) => ({
-            label,
-            value,
-          }))}
-          {...form.getInputProps("category")}
-        />
-        <Group position="right" mt="md">
-          <Button type="submit">Update</Button>
-        </Group>
-      </form>
-    </div>
+    <SpendingForm
+      handleSubmit={handleSubmit}
+      form={form}
+      formType={"UPDATE"}
+    ></SpendingForm>
   );
 };
 
