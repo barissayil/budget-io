@@ -1,8 +1,9 @@
-import { ActionIcon, Group, Modal, Text } from "@mantine/core";
+import { ActionIcon, Button, Group, Modal, Text } from "@mantine/core";
+import { showNotification, updateNotification } from "@mantine/notifications";
 import { Spending } from "@prisma/client";
 import { DataTable } from "mantine-datatable";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Eye, Edit, Trash } from "tabler-icons-react";
+import { Eye, Edit, Trash, Check } from "tabler-icons-react";
 import UpdateSpendingForm from "./update-spending-form";
 
 type Props = {
@@ -16,6 +17,14 @@ const SpendingTable = ({ spendings, setSpendings }: Props) => {
   );
 
   const deleteSpending = async (id: number): Promise<void> => {
+    showNotification({
+      id: "delete-spending",
+      loading: true,
+      title: "Deleting spending",
+      message: "The spending is being deleted",
+      autoClose: false,
+      disallowClose: true,
+    });
     const deletedSpending = await (
       await fetch(`/api/spending/${id}`, {
         method: "DELETE",
@@ -24,6 +33,14 @@ const SpendingTable = ({ spendings, setSpendings }: Props) => {
     setSpendings(
       spendings.filter((spending) => spending.id !== deletedSpending.id)
     );
+    updateNotification({
+      id: "delete-spending",
+      color: "teal",
+      title: "Spending is deleted",
+      message: "The spending is deleted",
+      icon: <Check size={16} />,
+      autoClose: 2000,
+    });
   };
 
   const openEditModalForSpending = (id: number) => {
