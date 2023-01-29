@@ -6,8 +6,8 @@ import { openConfirmModal } from "@mantine/modals";
 import { showNotification, updateNotification } from "@mantine/notifications";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import { Check } from "tabler-icons-react";
-import EditSpendingModal from "@components/edit-spending-modal";
-import AddSpendingModal from "@components/add-spending-modal";
+import EditSpendingModal from "@components/modals/edit-spending-modal";
+import AddSpendingModal from "@components/modals/add-spending-modal";
 
 type Props = {
   initialSpendings: Spending[];

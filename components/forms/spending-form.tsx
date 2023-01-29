@@ -3,7 +3,6 @@ import { DatePicker } from "@mantine/dates";
 import { UseFormReturnType } from "@mantine/form";
 import SpendingCategory from "@modeling/spending-category";
 import SpendingFormValues from "@modeling/spending-form-values";
-import { Title, Text } from "@mantine/core";
 import { SetStateAction } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 

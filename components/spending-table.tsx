@@ -1,11 +1,7 @@
-import { ActionIcon, Button, Group, Modal, Text } from "@mantine/core";
-import { openConfirmModal } from "@mantine/modals";
-import { showNotification, updateNotification } from "@mantine/notifications";
-import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
+import { ActionIcon, Group, Text } from "@mantine/core";
 import { Spending } from "@prisma/client";
 import { DataTable } from "mantine-datatable";
 import { Edit, Trash } from "tabler-icons-react";
-import EditSpendingModal from "@components/edit-spending-modal";
 
 type Props = {
   spendings: Spending[];

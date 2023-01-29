@@ -3,7 +3,7 @@ import { Spending } from "@prisma/client";
 import SpendingCategory from "@modeling/spending-category";
 import { Dispatch, SetStateAction } from "react";
 import { getISODate } from "lib/dates";
-import SpendingForm from "@components/spending-form";
+import SpendingForm from "@components/forms/spending-form";
 import SpendingFormValues from "@modeling/spending-form-values";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import { showNotification, updateNotification } from "@mantine/notifications";
