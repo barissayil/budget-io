@@ -81,7 +81,7 @@ const AddSpendingForm = ({
       form={form}
       formType={"ADD"}
       setOpenedSpendingModal={setOpenedSpendingModal}
-    ></SpendingForm>
+    />
   );
 };
 

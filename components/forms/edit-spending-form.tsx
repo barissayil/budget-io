@@ -92,7 +92,7 @@ const EditSpendingForm = ({
       form={form}
       formType={"UPDATE"}
       setOpenedSpendingModal={setOpenedSpendingModal}
-    ></SpendingForm>
+    />
   );
 };
 
