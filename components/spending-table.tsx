@@ -1,7 +1,7 @@
-import { ActionIcon, Group, Text } from "@mantine/core";
+import { Text } from "@mantine/core";
 import { Spending } from "@prisma/client";
 import { DataTable } from "mantine-datatable";
-import { Edit, Trash } from "tabler-icons-react";
+import SpendingActionsGroup from "components/spending-actions-group";
 
 type Props = {
   spendings: Spending[];
@@ -30,20 +30,11 @@ const SpendingTable = ({
           title: <Text mr="xs"></Text>,
           textAlignment: "right",
           render: (spending) => (
-            <Group spacing={4} position="right" noWrap>
-              <ActionIcon
-                color="teal"
-                onClick={() => openEditSpendingModal(spending.id)}
-              >
-                <Edit size={16} />
-              </ActionIcon>
-              <ActionIcon
-                color="red"
-                onClick={() => openDeleteModalForSpending(spending.id)}
-              >
-                <Trash size={16} />
-              </ActionIcon>
-            </Group>
+            <SpendingActionsGroup
+              spending={spending}
+              openEditSpendingModal={openEditSpendingModal}
+              openDeleteModalForSpending={openDeleteModalForSpending}
+            />
           ),
         },
       ]}
