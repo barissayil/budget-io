@@ -89,7 +89,7 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
           setSelectedSpendingId={setSelectedSpendingId}
         />
       )}
-      <div className="flex flex-col items-center gap-2 m-2 p-2 bg-slate-200">
+      <div className="flex flex-col items-center gap-2 p-2 bg-slate-200">
         <SpendingTable
           spendings={spendings}
           openEditSpendingModal={openEditSpendingModal}
