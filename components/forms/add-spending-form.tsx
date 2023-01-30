@@ -68,7 +68,7 @@ const AddSpendingForm = ({
       autoClose: false,
       disallowClose: true,
     });
-    addSpending({ date, amount, category });
+    await addSpending({ date, amount, category });
     updateNotification({
       id: `add-spending-${date}-${amount}-${category}`,
       color: "teal",

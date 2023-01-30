@@ -40,7 +40,11 @@ const EditSpendingForm = ({
     },
   });
 
-  const editSpending = async ({ date, amount, category }: SpendingFormValues) => {
+  const editSpending = async ({
+    date,
+    amount,
+    category,
+  }: SpendingFormValues) => {
     const body = {
       date: getISODate(date),
       amount,
@@ -75,7 +79,7 @@ const EditSpendingForm = ({
       autoClose: false,
       disallowClose: true,
     });
-    editSpending({ date, amount, category });
+    await editSpending({ date, amount, category });
     updateNotification({
       id: `edit-spending-${date}-${amount}-${category}`,
       color: "teal",
