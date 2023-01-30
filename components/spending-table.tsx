@@ -6,13 +6,13 @@ import SpendingActionsGroup from "components/spending-actions-group";
 type Props = {
   spendings: Spending[];
   openEditSpendingModal: (id: number) => void;
-  openDeleteModalForSpending: (id: number) => void;
+  openDeleteSpendingModal: (id: number) => void;
 };
 
 const SpendingTable = ({
   spendings,
   openEditSpendingModal,
-  openDeleteModalForSpending,
+  openDeleteSpendingModal,
 }: Props) => {
   return (
     <DataTable
@@ -33,7 +33,7 @@ const SpendingTable = ({
             <SpendingActionsGroup
               spending={spending}
               openEditSpendingModal={openEditSpendingModal}
-              openDeleteModalForSpending={openDeleteModalForSpending}
+              openDeleteSpendingModal={openDeleteSpendingModal}
             />
           ),
         },

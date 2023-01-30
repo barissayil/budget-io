@@ -33,7 +33,11 @@ const AddSpendingForm = ({
     },
   });
 
-  const add = async ({ date, amount, category }: SpendingFormValues) => {
+  const addSpending = async ({
+    date,
+    amount,
+    category,
+  }: SpendingFormValues) => {
     const body = {
       date: getISODate(date),
       amount,
@@ -64,7 +68,7 @@ const AddSpendingForm = ({
       autoClose: false,
       disallowClose: true,
     });
-    add({ date, amount, category });
+    addSpending({ date, amount, category });
     updateNotification({
       id: `add-spending-${date}-${amount}-${category}`,
       color: "teal",

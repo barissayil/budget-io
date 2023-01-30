@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Spending } from "@prisma/client";
 import SpendingTable from "@components/spending-table";
 import { Button, Text } from "@mantine/core";
-import { openConfirmModal } from "@mantine/modals";
-import { showNotification, updateNotification } from "@mantine/notifications";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
-import { Check } from "tabler-icons-react";
 import EditSpendingModal from "@components/modals/edit-spending-modal";
 import AddSpendingModal from "@components/modals/add-spending-modal";
+import DeleteSpendingModal from "@components/modals/delete-spending-modal";
 
 type Props = {
   initialSpendings: Spending[];
@@ -23,33 +21,6 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
     null
   );
 
-  const deleteSpending = async (id: number): Promise<void> => {
-    showNotification({
-      id: `delete-spending-${id}`,
-      loading: true,
-      title: "Deleting spending",
-      message: "The spending is being deleted",
-      autoClose: false,
-      disallowClose: true,
-    });
-    const deletedSpending = await (
-      await fetch(`/api/spending/${id}`, {
-        method: "DELETE",
-      })
-    ).json();
-    setSpendings(
-      spendings.filter((spending) => spending.id !== deletedSpending.id)
-    );
-    updateNotification({
-      id: `delete-spending-${id}`,
-      color: "teal",
-      title: "Spending is deleted",
-      message: "The spending is deleted",
-      icon: <Check size={16} />,
-      autoClose: 4000,
-    });
-  };
-
   const getSpending = (id: number): Spending => {
     return spendings.find((spending) => spending.id === id) as Spending;
   };
@@ -59,17 +30,10 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
     setOpenedSpendingModal("EDIT");
   };
 
-  const openDeleteModalForSpending = (id: number) =>
-    openConfirmModal({
-      title: "Delete spending",
-      centered: true,
-      children: (
-        <Text size="sm">Are you sure you want to delete this spending?</Text>
-      ),
-      labels: { confirm: "Delete", cancel: "Cancel" },
-      confirmProps: { color: "red" },
-      onConfirm: async () => await deleteSpending(id),
-    });
+  const openDeleteSpendingModal = (id: number) => {
+    setSelectedSpendingId(id);
+    setOpenedSpendingModal("DELETE");
+  };
 
   return (
     <>
@@ -89,11 +53,20 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
           setSelectedSpendingId={setSelectedSpendingId}
         />
       )}
+      {openedSpendingModal === "DELETE" && (
+        <DeleteSpendingModal
+          spendingIdToDelete={selectedSpendingId as number}
+          setOpenedSpendingModal={setOpenedSpendingModal}
+          spendings={spendings}
+          setSpendings={setSpendings}
+          setSelectedSpendingId={setSelectedSpendingId}
+        />
+      )}
       <div className="flex flex-col items-center gap-2 p-2 bg-slate-200">
         <SpendingTable
           spendings={spendings}
           openEditSpendingModal={openEditSpendingModal}
-          openDeleteModalForSpending={openDeleteModalForSpending}
+          openDeleteSpendingModal={openDeleteSpendingModal}
         />
         <Button onClick={() => setOpenedSpendingModal("ADD")} color="cyan">
           Add spending

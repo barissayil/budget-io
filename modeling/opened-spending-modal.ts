@@ -1,1 +1,1 @@
-export type OpenedSpendingModal = null | "EDIT" | "ADD";
+export type OpenedSpendingModal = null | "ADD" | "EDIT" | "DELETE";
