@@ -2,10 +2,7 @@ import { Button, Group, Modal, Text } from "@mantine/core";
 import { Spending } from "@prisma/client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
-import {
-  showLoadingNotification,
-  updateToSuccessNotification,
-} from "lib/notifications";
+import { showLoadingNotification, updateToSuccessNotification } from "lib/notifications";
 
 type Props = {
   spendingIdToDelete: number;
@@ -30,9 +27,7 @@ const DeleteSpendingModal = ({
         method: "DELETE",
       })
     ).json();
-    setSpendings(
-      spendings.filter((spending) => spending.id !== deletedSpending.id)
-    );
+    setSpendings(spendings.filter((spending) => spending.id !== deletedSpending.id));
   };
 
   const handleSubmit = async () => {
@@ -61,11 +56,7 @@ const DeleteSpendingModal = ({
     >
       <Text size="sm">Are you sure you want to delete this spending?</Text>
       <Group position="right" mt="md">
-        <Button
-          type="button"
-          variant="default"
-          onClick={() => setOpenedSpendingModal(null)}
-        >
+        <Button type="button" variant="default" onClick={() => setOpenedSpendingModal(null)}>
           Cancel
         </Button>
         <Button type="submit" color="red" onClick={() => handleSubmit()}>

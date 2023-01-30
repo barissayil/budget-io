@@ -10,11 +10,7 @@ type Props = {
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
 };
 
-const EditSpendingModal = ({
-  setOpenedSpendingModal,
-  spendings,
-  setSpendings,
-}: Props) => {
+const EditSpendingModal = ({ setOpenedSpendingModal, spendings, setSpendings }: Props) => {
   const [isOpened, setIsOpened] = useState<boolean>(true);
   return (
     <Modal

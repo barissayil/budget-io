@@ -14,11 +14,7 @@ const handleDelete = async (id: number, res: NextApiResponse) => {
   res.json(spending);
 };
 
-const handlePut = async (
-  id: number,
-  { date, amount, category }: Body,
-  res: NextApiResponse
-) => {
+const handlePut = async (id: number, { date, amount, category }: Body, res: NextApiResponse) => {
   const spending = await prisma.spending.update({
     where: { id },
     data: { date, amount, category },

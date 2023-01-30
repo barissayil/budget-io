@@ -1,11 +1,7 @@
 import { showNotification, updateNotification } from "@mantine/notifications";
 import { Check } from "tabler-icons-react";
 
-export const showLoadingNotification = (
-  id: string,
-  title: string,
-  message: string
-) => {
+export const showLoadingNotification = (id: string, title: string, message: string) => {
   showNotification({
     id,
     loading: true,
@@ -16,11 +12,7 @@ export const showLoadingNotification = (
   });
 };
 
-export const updateToSuccessNotification = (
-  id: string,
-  title: string,
-  message: string
-) => {
+export const updateToSuccessNotification = (id: string, title: string, message: string) => {
   updateNotification({
     id,
     color: "teal",

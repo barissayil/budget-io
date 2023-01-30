@@ -10,11 +10,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       withGlobalStyles
       withNormalizeCSS
       theme={{
-        fontFamily:
-          "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+        fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
         headings: {
-          fontFamily:
-            "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+          fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
         },
       }}
     >

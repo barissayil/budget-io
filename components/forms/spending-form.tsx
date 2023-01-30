@@ -7,25 +7,13 @@ import { SetStateAction } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 
 type Props = {
-  handleSubmit: ({
-    date,
-    amount,
-    category,
-  }: SpendingFormValues) => Promise<void>;
-  form: UseFormReturnType<
-    SpendingFormValues,
-    (values: SpendingFormValues) => SpendingFormValues
-  >;
+  handleSubmit: ({ date, amount, category }: SpendingFormValues) => Promise<void>;
+  form: UseFormReturnType<SpendingFormValues, (values: SpendingFormValues) => SpendingFormValues>;
   formType: "ADD" | "UPDATE";
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
 };
 
-const SpendingForm = ({
-  handleSubmit,
-  form,
-  formType,
-  setOpenedSpendingModal,
-}: Props) => {
+const SpendingForm = ({ handleSubmit, form, formType, setOpenedSpendingModal }: Props) => {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <DatePicker
@@ -34,11 +22,7 @@ const SpendingForm = ({
         className="mb-3"
         data-autofocus
       />
-      <NumberInput
-        placeholder="Amount"
-        {...form.getInputProps("amount")}
-        className="mb-3"
-      />
+      <NumberInput placeholder="Amount" {...form.getInputProps("amount")} className="mb-3" />
       <Select
         placeholder="Category"
         data={Object.entries(SpendingCategory).map(([label, value]) => ({
@@ -48,11 +32,7 @@ const SpendingForm = ({
         {...form.getInputProps("category")}
       />
       <Group position="right" mt="md">
-        <Button
-          type="button"
-          variant="default"
-          onClick={() => setOpenedSpendingModal(null)}
-        >
+        <Button type="button" variant="default" onClick={() => setOpenedSpendingModal(null)}>
           Cancel
         </Button>
         <Button type="submit" color={formType === "ADD" ? "cyan" : "teal"}>

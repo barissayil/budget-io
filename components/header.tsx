@@ -76,8 +76,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const Header = () => {
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
-    useDisclosure(false);
+  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const { classes, theme } = useStyles();
 
   return (
@@ -89,11 +88,7 @@ const Header = () => {
             Budget IO
           </Text>
 
-          <Group
-            sx={{ height: "100%" }}
-            spacing={0}
-            className={classes.hiddenMobile}
-          >
+          <Group sx={{ height: "100%" }} spacing={0} className={classes.hiddenMobile}>
             <a href="#" className={classes.link}>
               Spendings
             </a>
@@ -113,11 +108,7 @@ const Header = () => {
             <Button>Sign up</Button>
           </Group>
 
-          <Burger
-            opened={drawerOpened}
-            onClick={toggleDrawer}
-            className={classes.hiddenDesktop}
-          />
+          <Burger opened={drawerOpened} onClick={toggleDrawer} className={classes.hiddenDesktop} />
         </Group>
       </MantineHeader>
 

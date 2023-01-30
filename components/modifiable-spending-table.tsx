@@ -14,12 +14,9 @@ type Props = {
 const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
   const [spendings, setSpendings] = useState<Spending[]>(initialSpendings);
 
-  const [openedSpendingModal, setOpenedSpendingModal] =
-    useState<OpenedSpendingModal>(null);
+  const [openedSpendingModal, setOpenedSpendingModal] = useState<OpenedSpendingModal>(null);
 
-  const [selectedSpendingId, setSelectedSpendingId] = useState<number | null>(
-    null
-  );
+  const [selectedSpendingId, setSelectedSpendingId] = useState<number | null>(null);
 
   const getSpending = (id: number): Spending => {
     return spendings.find((spending) => spending.id === id) as Spending;

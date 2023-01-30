@@ -9,11 +9,7 @@ type Props = {
   openDeleteSpendingModal: (id: number) => void;
 };
 
-const SpendingTable = ({
-  spendings,
-  openEditSpendingModal,
-  openDeleteSpendingModal,
-}: Props) => {
+const SpendingTable = ({ spendings, openEditSpendingModal, openDeleteSpendingModal }: Props) => {
   return (
     <DataTable
       withBorder

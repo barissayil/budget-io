@@ -7,10 +7,7 @@ import SpendingForm from "@components/forms/spending-form";
 import SpendingFormValues from "@modeling/spending-form-values";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import SpendingFormSchema from "@modeling/spending-form-schema";
-import {
-  showLoadingNotification,
-  updateToSuccessNotification,
-} from "lib/notifications";
+import { showLoadingNotification, updateToSuccessNotification } from "lib/notifications";
 
 type Props = {
   spendingToUpdate: Spending;
@@ -38,11 +35,7 @@ const EditSpendingForm = ({
     validate: SpendingFormSchema,
   });
 
-  const editSpending = async ({
-    date,
-    amount,
-    category,
-  }: SpendingFormValues) => {
+  const editSpending = async ({ date, amount, category }: SpendingFormValues) => {
     const body = {
       date: getISODate(date),
       amount,
@@ -61,11 +54,7 @@ const EditSpendingForm = ({
     ]);
   };
 
-  const handleSubmit = async ({
-    date,
-    amount,
-    category,
-  }: SpendingFormValues) => {
+  const handleSubmit = async ({ date, amount, category }: SpendingFormValues) => {
     setModalIsOpened(false);
     setSelectedSpendingId(null);
     setOpenedSpendingModal(null);

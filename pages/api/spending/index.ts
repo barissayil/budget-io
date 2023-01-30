@@ -7,10 +7,7 @@ type Data = {
   category: string;
 };
 
-export default async function handle(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
+export default async function handle(req: NextApiRequest, res: NextApiResponse<Data>) {
   const { date, amount, category } = req.body;
   const spending = await prisma.spending.create({
     data: {

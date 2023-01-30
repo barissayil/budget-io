@@ -15,16 +15,10 @@ const SpendingActionsGroup = ({
 }: Props) => {
   return (
     <Group spacing={4} position="right" noWrap>
-      <ActionIcon
-        color="teal"
-        onClick={() => openEditSpendingModal(spending.id)}
-      >
+      <ActionIcon color="teal" onClick={() => openEditSpendingModal(spending.id)}>
         <Edit size={16} />
       </ActionIcon>
-      <ActionIcon
-        color="red"
-        onClick={() => openDeleteSpendingModal(spending.id)}
-      >
+      <ActionIcon color="red" onClick={() => openDeleteSpendingModal(spending.id)}>
         <Trash size={16} />
       </ActionIcon>
     </Group>
