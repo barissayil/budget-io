@@ -15,7 +15,6 @@ const SpendingTable = ({ spendings, openEditSpendingModal, openDeleteSpendingMod
       withBorder
       textSelectionDisabled
       shadow="xs"
-      minHeight={150}
       noRecordsText="No spending"
       columns={[
         { accessor: "date" },

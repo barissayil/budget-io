@@ -60,11 +60,13 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
         />
       )}
       <div className="flex flex-col items-center gap-2 p-2 bg-slate-200">
-        <SpendingTable
-          spendings={spendings}
-          openEditSpendingModal={openEditSpendingModal}
-          openDeleteSpendingModal={openDeleteSpendingModal}
-        />
+        {spendings.length > 0 && (
+          <SpendingTable
+            spendings={spendings}
+            openEditSpendingModal={openEditSpendingModal}
+            openDeleteSpendingModal={openDeleteSpendingModal}
+          />
+        )}
         <Button onClick={() => setOpenedSpendingModal("ADD")} color="cyan">
           Add spending
         </Button>
