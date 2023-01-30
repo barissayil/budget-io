@@ -2,8 +2,10 @@ import { Button, Group, Modal, Text } from "@mantine/core";
 import { Spending } from "@prisma/client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
-import { showNotification, updateNotification } from "@mantine/notifications";
-import { Check } from "tabler-icons-react";
+import {
+  showLoadingNotification,
+  updateToSuccessNotification,
+} from "lib/notifications";
 
 type Props = {
   spendingIdToDelete: number;
@@ -37,23 +39,17 @@ const DeleteSpendingModal = ({
     setIsOpened(false);
     setSelectedSpendingId(null);
     setOpenedSpendingModal(null);
-    showNotification({
-      id: `delete-spending-${spendingIdToDelete}`,
-      loading: true,
-      title: "Deleting spending",
-      message: "The spending is being deleted",
-      autoClose: false,
-      disallowClose: true,
-    });
+    showLoadingNotification(
+      `delete-spending-${spendingIdToDelete}`,
+      "Deleting",
+      "The spending is being deleted."
+    );
     await deleteSpending();
-    updateNotification({
-      id: `delete-spending-${spendingIdToDelete}`,
-      color: "teal",
-      title: "Spending is deleted",
-      message: "The spending is deleted",
-      icon: <Check size={16} />,
-      autoClose: 4000,
-    });
+    updateToSuccessNotification(
+      `delete-spending-${spendingIdToDelete}`,
+      "Deleted",
+      "The spending is deleted."
+    );
   };
 
   return (

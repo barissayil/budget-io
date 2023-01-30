@@ -6,8 +6,11 @@ import { getISODate } from "lib/dates";
 import SpendingForm from "@components/forms/spending-form";
 import SpendingFormValues from "@modeling/spending-form-values";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
-import { showNotification, updateNotification } from "@mantine/notifications";
-import { Check } from "tabler-icons-react";
+import SpendingFormSchema from "@modeling/spending-form-schema";
+import {
+  showLoadingNotification,
+  updateToSuccessNotification,
+} from "lib/notifications";
 
 type Props = {
   spendingToUpdate: Spending;
@@ -32,12 +35,7 @@ const EditSpendingForm = ({
       amount: spendingToUpdate.amount,
       category: spendingToUpdate.category as SpendingCategory,
     },
-
-    validate: {
-      date: (date) => (date ? null : "Invalid date"),
-      amount: (amount) => (amount && amount > 0 ? null : "Invalid amount"),
-      category: (category) => (category ? null : "Invalid category"),
-    },
+    validate: SpendingFormSchema,
   });
 
   const editSpending = async ({
@@ -71,23 +69,17 @@ const EditSpendingForm = ({
     setModalIsOpened(false);
     setSelectedSpendingId(null);
     setOpenedSpendingModal(null);
-    showNotification({
-      id: `edit-spending-${date}-${amount}-${category}`,
-      loading: true,
-      title: "Editing spending",
-      message: "The spending is being edited",
-      autoClose: false,
-      disallowClose: true,
-    });
+    showLoadingNotification(
+      `edit-spending-${date}-${amount}-${category}`,
+      "Editing",
+      "The spending is being edited."
+    );
     await editSpending({ date, amount, category });
-    updateNotification({
-      id: `edit-spending-${date}-${amount}-${category}`,
-      color: "teal",
-      title: "Spending is edited",
-      message: "The spending is edited",
-      icon: <Check size={16} />,
-      autoClose: 4000,
-    });
+    updateToSuccessNotification(
+      `edit-spending-${date}-${amount}-${category}`,
+      "Edited",
+      "The spending is edited."
+    );
   };
 
   return (
