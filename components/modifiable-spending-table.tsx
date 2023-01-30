@@ -72,7 +72,7 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
     });
 
   return (
-    <div className="flex flex-col items-center m-10 p-10 bg-teal-100">
+    <div className="flex flex-col items-center m-5 p-10 bg-slate-200">
       {openedSpendingModal === "ADD" && (
         <AddSpendingModal
           setOpenedSpendingModal={setOpenedSpendingModal}
