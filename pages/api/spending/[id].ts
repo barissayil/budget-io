@@ -1,5 +1,6 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import { prisma } from "@db/prisma";
+import { Spending } from "@prisma/client";
 
 type Body = {
   date: string;
@@ -7,14 +8,14 @@ type Body = {
   category: string;
 };
 
-const handleDelete = async (id: number, res: NextApiResponse) => {
+const handleDelete = async (id: number, res: NextApiResponse<Spending>) => {
   const spending = await prisma.spending.delete({
     where: { id },
   });
   res.json(spending);
 };
 
-const handlePut = async (id: number, { date, amount, category }: Body, res: NextApiResponse) => {
+const handlePut = async (id: number, { date, amount, category }: Body, res: NextApiResponse<Spending>) => {
   const spending = await prisma.spending.update({
     where: { id },
     data: { date, amount, category },
@@ -22,10 +23,18 @@ const handlePut = async (id: number, { date, amount, category }: Body, res: Next
   res.json(spending);
 };
 
-const handle = async (req: NextApiRequest, res: NextApiResponse) => {
+const handle = async (req: NextApiRequest, res: NextApiResponse<Spending>) => {
   const id = Number(req.query.id);
-  if (req.method === "DELETE") await handleDelete(id, res);
-  if (req.method === "PUT") await handlePut(id, req.body, res);
+  switch (req.method) {
+    case "DELETE":
+      await handleDelete(id, res);
+      break;
+    case "PUT":
+      await handlePut(id, req.body, res);
+      break;
+    default:
+      throw new Error(`The HTTP ${req.method} method is not supported at this route.`);
+  }
 };
 
 export default handle;

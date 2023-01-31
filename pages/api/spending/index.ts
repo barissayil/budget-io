@@ -1,14 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@db/prisma";
+import { Spending } from "@prisma/client";
 
-type Data = {
+type Body = {
   date: string;
   amount: number;
   category: string;
 };
 
-export default async function handle(req: NextApiRequest, res: NextApiResponse<Data>) {
-  const { date, amount, category } = req.body;
+const handlePost = async ({ date, amount, category }: Body, res: NextApiResponse<Spending>) => {
   const spending = await prisma.spending.create({
     data: {
       date,
@@ -17,4 +17,14 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse<D
     },
   });
   res.json(spending);
+};
+
+export default async function handle(req: NextApiRequest, res: NextApiResponse<Spending>) {
+  switch (req.method) {
+    case "POST":
+      await handlePost(req.body, res);
+      break;
+    default:
+      throw new Error(`The HTTP ${req.method} method is not supported at this route.`);
+  }
 }
