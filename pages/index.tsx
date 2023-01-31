@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Meta from "@components/meta";
 import Layout from "@components/layout";
-import { prisma } from "prisma/client";
+import { prisma } from "@db/prisma";
 import { Spending } from "@prisma/client";
 
 type Props = {

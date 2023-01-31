@@ -17,7 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@modeling/*": ["modeling/*"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
+      "@db/*": ["db/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

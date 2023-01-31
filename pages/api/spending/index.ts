@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "prisma/client";
+import { prisma } from "@db/prisma";
 
 type Data = {
   date: string;
