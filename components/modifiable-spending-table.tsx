@@ -34,7 +34,7 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
   };
 
   return (
-    <div className="flex flex-auto">
+    <>
       {openedSpendingModal === "ADD" && (
         <AddSpendingModal
           setOpenedSpendingModal={setOpenedSpendingModal}
@@ -79,7 +79,7 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
           Add spending
         </Button>
       </div>
-    </div>
+    </>
   );
 };
 
