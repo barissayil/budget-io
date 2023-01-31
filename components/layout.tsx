@@ -9,11 +9,13 @@ type Props = {
 
 const Layout = ({ spendings }: Props) => {
   return (
-    <main>
+    <>
       <Header />
-      <ModifiableSpendingTable initialSpendings={spendings} />
+      <main className="flex flex-col flex-auto">
+        <ModifiableSpendingTable initialSpendings={spendings} />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 };
 

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Spending } from "@prisma/client";
 import SpendingTable from "@components/spending-table";
-import { Button, Text } from "@mantine/core";
+import { Alert, Button, Text } from "@mantine/core";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import EditSpendingModal from "@components/modals/edit-spending-modal";
 import AddSpendingModal from "@components/modals/add-spending-modal";
 import DeleteSpendingModal from "@components/modals/delete-spending-modal";
+import { MoodSad } from "tabler-icons-react";
 
 type Props = {
   initialSpendings: Spending[];
@@ -33,7 +34,7 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
   };
 
   return (
-    <>
+    <div className="flex flex-auto">
       {openedSpendingModal === "ADD" && (
         <AddSpendingModal
           setOpenedSpendingModal={setOpenedSpendingModal}
@@ -59,19 +60,26 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
           setSelectedSpendingId={setSelectedSpendingId}
         />
       )}
-      <div className="flex flex-col items-center gap-2 p-2 bg-slate-200">
-        {spendings.length > 0 && (
-          <SpendingTable
-            spendings={spendings}
-            openEditSpendingModal={openEditSpendingModal}
-            openDeleteSpendingModal={openDeleteSpendingModal}
-          />
+      <div className="flex flex-col flex-auto justify-between items-center gap-2 p-2 bg-slate-200">
+        {spendings.length > 0 ? (
+          <div>
+            <SpendingTable
+              spendings={spendings}
+              openEditSpendingModal={openEditSpendingModal}
+              openDeleteSpendingModal={openDeleteSpendingModal}
+            />
+          </div>
+        ) : (
+          <>
+            <Alert title="No spendings">There are no spendings for the selected time period.</Alert>
+            <MoodSad size={48} strokeWidth={2} color={"black"} />
+          </>
         )}
         <Button onClick={() => setOpenedSpendingModal("ADD")} color="cyan">
           Add spending
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 
