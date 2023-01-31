@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Spending {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(cuid())
   date     String @db.Char(10)
   amount   Int
   category String

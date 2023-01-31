@@ -8,14 +8,18 @@ type Body = {
   category: string;
 };
 
-const handleDelete = async (id: number, res: NextApiResponse<Spending>) => {
+const handleDelete = async (id: string, res: NextApiResponse<Spending>) => {
   const spending = await prisma.spending.delete({
     where: { id },
   });
   res.json(spending);
 };
 
-const handlePut = async (id: number, { date, amount, category }: Body, res: NextApiResponse<Spending>) => {
+const handlePut = async (
+  id: string,
+  { date, amount, category }: Body,
+  res: NextApiResponse<Spending>
+) => {
   const spending = await prisma.spending.update({
     where: { id },
     data: { date, amount, category },
@@ -24,13 +28,12 @@ const handlePut = async (id: number, { date, amount, category }: Body, res: Next
 };
 
 const handle = async (req: NextApiRequest, res: NextApiResponse<Spending>) => {
-  const id = Number(req.query.id);
   switch (req.method) {
     case "DELETE":
-      await handleDelete(id, res);
+      await handleDelete(req.query.id as string, res);
       break;
     case "PUT":
-      await handlePut(id, req.body, res);
+      await handlePut(req.query.id as string, req.body, res);
       break;
     default:
       throw new Error(`The HTTP ${req.method} method is not supported at this route.`);
