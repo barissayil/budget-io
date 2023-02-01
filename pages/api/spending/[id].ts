@@ -2,7 +2,7 @@ import { NextApiResponse, NextApiRequest } from "next";
 import { prisma } from "@db/prisma";
 import { Spending } from "@prisma/client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]";
+import { authOptions } from "@api/auth/[...nextauth]";
 
 type Body = {
   date: string;
