@@ -15,6 +15,7 @@ import {
   ScrollArea,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { ReportMoney } from "tabler-icons-react";
 
 const useStyles = createStyles((theme) => ({
@@ -78,6 +79,7 @@ const useStyles = createStyles((theme) => ({
 const Header = () => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const { classes, theme } = useStyles();
+  const { data: session, status } = useSession();
 
   return (
     <Box>
@@ -104,8 +106,11 @@ const Header = () => {
           </Group>
 
           <Group className={classes.hiddenMobile}>
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
+            {session ? (
+              <Button onClick={() => signOut()}>Sign out</Button>
+            ) : (
+              <Button onClick={() => signIn()}>Sign in</Button>
+            )}
           </Group>
 
           <Burger opened={drawerOpened} onClick={toggleDrawer} className={classes.hiddenDesktop} />
@@ -140,8 +145,11 @@ const Header = () => {
           <Divider my="sm" color={"gray.1"} />
 
           <Group position="center" grow pb="xl" px="md">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
+            {session ? (
+              <Button onClick={() => signOut()}>Sign out</Button>
+            ) : (
+              <Button onClick={() => signIn()}>Sign in</Button>
+            )}
           </Group>
         </ScrollArea>
       </Drawer>
