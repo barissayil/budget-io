@@ -3,6 +3,7 @@ import { Spending } from "@prisma/client";
 import Header from "@components/header";
 import Footer from "@components/footer";
 import { ReactNode } from "react";
+import Meta from "@components/meta";
 
 type Props = {
   children: ReactNode;
@@ -11,6 +12,7 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <>
+      <Meta />
       <Header />
       <main className="flex flex-col flex-auto">{children}</main>
       <Footer />
