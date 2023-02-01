@@ -14,7 +14,7 @@ type Props = {
   spendings: Spending[];
   setSpendings: Dispatch<SetStateAction<Spending[]>>;
   setModalIsOpened: Dispatch<SetStateAction<boolean>>;
-  setSelectedSpendingId: Dispatch<SetStateAction<number | null>>;
+  setSelectedSpendingId: Dispatch<SetStateAction<string | null>>;
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
 };
 

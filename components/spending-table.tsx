@@ -5,8 +5,8 @@ import SpendingActionsGroup from "components/spending-actions-group";
 
 type Props = {
   spendings: Spending[];
-  openEditSpendingModal: (id: number) => void;
-  openDeleteSpendingModal: (id: number) => void;
+  openEditSpendingModal: (id: string) => void;
+  openDeleteSpendingModal: (id: string) => void;
 };
 
 const SpendingTable = ({ spendings, openEditSpendingModal, openDeleteSpendingModal }: Props) => {

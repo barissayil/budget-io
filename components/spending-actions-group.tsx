@@ -4,8 +4,8 @@ import { Edit, Trash } from "tabler-icons-react";
 
 type Props = {
   spending: Spending;
-  openEditSpendingModal: (id: number) => void;
-  openDeleteSpendingModal: (id: number) => void;
+  openEditSpendingModal: (id: string) => void;
+  openDeleteSpendingModal: (id: string) => void;
 };
 
 const SpendingActionsGroup = ({

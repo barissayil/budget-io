@@ -17,18 +17,18 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
 
   const [openedSpendingModal, setOpenedSpendingModal] = useState<OpenedSpendingModal>(null);
 
-  const [selectedSpendingId, setSelectedSpendingId] = useState<number | null>(null);
+  const [selectedSpendingId, setSelectedSpendingId] = useState<string | null>(null);
 
-  const getSpending = (id: number): Spending => {
+  const getSpending = (id: string): Spending => {
     return spendings.find((spending) => spending.id === id) as Spending;
   };
 
-  const openEditSpendingModal = (id: number) => {
+  const openEditSpendingModal = (id: string) => {
     setSelectedSpendingId(id);
     setOpenedSpendingModal("EDIT");
   };
 
-  const openDeleteSpendingModal = (id: number) => {
+  const openDeleteSpendingModal = (id: string) => {
     setSelectedSpendingId(id);
     setOpenedSpendingModal("DELETE");
   };
@@ -44,7 +44,7 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
       )}
       {openedSpendingModal === "EDIT" && (
         <EditSpendingModal
-          spendingToUpdate={getSpending(selectedSpendingId as number)}
+          spendingToUpdate={getSpending(selectedSpendingId as string)}
           setOpenedSpendingModal={setOpenedSpendingModal}
           spendings={spendings}
           setSpendings={setSpendings}
@@ -53,7 +53,7 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
       )}
       {openedSpendingModal === "DELETE" && (
         <DeleteSpendingModal
-          spendingIdToDelete={selectedSpendingId as number}
+          spendingIdToDelete={selectedSpendingId as string}
           setOpenedSpendingModal={setOpenedSpendingModal}
           spendings={spendings}
           setSpendings={setSpendings}

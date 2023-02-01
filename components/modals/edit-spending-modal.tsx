@@ -9,7 +9,7 @@ type Props = {
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
   spendings: Spending[];
   setSpendings: Dispatch<SetStateAction<Spending[]>>;
-  setSelectedSpendingId: Dispatch<SetStateAction<number | null>>;
+  setSelectedSpendingId: Dispatch<SetStateAction<string | null>>;
 };
 
 const EditSpendingModal = ({

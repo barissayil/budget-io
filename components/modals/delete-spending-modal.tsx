@@ -5,11 +5,11 @@ import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import { showLoadingNotification, updateToSuccessNotification } from "lib/notifications";
 
 type Props = {
-  spendingIdToDelete: number;
+  spendingIdToDelete: string;
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
   spendings: Spending[];
   setSpendings: Dispatch<SetStateAction<Spending[]>>;
-  setSelectedSpendingId: Dispatch<SetStateAction<number | null>>;
+  setSelectedSpendingId: Dispatch<SetStateAction<string | null>>;
 };
 
 const DeleteSpendingModal = ({
