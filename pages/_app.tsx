@@ -2,7 +2,6 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
-import { ModalsProvider } from "@mantine/modals";
 import { SessionProvider } from "next-auth/react";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -17,13 +16,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         },
       }}
     >
-      <ModalsProvider>
-        <NotificationsProvider>
-          <SessionProvider session={pageProps.session}>
-            <Component {...pageProps} />
-          </SessionProvider>
-        </NotificationsProvider>
-      </ModalsProvider>
+      <NotificationsProvider>
+        <SessionProvider session={pageProps.session}>
+          <Component {...pageProps} />
+        </SessionProvider>
+      </NotificationsProvider>
     </MantineProvider>
   );
 }

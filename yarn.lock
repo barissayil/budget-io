@@ -435,13 +435,6 @@
   "resolved" "https://registry.npmjs.org/@mantine/hooks/-/hooks-5.10.2.tgz"
   "version" "5.10.2"
 
-"@mantine/modals@^5.10.2":
-  "integrity" "sha512-hKd9UqHd2m+Qn5+5yMJmiFeykR+rdVlD3j9MxfjStu//NCCRSrnbj+3kgpyKn6zvZy8UV3Erg7wDzP56PgjldQ=="
-  "resolved" "https://registry.npmjs.org/@mantine/modals/-/modals-5.10.2.tgz"
-  "version" "5.10.2"
-  dependencies:
-    "@mantine/utils" "5.10.2"
-
 "@mantine/notifications@^5.10.0":
   "integrity" "sha512-JO92oVLRVbeD1Lz3zFlAFaK8uCWxev4R+RfhuAf3/MJgMLMvHT44hAJtnRUYC4jqnW0pweOKKflyQvnTZM7/Hg=="
   "resolved" "https://registry.npmjs.org/@mantine/notifications/-/notifications-5.10.2.tgz"
