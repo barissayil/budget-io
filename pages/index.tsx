@@ -5,6 +5,7 @@ import { prisma } from "@db/prisma";
 import { Spending } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
+import ModifiableSpendingTable from "@components/modifiable-spending-table";
 
 type Props = {
   spendings: Spending[];
@@ -48,7 +49,9 @@ const Home: NextPage<Props> = ({ spendings }: Props) => {
   return (
     <>
       <Meta />
-      <Layout spendings={spendings} />
+      <Layout>
+        <ModifiableSpendingTable initialSpendings={spendings} />
+      </Layout>
     </>
   );
 };

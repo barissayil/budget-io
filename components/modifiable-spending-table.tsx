@@ -66,9 +66,6 @@ const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
       <div className="flex flex-col flex-auto justify-between items-center gap-2 p-2 bg-slate-200">
         {session ? (
           <>
-            <Alert title="Hi" color="blue">
-              Hello {session?.user?.name ?? ""}!
-            </Alert>
             {spendings.length > 0 ? (
               <div>
                 <SpendingTable
