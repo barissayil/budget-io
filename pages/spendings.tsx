@@ -5,9 +5,16 @@ import { Spending } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 import ModifiableSpendingTable from "@components/modifiable-spending-table";
+import { useState } from "react";
+import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
+import { useSession } from "next-auth/react";
+import AddSpendingModal from "@components/modals/add-spending-modal";
+import DeleteSpendingModal from "@components/modals/delete-spending-modal";
+import EditSpendingModal from "@components/modals/edit-spending-modal";
+import { Flex, Loader } from "@mantine/core";
 
 type Props = {
-  spendings: Spending[];
+  initialSpendings: Spending[];
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -22,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  const spendings = await prisma.spending.findMany({
+  const initialSpendings = await prisma.spending.findMany({
     where: {
       user: {
         email: session.user?.email,
@@ -32,17 +39,74 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       date: "asc",
     },
   });
-  console.table(spendings);
+  console.table(initialSpendings);
   return {
-    props: { spendings },
+    props: { initialSpendings },
   };
 };
 
-const SpendingsPage: NextPage<Props> = ({ spendings }: Props) => {
+const SpendingsPage: NextPage<Props> = ({ initialSpendings }: Props) => {
+  const [spendings, setSpendings] = useState<Spending[]>(initialSpendings);
+
+  const [openedSpendingModal, setOpenedSpendingModal] = useState<OpenedSpendingModal>(null);
+
+  const [selectedSpendingId, setSelectedSpendingId] = useState<string | null>(null);
+
+  const { status } = useSession();
+
+  const getSpending = (id: string): Spending => {
+    return spendings.find((spending) => spending.id === id) as Spending;
+  };
+
+  const openEditSpendingModal = (id: string) => {
+    setSelectedSpendingId(id);
+    setOpenedSpendingModal("EDIT");
+  };
+
+  const openDeleteSpendingModal = (id: string) => {
+    setSelectedSpendingId(id);
+    setOpenedSpendingModal("DELETE");
+  };
   return (
     <>
       <Layout>
-        <ModifiableSpendingTable initialSpendings={spendings} />
+        {openedSpendingModal === "ADD" && (
+          <AddSpendingModal
+            setOpenedSpendingModal={setOpenedSpendingModal}
+            spendings={spendings}
+            setSpendings={setSpendings}
+          />
+        )}
+        {openedSpendingModal === "EDIT" && (
+          <EditSpendingModal
+            spendingToUpdate={getSpending(selectedSpendingId as string)}
+            setOpenedSpendingModal={setOpenedSpendingModal}
+            spendings={spendings}
+            setSpendings={setSpendings}
+            setSelectedSpendingId={setSelectedSpendingId}
+          />
+        )}
+        {openedSpendingModal === "DELETE" && (
+          <DeleteSpendingModal
+            spendingIdToDelete={selectedSpendingId as string}
+            setOpenedSpendingModal={setOpenedSpendingModal}
+            spendings={spendings}
+            setSpendings={setSpendings}
+            setSelectedSpendingId={setSelectedSpendingId}
+          />
+        )}
+        {status === "loading" ? (
+          <div className="self-center m-10">
+            <Loader />
+          </div>
+        ) : (
+          <ModifiableSpendingTable
+            spendings={spendings}
+            setOpenedSpendingModal={setOpenedSpendingModal}
+            openEditSpendingModal={openEditSpendingModal}
+            openDeleteSpendingModal={openDeleteSpendingModal}
+          />
+        )}
       </Layout>
     </>
   );

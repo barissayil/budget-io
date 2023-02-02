@@ -2,7 +2,8 @@ import type { GetServerSideProps, NextPage } from "next";
 import Layout from "@components/layout";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
-import { Alert } from "@mantine/core";
+import { Alert, Loader } from "@mantine/core";
+import { useSession } from "next-auth/react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -20,10 +21,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const IndexPage: NextPage = () => {
+  const { status } = useSession();
   return (
     <>
       <Layout>
-        <Alert>Please log in</Alert>
+        {status === "loading" ? (
+          <div className="self-center m-10">
+            <Loader />
+          </div>
+        ) : (
+          <Alert>Please log in</Alert>
+        )}
       </Layout>
     </>
   );

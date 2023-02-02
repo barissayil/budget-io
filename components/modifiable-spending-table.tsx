@@ -1,69 +1,26 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Spending } from "@prisma/client";
 import SpendingTable from "@components/spending-table";
 import { Alert, Button, Text } from "@mantine/core";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
-import EditSpendingModal from "@components/modals/edit-spending-modal";
-import AddSpendingModal from "@components/modals/add-spending-modal";
-import DeleteSpendingModal from "@components/modals/delete-spending-modal";
 import { MoodSad } from "tabler-icons-react";
-import { useSession } from "next-auth/react";
 
 type Props = {
-  initialSpendings: Spending[];
+  spendings: Spending[];
+  setOpenedSpendingModal: Dispatch<SetStateAction<OpenedSpendingModal>>;
+  openEditSpendingModal: (id: string) => void;
+  openDeleteSpendingModal: (id: string) => void;
 };
 
-const ModifiableSpendingTable = ({ initialSpendings }: Props) => {
-  const [spendings, setSpendings] = useState<Spending[]>(initialSpendings);
-
-  const [openedSpendingModal, setOpenedSpendingModal] = useState<OpenedSpendingModal>(null);
-
-  const [selectedSpendingId, setSelectedSpendingId] = useState<string | null>(null);
-
-  const { data: session, status } = useSession();
-
-  const getSpending = (id: string): Spending => {
-    return spendings.find((spending) => spending.id === id) as Spending;
-  };
-
-  const openEditSpendingModal = (id: string) => {
-    setSelectedSpendingId(id);
-    setOpenedSpendingModal("EDIT");
-  };
-
-  const openDeleteSpendingModal = (id: string) => {
-    setSelectedSpendingId(id);
-    setOpenedSpendingModal("DELETE");
-  };
-
+const ModifiableSpendingTable = ({
+  spendings,
+  setOpenedSpendingModal,
+  openEditSpendingModal,
+  openDeleteSpendingModal,
+}: Props) => {
   return (
     <>
-      {openedSpendingModal === "ADD" && (
-        <AddSpendingModal
-          setOpenedSpendingModal={setOpenedSpendingModal}
-          spendings={spendings}
-          setSpendings={setSpendings}
-        />
-      )}
-      {openedSpendingModal === "EDIT" && (
-        <EditSpendingModal
-          spendingToUpdate={getSpending(selectedSpendingId as string)}
-          setOpenedSpendingModal={setOpenedSpendingModal}
-          spendings={spendings}
-          setSpendings={setSpendings}
-          setSelectedSpendingId={setSelectedSpendingId}
-        />
-      )}
-      {openedSpendingModal === "DELETE" && (
-        <DeleteSpendingModal
-          spendingIdToDelete={selectedSpendingId as string}
-          setOpenedSpendingModal={setOpenedSpendingModal}
-          spendings={spendings}
-          setSpendings={setSpendings}
-          setSelectedSpendingId={setSelectedSpendingId}
-        />
-      )}
-      <div className="flex flex-col flex-auto justify-between items-center gap-2 p-2 bg-slate-200">
+      <div className="flex flex-col flex-auto justify-between items-center gap-2 p-2">
         {spendings.length > 0 ? (
           <div>
             <SpendingTable
