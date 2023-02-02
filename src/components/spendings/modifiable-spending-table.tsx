@@ -7,6 +7,7 @@ import { MoodSad } from "tabler-icons-react";
 
 type Props = {
   spendings: Spending[];
+  setSpendings: Dispatch<SetStateAction<Spending[]>>;
   setOpenedSpendingModal: Dispatch<SetStateAction<OpenedSpendingModal>>;
   openEditSpendingModal: (id: string) => void;
   openDeleteSpendingModal: (id: string) => void;
@@ -14,6 +15,7 @@ type Props = {
 
 const ModifiableSpendingTable = ({
   spendings,
+  setSpendings,
   setOpenedSpendingModal,
   openEditSpendingModal,
   openDeleteSpendingModal,
@@ -25,6 +27,7 @@ const ModifiableSpendingTable = ({
           <div>
             <SpendingTable
               spendings={spendings}
+              setSpendings={setSpendings}
               openEditSpendingModal={openEditSpendingModal}
               openDeleteSpendingModal={openDeleteSpendingModal}
             />
