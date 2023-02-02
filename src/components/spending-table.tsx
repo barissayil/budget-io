@@ -1,7 +1,7 @@
 import { Text } from "@mantine/core";
 import { Spending } from "@prisma/client";
 import { DataTable } from "mantine-datatable";
-import SpendingActionsGroup from "components/spending-actions-group";
+import SpendingActionsGroup from "src/components/spending-actions-group";
 
 type Props = {
   spendings: Spending[];

@@ -1,9 +1,9 @@
-import ModifiableSpendingTable from "@components/modifiable-spending-table";
+import ModifiableSpendingTable from "src/components/modifiable-spending-table";
 import { Spending } from "@prisma/client";
-import Header from "@components/header";
-import Footer from "@components/footer";
+import Header from "src/components/header";
+import Footer from "src/components/footer";
 import { ReactNode } from "react";
-import Meta from "@components/meta";
+import Meta from "src/components/meta";
 
 type Props = {
   children: ReactNode;

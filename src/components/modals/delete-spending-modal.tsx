@@ -2,7 +2,7 @@ import { Button, Group, Modal, Text } from "@mantine/core";
 import { Spending } from "@prisma/client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
-import { showLoadingNotification, updateToSuccessNotification } from "lib/notifications";
+import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";
 
 type Props = {
   spendingIdToDelete: string;

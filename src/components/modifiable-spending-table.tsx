@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Spending } from "@prisma/client";
-import SpendingTable from "@components/spending-table";
+import SpendingTable from "src/components/spending-table";
 import { Alert, Button, Text } from "@mantine/core";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import { MoodSad } from "tabler-icons-react";
