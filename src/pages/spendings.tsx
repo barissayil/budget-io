@@ -96,7 +96,7 @@ const SpendingsPage: NextPage<Props> = ({ initialSpendings }: Props) => {
           />
         )}
         {status === "loading" ? (
-          <div className="self-center m-10">
+          <div className="m-10 self-center">
             <Loader />
           </div>
         ) : (

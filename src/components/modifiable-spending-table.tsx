@@ -20,7 +20,7 @@ const ModifiableSpendingTable = ({
 }: Props) => {
   return (
     <>
-      <div className="flex flex-col flex-auto justify-between items-center gap-2 p-2">
+      <div className="flex flex-auto flex-col items-center justify-between gap-2 p-2">
         {spendings.length > 0 ? (
           <div>
             <SpendingTable

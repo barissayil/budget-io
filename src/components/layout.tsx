@@ -14,7 +14,7 @@ const Layout = ({ children }: Props) => {
     <>
       <Meta />
       <Header />
-      <main className="flex flex-col flex-auto bg-slate-200">{children}</main>
+      <main className="flex flex-auto flex-col bg-slate-200">{children}</main>
       <Footer />
     </>
   );
