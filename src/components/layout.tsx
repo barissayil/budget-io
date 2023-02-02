@@ -1,5 +1,3 @@
-import ModifiableSpendingTable from "src/components/modifiable-spending-table";
-import { Spending } from "@prisma/client";
 import Header from "src/components/header";
 import Footer from "src/components/footer";
 import { ReactNode } from "react";

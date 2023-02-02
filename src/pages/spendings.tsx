@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import AddSpendingModal from "src/components/modals/add-spending-modal";
 import DeleteSpendingModal from "src/components/modals/delete-spending-modal";
 import EditSpendingModal from "src/components/modals/edit-spending-modal";
-import { Flex, Loader } from "@mantine/core";
+import { Loader } from "@mantine/core";
 
 type Props = {
   initialSpendings: Spending[];
