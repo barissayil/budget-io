@@ -1,5 +1,5 @@
 import { Modal } from "@mantine/core";
-import EditSpendingForm from "src/components/forms/edit-spending-form";
+import EditSpendingForm from "@components/spendings/forms/edit-spending-form";
 import { Spending } from "@prisma/client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";

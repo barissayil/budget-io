@@ -1,73 +1,62 @@
 import { useForm } from "@mantine/form";
 import { Spending } from "@prisma/client";
-import SpendingCategory from "@modeling/spending-category";
 import { Dispatch, SetStateAction } from "react";
 import { getISODate } from "@lib/dates";
-import SpendingForm from "src/components/forms/spending-form";
 import SpendingFormValues from "@modeling/spending-form-values";
+import SpendingForm from "@components/spendings/forms/spending-form";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import SpendingFormSchema from "@modeling/spending-form-schema";
 import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";
 
 type Props = {
-  spendingToUpdate: Spending;
   spendings: Spending[];
   setSpendings: Dispatch<SetStateAction<Spending[]>>;
   setModalIsOpened: Dispatch<SetStateAction<boolean>>;
-  setSelectedSpendingId: Dispatch<SetStateAction<string | null>>;
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
 };
 
-const EditSpendingForm = ({
-  spendingToUpdate,
+const AddSpendingForm = ({
   spendings,
   setSpendings,
   setModalIsOpened,
-  setSelectedSpendingId,
   setOpenedSpendingModal,
 }: Props) => {
   const form = useForm<SpendingFormValues>({
     initialValues: {
-      date: new Date(spendingToUpdate.date),
-      amount: spendingToUpdate.amount,
-      category: spendingToUpdate.category as SpendingCategory,
+      date: new Date(),
     },
     validate: SpendingFormSchema,
   });
 
-  const editSpending = async ({ date, amount, category }: SpendingFormValues) => {
+  const addSpending = async ({ date, amount, category }: SpendingFormValues) => {
     const body = {
       date: getISODate(date),
       amount,
       category,
     };
-    const updatedSpending: Spending = await (
-      await fetch(`/api/spending/${spendingToUpdate.id}`, {
-        method: "PUT",
+    const spending: Spending = await (
+      await fetch(`/api/spending`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       })
     ).json();
-    setSpendings([
-      ...spendings.filter((spending) => spending.id !== spendingToUpdate.id),
-      updatedSpending,
-    ]);
+    setSpendings([...spendings, spending]);
   };
 
   const handleSubmit = async ({ date, amount, category }: SpendingFormValues) => {
     setModalIsOpened(false);
-    setSelectedSpendingId(null);
     setOpenedSpendingModal(null);
     showLoadingNotification(
-      `edit-spending-${date}-${amount}-${category}`,
-      "Editing",
-      "The spending is being edited."
+      `add-spending-${date}-${amount}-${category}`,
+      "Adding",
+      "The spending is being added."
     );
-    await editSpending({ date, amount, category });
+    await addSpending({ date, amount, category });
     updateToSuccessNotification(
-      `edit-spending-${date}-${amount}-${category}`,
-      "Edited",
-      "The spending is edited."
+      `add-spending-${date}-${amount}-${category}`,
+      "Added",
+      "The spending is added."
     );
   };
 
@@ -75,10 +64,10 @@ const EditSpendingForm = ({
     <SpendingForm
       handleSubmit={handleSubmit}
       form={form}
-      formType={"UPDATE"}
+      formType={"ADD"}
       setOpenedSpendingModal={setOpenedSpendingModal}
     />
   );
 };
 
-export default EditSpendingForm;
+export default AddSpendingForm;

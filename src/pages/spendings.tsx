@@ -1,16 +1,16 @@
 import type { GetServerSideProps, NextPage } from "next";
-import Layout from "src/components/layout";
+import Layout from "@components/layout";
 import { prisma } from "db/prisma";
 import { Spending } from "@prisma/client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]";
-import ModifiableSpendingTable from "src/components/modifiable-spending-table";
+import { authOptions } from "@api/auth/[...nextauth]";
+import ModifiableSpendingTable from "@components/spendings/modifiable-spending-table";
 import { useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import { useSession } from "next-auth/react";
-import AddSpendingModal from "src/components/modals/add-spending-modal";
-import DeleteSpendingModal from "src/components/modals/delete-spending-modal";
-import EditSpendingModal from "src/components/modals/edit-spending-modal";
+import AddSpendingModal from "@components/spendings/modals/add-spending-modal";
+import DeleteSpendingModal from "@components/spendings/modals/delete-spending-modal";
+import EditSpendingModal from "@components/spendings/modals/edit-spending-modal";
 import { Loader } from "@mantine/core";
 
 type Props = {

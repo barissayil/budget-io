@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from "next";
-import Layout from "src/components/layout";
+import Layout from "@components/layout";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]";
+import { authOptions } from "@api/auth/[...nextauth]";
 import { Alert, Loader } from "@mantine/core";
 import { useSession } from "next-auth/react";
 
