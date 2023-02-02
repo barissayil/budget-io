@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "npx prettier --write .",
-    "db:push": "npx prisma db push"
+    "db:push": "npx prisma db push",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -48,5 +49,9 @@
   },
   "prisma": {
     "schema": "db/schema.prisma"
+  },
+  "lint-staged": {
+    "*.{tsx,ts}": "eslint --cache --fix --cache-location './node_modules/@eslint/.eslintcache/'",
+    "*.{tsx,ts,css,md}": "prettier --write"
   }
 }
