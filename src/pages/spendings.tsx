@@ -102,7 +102,6 @@ const SpendingsPage: NextPage<Props> = ({ initialSpendings }: Props) => {
         ) : (
           <ModifiableSpendingTable
             spendings={spendings}
-            setSpendings={setSpendings}
             setOpenedSpendingModal={setOpenedSpendingModal}
             openEditSpendingModal={openEditSpendingModal}
             openDeleteSpendingModal={openDeleteSpendingModal}

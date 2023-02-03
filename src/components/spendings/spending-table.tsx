@@ -2,12 +2,11 @@ import { Text } from "@mantine/core";
 import { Spending } from "@prisma/client";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import SpendingActionsGroup from "@components/spendings/spending-actions-group";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { sortBy } from "lodash";
 
 type Props = {
   spendings: Spending[];
-  setSpendings: Dispatch<SetStateAction<Spending[]>>;
   openEditSpendingModal: (id: string) => void;
   openDeleteSpendingModal: (id: string) => void;
 };
