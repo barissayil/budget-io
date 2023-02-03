@@ -42,7 +42,7 @@ const SpendingTable = ({ spendings, openEditSpendingModal, openDeleteSpendingMod
           textAlignment: "right",
           render: (spending) => (
             <SpendingActionsGroup
-              spending={spending}
+              spendingId={spending.id}
               openEditSpendingModal={openEditSpendingModal}
               openDeleteSpendingModal={openDeleteSpendingModal}
             />
