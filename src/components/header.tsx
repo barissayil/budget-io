@@ -9,13 +9,14 @@ import {
   Drawer,
   ScrollArea,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useFullscreen } from "@mantine/hooks";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { ReportMoney } from "tabler-icons-react";
+import { ReportMoney, ArrowsMaximize, ArrowsMinimize } from "tabler-icons-react";
 
 const Header = () => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const { data: session, status } = useSession();
+  const { toggle, fullscreen } = useFullscreen();
 
   const links = ["Spendings", "Reports", "Insights", "Settings"];
   const linksCommonClasses =
@@ -44,6 +45,9 @@ const Header = () => {
           </Group>
 
           <Group className="hidden md:flex">
+            <Button variant="default" className="px-1.5" onClick={toggle}>
+              {fullscreen ? <ArrowsMinimize /> : <ArrowsMaximize />}
+            </Button>
             {session ? (
               <Button onClick={() => signOut()}>Sign out</Button>
             ) : (
