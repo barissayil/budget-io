@@ -7,27 +7,41 @@ import { sortBy } from "lodash";
 
 type Props = {
   spendings: Spending[];
+  selectedCategory: string | null;
   openEditSpendingModal: (id: string) => void;
   openDeleteSpendingModal: (id: string) => void;
 };
 
-const SpendingTable = ({ spendings, openEditSpendingModal, openDeleteSpendingModal }: Props) => {
+const SpendingTable = ({
+  spendings,
+  selectedCategory,
+  openEditSpendingModal,
+  openDeleteSpendingModal,
+}: Props) => {
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
     columnAccessor: "date",
     direction: "asc",
   });
   const [records, setRecords] = useState(sortBy(spendings, "date"));
+  const [filteredSpendingsLength, setFilteredSpendingsLength] = useState(spendings.length);
 
   useEffect(() => {
-    const sortedSpendings = sortBy(spendings, sortStatus.columnAccessor);
-    setRecords(sortStatus.direction === "desc" ? sortedSpendings.reverse() : sortedSpendings);
-  }, [sortStatus, spendings]);
+    const filteredSpendings = spendings.filter(
+      (spending) => !selectedCategory || spending.category === selectedCategory
+    );
+    setFilteredSpendingsLength(filteredSpendings.length);
+    const sortedFilteredSpendings = sortBy(filteredSpendings, sortStatus.columnAccessor);
+    setRecords(
+      sortStatus.direction === "desc" ? sortedFilteredSpendings.reverse() : sortedFilteredSpendings
+    );
+  }, [selectedCategory, sortStatus, spendings]);
 
   return (
     <DataTable
       withBorder
       textSelectionDisabled
       shadow="xs"
+      minHeight={filteredSpendingsLength > 0 ? 0 : 150}
       records={records}
       sortStatus={sortStatus}
       onSortStatusChange={setSortStatus}
