@@ -47,7 +47,9 @@ const Header = () => {
             {session ? (
               <Button onClick={() => signOut()}>Sign out</Button>
             ) : (
-              <Button onClick={() => signIn()}>Sign in</Button>
+              <Button onClick={() => signIn()} loading={status === "loading"}>
+                Sign in
+              </Button>
             )}
           </Group>
 
