@@ -7,7 +7,7 @@ import { SetStateAction } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 
 type Props = {
-  handleSubmit: ({ date, amount, category }: SpendingFormValues) => Promise<void>;
+  handleSubmit: ({ dateObject, amount, category }: SpendingFormValues) => Promise<void>;
   form: UseFormReturnType<SpendingFormValues, (values: SpendingFormValues) => SpendingFormValues>;
   formType: "ADD" | "UPDATE";
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
@@ -18,7 +18,7 @@ const SpendingForm = ({ handleSubmit, form, formType, setOpenedSpendingModal }: 
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <DatePicker
         placeholder="Date"
-        {...form.getInputProps("date")}
+        {...form.getInputProps("dateObject")}
         className="mb-3"
         data-autofocus
       />

@@ -2,7 +2,7 @@ import { useForm } from "@mantine/form";
 import { Spending } from "@prisma/client";
 import SpendingCategory from "@modeling/spending-category";
 import { Dispatch, SetStateAction } from "react";
-import { getISODate } from "@lib/dates";
+import { convertDateObjectToDate } from "@lib/dates";
 import SpendingForm from "@components/spendings/forms/spending-form";
 import SpendingFormValues from "@modeling/spending-form-values";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
@@ -28,16 +28,16 @@ const EditSpendingForm = ({
 }: Props) => {
   const form = useForm<SpendingFormValues>({
     initialValues: {
-      date: new Date(spendingToUpdate.date),
+      dateObject: new Date(spendingToUpdate.date),
       amount: spendingToUpdate.amount,
       category: spendingToUpdate.category as SpendingCategory,
     },
     validate: SpendingFormSchema,
   });
 
-  const editSpending = async ({ date, amount, category }: SpendingFormValues) => {
+  const editSpending = async ({ dateObject, amount, category }: SpendingFormValues) => {
     const body = {
-      date: getISODate(date),
+      date: convertDateObjectToDate(dateObject),
       amount,
       category,
     };
@@ -54,18 +54,18 @@ const EditSpendingForm = ({
     ]);
   };
 
-  const handleSubmit = async ({ date, amount, category }: SpendingFormValues) => {
+  const handleSubmit = async ({ dateObject, amount, category }: SpendingFormValues) => {
     setModalIsOpened(false);
     setSelectedSpendingId(null);
     setOpenedSpendingModal(null);
     showLoadingNotification(
-      `edit-spending-${date}-${amount}-${category}`,
+      `edit-spending-${dateObject}-${amount}-${category}`,
       "Editing",
       "The spending is being edited."
     );
-    await editSpending({ date, amount, category });
+    await editSpending({ dateObject, amount, category });
     updateToSuccessNotification(
-      `edit-spending-${date}-${amount}-${category}`,
+      `edit-spending-${dateObject}-${amount}-${category}`,
       "Edited",
       "The spending is edited."
     );

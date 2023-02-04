@@ -1,7 +1,7 @@
 import SpendingCategory from "@modeling/spending-category";
 
 type SpendingFormValues = {
-  date: Date;
+  dateObject: Date;
   amount?: number;
   category?: SpendingCategory;
 };

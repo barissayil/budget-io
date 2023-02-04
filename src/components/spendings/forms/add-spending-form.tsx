@@ -1,7 +1,7 @@
 import { useForm } from "@mantine/form";
 import { Spending } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
-import { getISODate } from "@lib/dates";
+import { convertDateObjectToDate } from "@lib/dates";
 import SpendingFormValues from "@modeling/spending-form-values";
 import SpendingForm from "@components/spendings/forms/spending-form";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
@@ -23,14 +23,14 @@ const AddSpendingForm = ({
 }: Props) => {
   const form = useForm<SpendingFormValues>({
     initialValues: {
-      date: new Date(),
+      dateObject: new Date(),
     },
     validate: SpendingFormSchema,
   });
 
-  const addSpending = async ({ date, amount, category }: SpendingFormValues) => {
+  const addSpending = async ({ dateObject, amount, category }: SpendingFormValues) => {
     const body = {
-      date: getISODate(date),
+      date: convertDateObjectToDate(dateObject),
       amount,
       category,
     };
@@ -44,17 +44,17 @@ const AddSpendingForm = ({
     setSpendings([...spendings, spending]);
   };
 
-  const handleSubmit = async ({ date, amount, category }: SpendingFormValues) => {
+  const handleSubmit = async ({ dateObject, amount, category }: SpendingFormValues) => {
     setModalIsOpened(false);
     setOpenedSpendingModal(null);
     showLoadingNotification(
-      `add-spending-${date}-${amount}-${category}`,
+      `add-spending-${dateObject}-${amount}-${category}`,
       "Adding",
       "The spending is being added."
     );
-    await addSpending({ date, amount, category });
+    await addSpending({ dateObject, amount, category });
     updateToSuccessNotification(
-      `add-spending-${date}-${amount}-${category}`,
+      `add-spending-${dateObject}-${amount}-${category}`,
       "Added",
       "The spending is added."
     );
