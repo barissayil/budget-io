@@ -1,6 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Layout from "@components/layout";
-import { prisma } from "db/prisma";
 import { Spending } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
@@ -12,6 +11,7 @@ import AddSpendingModal from "@components/spendings/modals/add-spending-modal";
 import DeleteSpendingModal from "@components/spendings/modals/delete-spending-modal";
 import EditSpendingModal from "@components/spendings/modals/edit-spending-modal";
 import { Loader } from "@mantine/core";
+import { getSpendingsOfUser } from "@lib/db/spendings";
 
 type Props = {
   initialSpendings: Spending[];
@@ -29,16 +29,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
-  const initialSpendings = await prisma.spending.findMany({
-    where: {
-      user: {
-        email: session.user?.email,
-      },
-    },
-  });
-  console.table(initialSpendings);
   return {
-    props: { initialSpendings },
+    props: { initialSpendings: await getSpendingsOfUser(session.user.email) },
   };
 };
 
