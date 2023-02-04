@@ -35,9 +35,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         email: session.user?.email,
       },
     },
-    orderBy: {
-      date: "asc",
-    },
   });
   console.table(initialSpendings);
   return {

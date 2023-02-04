@@ -30,7 +30,7 @@ const SpendingTable = ({
       (spending) => !selectedCategory || spending.category === selectedCategory
     );
     setFilteredSpendingsLength(filteredSpendings.length);
-    const sortedFilteredSpendings = sortBy(filteredSpendings, sortStatus.columnAccessor);
+    const sortedFilteredSpendings = sortBy(filteredSpendings, [sortStatus.columnAccessor, "id"]);
     setRecords(
       sortStatus.direction === "desc" ? sortedFilteredSpendings.reverse() : sortedFilteredSpendings
     );
