@@ -2,7 +2,7 @@ import { Text } from "@mantine/core";
 import { Spending } from "@prisma/client";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import SpendingActionsGroup from "@components/spendings/spending-actions-group";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { sortBy } from "lodash";
 
 type Props = {
@@ -22,26 +22,19 @@ const SpendingTable = ({
     columnAccessor: "date",
     direction: "asc",
   });
-  const [records, setRecords] = useState(sortBy(spendings, "date"));
-  const [filteredSpendingsLength, setFilteredSpendingsLength] = useState(spendings.length);
-
-  useEffect(() => {
-    const filteredSpendings = spendings.filter(
-      (spending) => !selectedCategory || spending.category === selectedCategory
-    );
-    setFilteredSpendingsLength(filteredSpendings.length);
-    const sortedFilteredSpendings = sortBy(filteredSpendings, [sortStatus.columnAccessor, "id"]);
-    setRecords(
-      sortStatus.direction === "desc" ? sortedFilteredSpendings.reverse() : sortedFilteredSpendings
-    );
-  }, [selectedCategory, sortStatus, spendings]);
+  const filteredSpendings = spendings.filter(
+    (spending) => !selectedCategory || spending.category === selectedCategory
+  );
+  const sortedFilteredSpendings = sortBy(filteredSpendings, [sortStatus.columnAccessor, "id"]);
+  const records =
+    sortStatus.direction === "desc" ? sortedFilteredSpendings.reverse() : sortedFilteredSpendings;
 
   return (
     <DataTable
       withBorder
       textSelectionDisabled
       shadow="xs"
-      minHeight={filteredSpendingsLength > 0 ? 0 : 150}
+      minHeight={records.length > 0 ? 0 : 150}
       records={records}
       sortStatus={sortStatus}
       onSortStatusChange={setSortStatus}
