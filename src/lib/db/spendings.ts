@@ -1,5 +1,5 @@
 import { prisma } from "@db/prisma";
-import { getCurrentYearMonth, getToday } from "@lib/dates";
+import { getCurrentYear, getCurrentYearMonth, getToday } from "@lib/dates";
 
 export const getSpendings = (userEmail: string) => {
   return prisma.spending.findMany({
@@ -30,6 +30,19 @@ export const getThisMonthsSpendings = (userEmail: string) => {
       },
       date: {
         contains: getCurrentYearMonth(),
+      },
+    },
+  });
+};
+
+export const getThisYearsSpendings = (userEmail: string) => {
+  return prisma.spending.findMany({
+    where: {
+      user: {
+        email: userEmail,
+      },
+      date: {
+        contains: getCurrentYear(),
       },
     },
   });

@@ -33,7 +33,7 @@ const SpendingsPage: NextPage = () => {
   const [spendings, setSpendings] = useState<Spending[]>([]);
   const [spendingsView, setSpendingsView] = useState<string | null>("THIS_MONTH");
   useEffect(() => {
-    fetch(`/api/spending/${spendingsView === "THIS_MONTH" ? "this-month" : "today"}`)
+    fetch(`/api/spending/${spendingsView?.toLowerCase().replace("_", "-")}`)
       .then((res) => res.json())
       .then((initialSpendings: Spending[]) => {
         setSpendings(initialSpendings);
