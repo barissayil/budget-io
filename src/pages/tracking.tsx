@@ -3,13 +3,13 @@ import Layout from "@components/layout";
 import { Spending } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
-import ModifiableSpendingTable from "@components/spendings/modifiable-spending-table";
+import ModifiableSpendingTable from "@components/tracking/modifiable-spending-table";
 import { useEffect, useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import { useSession } from "next-auth/react";
-import AddSpendingModal from "@components/spendings/modals/add-spending-modal";
-import DeleteSpendingModal from "@components/spendings/modals/delete-spending-modal";
-import EditSpendingModal from "@components/spendings/modals/edit-spending-modal";
+import AddSpendingModal from "@components/tracking/modals/add-spending-modal";
+import DeleteSpendingModal from "@components/tracking/modals/delete-spending-modal";
+import EditSpendingModal from "@components/tracking/modals/edit-spending-modal";
 import { Loader } from "@mantine/core";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-const SpendingsPage: NextPage = () => {
+const Tracking: NextPage = () => {
   const [spendings, setSpendings] = useState<Spending[]>([]);
   const [spendingsView, setSpendingsView] = useState<string | null>("THIS_MONTH");
   useEffect(() => {
@@ -106,4 +106,4 @@ const SpendingsPage: NextPage = () => {
   );
 };
 
-export default SpendingsPage;
+export default Tracking;

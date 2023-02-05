@@ -3,7 +3,7 @@ import { Spending } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 import { convertDateObjectToDate } from "@lib/dates";
 import SpendingFormValues from "@modeling/spending-form-values";
-import SpendingForm from "@components/spendings/forms/spending-form";
+import SpendingForm from "@components/tracking/forms/spending-form";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import SpendingFormSchema from "@modeling/spending-form-schema";
 import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";

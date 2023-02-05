@@ -2,7 +2,7 @@ import { Modal } from "@mantine/core";
 import { Spending } from "@prisma/client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
-import AddSpendingForm from "@components/spendings/forms/add-spending-form";
+import AddSpendingForm from "@components/tracking/forms/add-spending-form";
 
 type Props = {
   spendings: Spending[];

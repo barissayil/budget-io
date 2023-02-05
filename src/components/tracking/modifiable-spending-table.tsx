@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Spending } from "@prisma/client";
-import SpendingTable from "@components/spendings/spending-table";
+import SpendingTable from "@components/tracking/spending-table";
 import { Button, Select } from "@mantine/core";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import SpendingCategory from "@modeling/spending-category";

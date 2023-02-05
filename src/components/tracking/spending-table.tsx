@@ -1,7 +1,7 @@
 import { Text } from "@mantine/core";
 import { Spending } from "@prisma/client";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
-import SpendingActionsGroup from "@components/spendings/spending-actions-group";
+import SpendingActionsGroup from "@components/tracking/spending-actions-group";
 import { useState } from "react";
 import { sortBy } from "lodash";
 

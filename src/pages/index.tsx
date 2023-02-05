@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (session?.user?.email) {
     return {
       redirect: {
-        destination: "/spendings",
+        destination: "/tracking",
         permanent: false,
       },
     };
@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: {} };
 };
 
-const IndexPage: NextPage = () => {
+const Index: NextPage = () => {
   const { status } = useSession();
   return (
     <>
@@ -37,4 +37,4 @@ const IndexPage: NextPage = () => {
   );
 };
 
-export default IndexPage;
+export default Index;
