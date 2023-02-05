@@ -15,13 +15,13 @@ import { ReportMoney, ArrowsMaximize, ArrowsMinimize } from "tabler-icons-react"
 
 const Header = () => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const { toggle, fullscreen } = useFullscreen();
 
-  const links = ["Spendings", "Reports", "Insights", "Settings"];
-  const linksCommonClasses =
-    "flex items-center px-4 text-sm font-medium text-black " +
-    "no-underline decoration-current decoration-solid decoration-auto ";
+  // const links = ["Spendings"];
+  // const linksCommonClasses =
+  //   "flex items-center px-4 text-sm font-medium text-black " +
+  //   "no-underline decoration-current decoration-solid decoration-auto ";
 
   return (
     <Box>
@@ -32,7 +32,7 @@ const Header = () => {
             Budget IO
           </Text>
 
-          <Group spacing={0} className="hidden h-full md:flex">
+          {/* <Group spacing={0} className="hidden h-full md:flex">
             {links.map((link) => (
               <a
                 key={link}
@@ -42,13 +42,13 @@ const Header = () => {
                 {link}
               </a>
             ))}
-          </Group>
+          </Group> */}
 
           <Group className="hidden md:flex">
             <Button variant="default" className="px-1.5" onClick={toggle}>
               {fullscreen ? <ArrowsMinimize /> : <ArrowsMaximize />}
             </Button>
-            {session ? (
+            {status === "authenticated" ? (
               <Button onClick={() => signOut()}>Sign out</Button>
             ) : (
               <Button onClick={() => signIn()} loading={status === "loading"}>
@@ -73,19 +73,21 @@ const Header = () => {
         <ScrollArea sx={{ height: "calc(100vh - 60px)" }} mx="-md">
           <Divider my="sm" color={"gray.1"} />
 
-          {links.map((link) => (
+          {/* {links.map((link) => (
             <a key={link} href="#" className={linksCommonClasses + "h-10 w-full active:bg-gray-50"}>
               {link}
             </a>
           ))}
 
-          <Divider my="sm" color={"gray.1"} />
+          <Divider my="sm" color={"gray.1"} /> */}
 
           <Group position="center" grow pb="xl" px="md">
-            {session ? (
+            {status === "authenticated" ? (
               <Button onClick={() => signOut()}>Sign out</Button>
             ) : (
-              <Button onClick={() => signIn()}>Sign in</Button>
+              <Button onClick={() => signIn()} loading={status === "loading"}>
+                Sign in
+              </Button>
             )}
           </Group>
         </ScrollArea>
