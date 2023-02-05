@@ -1,7 +1,7 @@
 import { prisma } from "@db/prisma";
 import { getCurrentYearMonth, getToday } from "@lib/dates";
 
-export const getSpendingsOfUser = (userEmail: string) => {
+export const getSpendings = (userEmail: string) => {
   return prisma.spending.findMany({
     where: {
       user: {
@@ -11,7 +11,7 @@ export const getSpendingsOfUser = (userEmail: string) => {
   });
 };
 
-export const getTodaysSpendingsOfUser = (userEmail: string) => {
+export const getTodaysSpendings = (userEmail: string) => {
   return prisma.spending.findMany({
     where: {
       user: {
@@ -22,7 +22,7 @@ export const getTodaysSpendingsOfUser = (userEmail: string) => {
   });
 };
 
-export const getThisMonthsSpendingsOfUser = (userEmail: string) => {
+export const getThisMonthsSpendings = (userEmail: string) => {
   return prisma.spending.findMany({
     where: {
       user: {

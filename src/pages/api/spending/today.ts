@@ -2,10 +2,10 @@ import { NextApiResponse, NextApiRequest } from "next";
 import { Spending } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
-import { getTodaysSpendingsOfUser } from "@lib/db/spendings";
+import { getTodaysSpendings } from "@lib/db/spendings";
 
 const handleGet = async (userEmail: string, res: NextApiResponse<Spending[]>) => {
-  const spendings = await getTodaysSpendingsOfUser(userEmail);
+  const spendings = await getTodaysSpendings(userEmail);
   res.json(spendings);
 };
 
