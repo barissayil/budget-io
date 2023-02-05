@@ -4,18 +4,13 @@ import { Spending } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
 import ModifiableSpendingTable from "@components/spendings/modifiable-spending-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import { useSession } from "next-auth/react";
 import AddSpendingModal from "@components/spendings/modals/add-spending-modal";
 import DeleteSpendingModal from "@components/spendings/modals/delete-spending-modal";
 import EditSpendingModal from "@components/spendings/modals/edit-spending-modal";
 import { Loader } from "@mantine/core";
-import { getSpendingsOfUser } from "@lib/db/spendings";
-
-type Props = {
-  initialSpendings: Spending[];
-};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -30,12 +25,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: { initialSpendings: await getSpendingsOfUser(session.user.email) },
+    props: {},
   };
 };
 
-const SpendingsPage: NextPage<Props> = ({ initialSpendings }: Props) => {
-  const [spendings, setSpendings] = useState<Spending[]>(initialSpendings);
+const SpendingsPage: NextPage = () => {
+  const [spendings, setSpendings] = useState<Spending[]>([]);
+  const [spendingsView, setSpendingsView] = useState<string | null>("THIS_MONTH");
+  useEffect(() => {
+    fetch(`/api/spending/${spendingsView === "THIS_MONTH" ? "this-month" : "today"}`)
+      .then((res) => res.json())
+      .then((initialSpendings: Spending[]) => {
+        setSpendings(initialSpendings);
+      });
+  }, [spendingsView]);
 
   const [openedSpendingModal, setOpenedSpendingModal] = useState<OpenedSpendingModal>(null);
 
@@ -91,6 +94,8 @@ const SpendingsPage: NextPage<Props> = ({ initialSpendings }: Props) => {
         ) : (
           <ModifiableSpendingTable
             spendings={spendings}
+            spendingsView={spendingsView}
+            setSpendingsView={setSpendingsView}
             setOpenedSpendingModal={setOpenedSpendingModal}
             openEditSpendingModal={openEditSpendingModal}
             openDeleteSpendingModal={openDeleteSpendingModal}
