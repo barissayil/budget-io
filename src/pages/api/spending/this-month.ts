@@ -1,7 +1,7 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import { Spending } from "@prisma/client";
 import { authOptions } from "@api/auth/[...nextauth]";
-import { getThisMonthsSpendings } from "@lib/db/spendings";
+import { getThisMonthsSpendings } from "@lib/db/spending";
 import { getUserEmail } from "@lib/auth";
 
 const handle = async (req: NextApiRequest, res: NextApiResponse<Spending[]>) => {
