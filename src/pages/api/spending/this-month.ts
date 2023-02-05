@@ -1,25 +1,18 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import { Spending } from "@prisma/client";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
 import { getThisMonthsSpendings } from "@lib/db/spendings";
-
-const handleGet = async (userEmail: string, res: NextApiResponse<Spending[]>) => {
-  const spendings = await getThisMonthsSpendings(userEmail);
-  res.json(spendings);
-};
+import { getUserEmail } from "@lib/auth";
 
 const handle = async (req: NextApiRequest, res: NextApiResponse<Spending[]>) => {
-  const session = await getServerSession(req, res, authOptions);
-  if (!session) throw new Error(`Unauthorized.`);
-
-  const userEmail = session.user?.email;
-  if (!userEmail) throw new Error(`User does not exist or has no email.`);
+  const userEmail = await getUserEmail(req, res, authOptions);
 
   switch (req.method) {
-    case "GET":
-      await handleGet(userEmail, res);
+    case "GET": {
+      const spendings = await getThisMonthsSpendings(userEmail);
+      res.json(spendings);
       break;
+    }
     default:
       throw new Error(`The HTTP ${req.method} method is not supported at this route.`);
   }
