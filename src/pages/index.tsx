@@ -2,8 +2,11 @@ import type { GetServerSideProps, NextPage } from "next";
 import Layout from "@components/layout";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
-import { Alert, Loader } from "@mantine/core";
+import { Loader } from "@mantine/core";
 import { useSession } from "next-auth/react";
+import Hero from "@components/index/hero";
+import Features from "@components/index/features";
+import { useScrollIntoView } from "@mantine/hooks";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -22,6 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const Index: NextPage = () => {
   const { status } = useSession();
+  const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>();
   return (
     <>
       <Layout>
@@ -30,7 +34,10 @@ const Index: NextPage = () => {
             <Loader />
           </div>
         ) : (
-          <Alert>Please log in</Alert>
+          <>
+            <Hero scrollToFeatures={scrollIntoView} />
+            <Features containerRef={targetRef} />
+          </>
         )}
       </Layout>
     </>

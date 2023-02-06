@@ -16,7 +16,7 @@ const Layout = ({ children }: Props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="flex flex-auto flex-col bg-slate-200">{children}</main>
+      <main className="flex flex-auto flex-col bg-slate-100">{children}</main>
       <Footer />
     </>
   );
