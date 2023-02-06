@@ -10,9 +10,9 @@ import {
 } from "@mantine/core";
 import { MutableRefObject } from "react";
 import {
-  DeviceTablet as IconDeviceTablet,
-  UserCheck as IconUserCheck,
-  FreeRights as IconFreeRights,
+  DeviceTablet as TabletIcon,
+  UserCheck as UserCheckIcon,
+  FreeRights as FreeRightsIcon,
 } from "tabler-icons-react";
 
 type Props = {
@@ -25,20 +25,20 @@ const featuresData = [
     description:
       "Have a smooth and seamless experience thanks to our responsive design," +
       " whether you're using a desktop, tablet, or smartphone.",
-    icon: IconDeviceTablet,
+    icon: TabletIcon,
   },
   {
     title: "Free",
     description:
       "Enjoy a budgeting experience that's both powerful and free," +
       " our app gives you the tools you need to manage your finances without any hidden costs",
-    icon: IconFreeRights,
+    icon: FreeRightsIcon,
   },
   {
     title: "Privacy-focused",
     description:
       "Have peace of mind by keeping your financial information safe with our privacy-focused architecture.",
-    icon: IconUserCheck,
+    icon: UserCheckIcon,
   },
 ];
 

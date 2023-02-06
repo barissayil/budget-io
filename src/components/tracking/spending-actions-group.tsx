@@ -1,5 +1,5 @@
 import { Group, ActionIcon } from "@mantine/core";
-import { Edit, Trash } from "tabler-icons-react";
+import { Edit as EditIcon, Trash as TrashIcon } from "tabler-icons-react";
 
 type Props = {
   spendingId: string;
@@ -15,10 +15,10 @@ const SpendingActionsGroup = ({
   return (
     <Group spacing={4} position="right" noWrap>
       <ActionIcon color="teal" onClick={() => openEditSpendingModal(spendingId)}>
-        <Edit size={16} />
+        <EditIcon size={16} />
       </ActionIcon>
       <ActionIcon color="red" onClick={() => openDeleteSpendingModal(spendingId)}>
-        <Trash size={16} />
+        <TrashIcon size={16} />
       </ActionIcon>
     </Group>
   );

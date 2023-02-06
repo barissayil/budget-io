@@ -11,7 +11,11 @@ import {
 } from "@mantine/core";
 import { useDisclosure, useFullscreen } from "@mantine/hooks";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { ReportMoney, ArrowsMaximize, ArrowsMinimize } from "tabler-icons-react";
+import {
+  ReportMoney as ReportMoneyIcon,
+  ArrowsMaximize as MaximizeIcon,
+  ArrowsMinimize as MinimizeIcon,
+} from "tabler-icons-react";
 
 const Header = () => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
@@ -27,7 +31,7 @@ const Header = () => {
     <Box>
       <MantineHeader height={60} px="md">
         <Group position="apart" className="h-full">
-          <ReportMoney size={30} />
+          <ReportMoneyIcon size={30} />
           <Text fz="xl" fw={500}>
             Budget IO
           </Text>
@@ -46,7 +50,7 @@ const Header = () => {
 
           <Group className="hidden md:flex">
             <Button variant="default" className="px-1.5" onClick={toggle}>
-              {fullscreen ? <ArrowsMinimize /> : <ArrowsMaximize />}
+              {fullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
             </Button>
             {status === "authenticated" ? (
               <Button onClick={() => signOut()}>Sign out</Button>
