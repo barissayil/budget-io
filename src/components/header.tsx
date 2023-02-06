@@ -12,7 +12,7 @@ import {
 import { useDisclosure, useFullscreen } from "@mantine/hooks";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {
-  ReportMoney as ReportMoneyIcon,
+  PigMoney as PiggyBankIcon,
   ArrowsMaximize as MaximizeIcon,
   ArrowsMinimize as MinimizeIcon,
 } from "tabler-icons-react";
@@ -31,7 +31,7 @@ const Header = () => {
     <Box>
       <MantineHeader height={60} px="md">
         <Group position="apart" className="h-full">
-          <ReportMoneyIcon size={30} />
+          <PiggyBankIcon size={30} />
           <Text fz="xl" fw={500}>
             Budget IO
           </Text>
