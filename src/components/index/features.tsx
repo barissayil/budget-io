@@ -1,13 +1,4 @@
-import {
-  createStyles,
-  Badge,
-  Group,
-  Title,
-  Text,
-  Card,
-  SimpleGrid,
-  Container,
-} from "@mantine/core";
+import { Badge, Group, Title, Text, Card, SimpleGrid, Container } from "@mantine/core";
 import { MutableRefObject } from "react";
 import {
   DeviceTablet as TabletIcon,
@@ -31,7 +22,7 @@ const featuresData = [
     title: "Free",
     description:
       "Enjoy a budgeting experience that's both powerful and free," +
-      " our app gives you the tools you need to manage your finances without any hidden costs",
+      " our app gives you the tools you need to manage your finances without any hidden costs.",
     icon: FreeRightsIcon,
   },
   {
@@ -42,55 +33,22 @@ const featuresData = [
   },
 ];
 
-const useStyles = createStyles((theme) => ({
-  title: {
-    fontSize: 34,
-    fontWeight: 900,
-    [theme.fn.smallerThan("sm")]: {
-      fontSize: 24,
-    },
-  },
-
-  description: {
-    maxWidth: 600,
-    margin: "auto",
-
-    "&::after": {
-      content: '""',
-      display: "block",
-      backgroundColor: theme.fn.primaryColor(),
-      width: 45,
-      height: 2,
-      marginTop: theme.spacing.sm,
-      marginLeft: "auto",
-      marginRight: "auto",
-    },
-  },
-
-  card: {
-    border: `1px solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[1]
-    }`,
-  },
-
-  cardTitle: {
-    "&::after": {
-      content: '""',
-      display: "block",
-      backgroundColor: theme.fn.primaryColor(),
-      width: 45,
-      height: 2,
-      marginTop: theme.spacing.sm,
-    },
-  },
-}));
-
 const Features = ({ containerRef }: Props) => {
-  const { classes, theme } = useStyles();
   const features = featuresData.map((feature) => (
-    <Card key={feature.title} shadow="md" radius="md" className={classes.card} p="xl">
-      <feature.icon size={50} color={theme.fn.primaryColor()} />
-      <Text size="lg" weight={500} className={classes.cardTitle} mt="md">
+    <Card
+      key={feature.title}
+      shadow="md"
+      radius="md"
+      p="xl"
+      className="border border-solid border-gray-100"
+    >
+      <feature.icon size={50} color="#228BE6" />
+      <Text
+        size="lg"
+        weight={500}
+        className="after:mt-3 after:block after:h-0.5 after:w-11 after:bg-[#228BE6] after:content-['']"
+        mt="md"
+      >
         {feature.title}
       </Text>
       <Text size="sm" color="dimmed" mt="sm">
@@ -106,11 +64,16 @@ const Features = ({ containerRef }: Props) => {
         </Badge>
       </Group>
 
-      <Title order={2} className={classes.title} align="center" mt="sm">
-        Responsive, privacy-focused, and open-source budgeting app
+      <Title order={2} className="text-2xl font-black md:text-4xl" align="center" mt="sm">
+        A new kind of budgeting app just for you
       </Title>
 
-      <Text color="dimmed" className={classes.description} align="center" mt="md">
+      <Text
+        color="dimmed"
+        className="after:mx-auto after:mt-3 after:block after:h-0.5 after:w-11 after:bg-[#228BE6] after:content-['']"
+        align="center"
+        mt="md"
+      >
         Say goodbye to budgeting headaches. Our privacy-focused, responsive, and open-source app
         helps you take control of your finances.
       </Text>
