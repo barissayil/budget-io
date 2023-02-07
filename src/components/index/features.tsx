@@ -1,10 +1,11 @@
-import { Badge, Group, Title, Text, Card, SimpleGrid, Container } from "@mantine/core";
+import { Badge, Group, Title, Text, SimpleGrid, Container } from "@mantine/core";
 import { MutableRefObject } from "react";
 import {
   DeviceTablet as TabletIcon,
   UserCheck as UserCheckIcon,
   FreeRights as FreeRightsIcon,
 } from "tabler-icons-react";
+import FeatureCard from "@components/index/feature-card";
 
 type Props = {
   containerRef: MutableRefObject<HTMLDivElement>;
@@ -34,28 +35,6 @@ const featuresData = [
 ];
 
 const Features = ({ containerRef }: Props) => {
-  const features = featuresData.map((feature) => (
-    <Card
-      key={feature.title}
-      shadow="md"
-      radius="md"
-      p="xl"
-      className="border border-solid border-gray-100"
-    >
-      <feature.icon size={50} color="#228BE6" />
-      <Text
-        size="lg"
-        weight={500}
-        className="after:mt-3 after:block after:h-0.5 after:w-11 after:bg-[#228BE6] after:content-['']"
-        mt="md"
-      >
-        {feature.title}
-      </Text>
-      <Text size="sm" color="dimmed" mt="sm">
-        {feature.description}
-      </Text>
-    </Card>
-  ));
   return (
     <Container size="lg" py="xl" ref={containerRef}>
       <Group position="center">
@@ -70,7 +49,8 @@ const Features = ({ containerRef }: Props) => {
 
       <Text
         color="dimmed"
-        className="after:mx-auto after:mt-3 after:block after:h-0.5 after:w-11 after:bg-[#228BE6] after:content-['']"
+        className="after:mx-auto after:mt-3 after:block after:h-0.5 after:w-11 after:bg-[#228BE6] 
+                   after:content-['']"
         align="center"
         mt="md"
       >
@@ -79,7 +59,9 @@ const Features = ({ containerRef }: Props) => {
       </Text>
 
       <SimpleGrid cols={3} spacing="xl" mt={50} breakpoints={[{ maxWidth: "md", cols: 1 }]}>
-        {features}
+        {featuresData.map(({ title, description, icon }) => (
+          <FeatureCard key={title} title={title} description={description} Icon={icon} />
+        ))}
       </SimpleGrid>
     </Container>
   );
