@@ -60,49 +60,47 @@ const Tracking: NextPage = () => {
     setOpenedSpendingModal("DELETE");
   };
   return (
-    <>
-      <Layout>
-        {openedSpendingModal === "ADD" && (
-          <AddSpendingModal
-            setOpenedSpendingModal={setOpenedSpendingModal}
-            spendings={spendings}
-            setSpendings={setSpendings}
-          />
-        )}
-        {openedSpendingModal === "EDIT" && (
-          <EditSpendingModal
-            spendingToUpdate={getSpending(selectedSpendingId as string)}
-            setOpenedSpendingModal={setOpenedSpendingModal}
-            spendings={spendings}
-            setSpendings={setSpendings}
-            setSelectedSpendingId={setSelectedSpendingId}
-          />
-        )}
-        {openedSpendingModal === "DELETE" && (
-          <DeleteSpendingModal
-            spendingIdToDelete={selectedSpendingId as string}
-            setOpenedSpendingModal={setOpenedSpendingModal}
-            spendings={spendings}
-            setSpendings={setSpendings}
-            setSelectedSpendingId={setSelectedSpendingId}
-          />
-        )}
-        {status === "loading" ? (
-          <div className="m-10 self-center">
-            <Loader />
-          </div>
-        ) : (
-          <ModifiableSpendingTable
-            spendings={spendings}
-            spendingsView={spendingsView}
-            setSpendingsView={setSpendingsView}
-            setOpenedSpendingModal={setOpenedSpendingModal}
-            openEditSpendingModal={openEditSpendingModal}
-            openDeleteSpendingModal={openDeleteSpendingModal}
-          />
-        )}
-      </Layout>
-    </>
+    <Layout>
+      {openedSpendingModal === "ADD" && (
+        <AddSpendingModal
+          setOpenedSpendingModal={setOpenedSpendingModal}
+          spendings={spendings}
+          setSpendings={setSpendings}
+        />
+      )}
+      {openedSpendingModal === "EDIT" && (
+        <EditSpendingModal
+          spendingToUpdate={getSpending(selectedSpendingId as string)}
+          setOpenedSpendingModal={setOpenedSpendingModal}
+          spendings={spendings}
+          setSpendings={setSpendings}
+          setSelectedSpendingId={setSelectedSpendingId}
+        />
+      )}
+      {openedSpendingModal === "DELETE" && (
+        <DeleteSpendingModal
+          spendingIdToDelete={selectedSpendingId as string}
+          setOpenedSpendingModal={setOpenedSpendingModal}
+          spendings={spendings}
+          setSpendings={setSpendings}
+          setSelectedSpendingId={setSelectedSpendingId}
+        />
+      )}
+      {status === "loading" ? (
+        <div className="m-10 self-center">
+          <Loader />
+        </div>
+      ) : (
+        <ModifiableSpendingTable
+          spendings={spendings}
+          spendingsView={spendingsView}
+          setSpendingsView={setSpendingsView}
+          setOpenedSpendingModal={setOpenedSpendingModal}
+          openEditSpendingModal={openEditSpendingModal}
+          openDeleteSpendingModal={openDeleteSpendingModal}
+        />
+      )}
+    </Layout>
   );
 };
 

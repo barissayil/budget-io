@@ -27,20 +27,18 @@ const Index: NextPage = () => {
   const { status } = useSession();
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>();
   return (
-    <>
-      <Layout>
-        {status === "loading" ? (
-          <div className="m-10 self-center">
-            <Loader />
-          </div>
-        ) : (
-          <>
-            <Hero scrollToFeatures={scrollIntoView} />
-            <Features containerRef={targetRef} />
-          </>
-        )}
-      </Layout>
-    </>
+    <Layout>
+      {status === "loading" ? (
+        <div className="m-10 self-center">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <Hero scrollToFeatures={scrollIntoView} />
+          <Features containerRef={targetRef} />
+        </>
+      )}
+    </Layout>
   );
 };
 
