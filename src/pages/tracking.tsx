@@ -11,6 +11,7 @@ import AddSpendingModal from "@components/tracking/modals/add-spending-modal";
 import DeleteSpendingModal from "@components/tracking/modals/delete-spending-modal";
 import EditSpendingModal from "@components/tracking/modals/edit-spending-modal";
 import { Loader } from "@mantine/core";
+import useSWR from "swr";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -29,16 +30,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
 const Tracking: NextPage = () => {
   const [spendings, setSpendings] = useState<Spending[]>([]);
   const [spendingsView, setSpendingsView] = useState<string | null>("THIS_MONTH");
+  const { data: initialSpendings, error } = useSWR<Spending[], Error>(
+    `/api/spending/${spendingsView?.toLowerCase().replace("_", "-")}`,
+    fetcher
+  );
   useEffect(() => {
-    fetch(`/api/spending/${spendingsView?.toLowerCase().replace("_", "-")}`)
-      .then((res) => res.json())
-      .then((initialSpendings: Spending[]) => {
-        setSpendings(initialSpendings);
-      });
-  }, [spendingsView]);
+    setSpendings(initialSpendings ?? []);
+  }, [initialSpendings]);
 
   const [openedSpendingModal, setOpenedSpendingModal] = useState<OpenedSpendingModal>(null);
 
@@ -86,7 +89,7 @@ const Tracking: NextPage = () => {
           setSelectedSpendingId={setSelectedSpendingId}
         />
       )}
-      {status === "loading" ? (
+      {status === "loading" || error ? (
         <div className="m-10 self-center">
           <Loader />
         </div>
