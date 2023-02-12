@@ -2,12 +2,12 @@ import { useForm } from "@mantine/form";
 import { Spending } from "@prisma/client";
 import SpendingCategory from "@modeling/spending-category";
 import { Dispatch, SetStateAction } from "react";
-import { convertDateToIsoDateString } from "@lib/dates";
 import SpendingForm from "@components/tracking/forms/spending-form";
 import SpendingFormValues from "@modeling/spending-form-values";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import SpendingFormSchema from "@modeling/spending-form-schema";
 import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";
+import dayjs from "dayjs";
 
 type Props = {
   spendingToUpdate: Spending;
@@ -37,7 +37,7 @@ const EditSpendingForm = ({
 
   const editSpending = async ({ date, amount, category }: SpendingFormValues) => {
     const body = {
-      date: convertDateToIsoDateString(date),
+      date: dayjs(date).format().substring(0, 10),
       amount,
       category,
     };

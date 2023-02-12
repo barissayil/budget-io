@@ -1,5 +1,5 @@
 import { prisma } from "@db/prisma";
-import { getCurrentYear, getCurrentYearMonth, getToday } from "@lib/dates";
+import dayjs from "dayjs";
 
 type Body = {
   date: string;
@@ -18,17 +18,6 @@ export const createSpending = (userEmail: string, { date, amount, category }: Bo
   });
 };
 
-export const getTodaysSpendings = (userEmail: string) => {
-  return prisma.spending.findMany({
-    where: {
-      user: {
-        email: userEmail,
-      },
-      date: getToday(),
-    },
-  });
-};
-
 export const getThisMonthsSpendings = (userEmail: string) => {
   return prisma.spending.findMany({
     where: {
@@ -36,20 +25,7 @@ export const getThisMonthsSpendings = (userEmail: string) => {
         email: userEmail,
       },
       date: {
-        contains: getCurrentYearMonth(),
-      },
-    },
-  });
-};
-
-export const getThisYearsSpendings = (userEmail: string) => {
-  return prisma.spending.findMany({
-    where: {
-      user: {
-        email: userEmail,
-      },
-      date: {
-        contains: getCurrentYear(),
+        contains: dayjs().format().substring(0, 7),
       },
     },
   });

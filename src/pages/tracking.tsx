@@ -34,9 +34,8 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 const Tracking: NextPage = () => {
   const [spendings, setSpendings] = useState<Spending[]>([]);
-  const [spendingsView, setSpendingsView] = useState<string | null>("THIS_MONTH");
   const { data: initialSpendings, error } = useSWR<Spending[], Error>(
-    `/api/spending/${spendingsView?.toLowerCase().replace("_", "-")}`,
+    `/api/spending/this-month`,
     fetcher
   );
   useEffect(() => {
@@ -96,8 +95,6 @@ const Tracking: NextPage = () => {
       ) : (
         <ModifiableSpendingTable
           spendings={spendings}
-          spendingsView={spendingsView}
-          setSpendingsView={setSpendingsView}
           setOpenedSpendingModal={setOpenedSpendingModal}
           openEditSpendingModal={openEditSpendingModal}
           openDeleteSpendingModal={openDeleteSpendingModal}
