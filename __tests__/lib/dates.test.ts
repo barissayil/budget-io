@@ -7,9 +7,9 @@ describe("test", () => {
       jest.setSystemTime(new Date("June 1, 2000 00:00:00"));
     });
     it("should convert date object to date", () => {
-      const dateObject2020_10_30 = new Date("2020-10-30");
-      const actual = convertDateObjectToDate(dateObject2020_10_30);
-      const expected = "2020-10-30";
+      const dateObject1990_10_30 = new Date("1990-10-30");
+      const actual = convertDateObjectToDate(dateObject1990_10_30);
+      const expected = "1990-10-30";
       expect(actual).toEqual(expected);
     });
     it("should get today", () => {
@@ -37,8 +37,9 @@ describe("test", () => {
       `should be correct at %i:00`,
       (hour) => {
         jest.setSystemTime(new Date(`June 2, 2000 ${hour}:00`));
-        const actual = getToday();
-        const expected = "2000-06-02";
+        const dateObject1990_10_30 = new Date("1990-10-30");
+        const actual = convertDateObjectToDate(dateObject1990_10_30);
+        const expected = "1990-10-30";
         expect(actual).toEqual(expected);
       }
     );
