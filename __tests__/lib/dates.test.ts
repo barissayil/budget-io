@@ -7,9 +7,9 @@ describe("test", () => {
       jest.setSystemTime(new Date("June 1, 2000 00:00:00"));
     });
     it("should convert date object to date", () => {
-      const dateObject1990_10_30 = new Date("1990-10-30");
-      const actual = convertDateObjectToDate(dateObject1990_10_30);
-      const expected = "1990-10-30";
+      const pastDateObject = new Date("December 17, 1995 03:24:00");
+      const actual = convertDateObjectToDate(pastDateObject);
+      const expected = "1995-12-17";
       expect(actual).toEqual(expected);
     });
     it("should get today", () => {
@@ -34,12 +34,12 @@ describe("test", () => {
       jest.useFakeTimers();
     });
     it.each([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23])(
-      `should be correct at %i:00`,
+      `should convert date object to date at %i:00`,
       (hour) => {
         jest.setSystemTime(new Date(`June 2, 2000 ${hour}:00`));
-        const dateObject1990_10_30 = new Date("1990-10-30");
-        const actual = convertDateObjectToDate(dateObject1990_10_30);
-        const expected = "1990-10-30";
+        const pastDateObject = new Date("December 17, 1995 03:24:00");
+        const actual = convertDateObjectToDate(pastDateObject);
+        const expected = "1995-12-17";
         expect(actual).toEqual(expected);
       }
     );
