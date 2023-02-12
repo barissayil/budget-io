@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 
-export const convertDateObjectToDate = (dateObject: Date): string => {
-  return dayjs(dateObject).format().substring(0, 10);
+export const convertDateToIsoDateString = (date: Date): string => {
+  return dayjs(date).format().substring(0, 10);
 };
 
 export const getToday = (): string => {

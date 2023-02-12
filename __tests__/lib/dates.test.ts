@@ -1,4 +1,9 @@
-import { convertDateObjectToDate, getCurrentYear, getCurrentYearMonth, getToday } from "@lib/dates";
+import {
+  convertDateToIsoDateString,
+  getCurrentYear,
+  getCurrentYearMonth,
+  getToday,
+} from "@lib/dates";
 
 describe("test", () => {
   describe("all exports", () => {
@@ -6,9 +11,9 @@ describe("test", () => {
       jest.useFakeTimers();
       jest.setSystemTime(new Date("June 1, 2000 00:00:00"));
     });
-    it("should convert date object to date", () => {
+    it("should convert date iso date string", () => {
       const pastDateObject = new Date("December 17, 1995 03:24:00");
-      const actual = convertDateObjectToDate(pastDateObject);
+      const actual = convertDateToIsoDateString(pastDateObject);
       const expected = "1995-12-17";
       expect(actual).toEqual(expected);
     });
@@ -34,11 +39,11 @@ describe("test", () => {
       jest.useFakeTimers();
     });
     it.each([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23])(
-      `should convert date object to date at %i:00`,
+      `should convert date to iso date string at %i:00`,
       (hour) => {
         jest.setSystemTime(new Date(`June 2, 2000 ${hour}:00`));
         const pastDateObject = new Date("December 17, 1995 03:24:00");
-        const actual = convertDateObjectToDate(pastDateObject);
+        const actual = convertDateToIsoDateString(pastDateObject);
         const expected = "1995-12-17";
         expect(actual).toEqual(expected);
       }

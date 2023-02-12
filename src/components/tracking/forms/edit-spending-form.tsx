@@ -2,7 +2,7 @@ import { useForm } from "@mantine/form";
 import { Spending } from "@prisma/client";
 import SpendingCategory from "@modeling/spending-category";
 import { Dispatch, SetStateAction } from "react";
-import { convertDateObjectToDate } from "@lib/dates";
+import { convertDateToIsoDateString } from "@lib/dates";
 import SpendingForm from "@components/tracking/forms/spending-form";
 import SpendingFormValues from "@modeling/spending-form-values";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
@@ -28,16 +28,16 @@ const EditSpendingForm = ({
 }: Props) => {
   const form = useForm<SpendingFormValues>({
     initialValues: {
-      dateObject: new Date(spendingToUpdate.date),
+      date: new Date(spendingToUpdate.date),
       amount: spendingToUpdate.amount,
       category: spendingToUpdate.category as SpendingCategory,
     },
     validate: SpendingFormSchema,
   });
 
-  const editSpending = async ({ dateObject, amount, category }: SpendingFormValues) => {
+  const editSpending = async ({ date, amount, category }: SpendingFormValues) => {
     const body = {
-      date: convertDateObjectToDate(dateObject),
+      date: convertDateToIsoDateString(date),
       amount,
       category,
     };
@@ -54,18 +54,18 @@ const EditSpendingForm = ({
     ]);
   };
 
-  const handleSubmit = async ({ dateObject, amount, category }: SpendingFormValues) => {
+  const handleSubmit = async ({ date, amount, category }: SpendingFormValues) => {
     setModalIsOpened(false);
     setSelectedSpendingId(null);
     setOpenedSpendingModal(null);
     showLoadingNotification(
-      `edit-spending-${dateObject}-${amount}-${category}`,
+      `edit-spending-${date}-${amount}-${category}`,
       "Editing",
       "The spending is being edited."
     );
-    await editSpending({ dateObject, amount, category });
+    await editSpending({ date, amount, category });
     updateToSuccessNotification(
-      `edit-spending-${dateObject}-${amount}-${category}`,
+      `edit-spending-${date}-${amount}-${category}`,
       "Edited",
       "The spending is edited."
     );
