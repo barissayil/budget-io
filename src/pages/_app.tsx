@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import { SessionProvider } from "next-auth/react";
+import { SWRConfig } from "swr/_internal";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,7 +19,14 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <NotificationsProvider>
         <SessionProvider session={pageProps.session}>
-          <Component {...pageProps} />
+          <SWRConfig
+            value={{
+              refreshInterval: 3000,
+              fetcher: (url: URL, init?: RequestInit) => fetch(url, init).then((res) => res.json()),
+            }}
+          >
+            <Component {...pageProps} />
+          </SWRConfig>
         </SessionProvider>
       </NotificationsProvider>
     </MantineProvider>

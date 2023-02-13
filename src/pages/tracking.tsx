@@ -31,14 +31,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
-
 const Tracking: NextPage = () => {
   const [spendings, setSpendings] = useState<Spending[]>([]);
   const [monthIndex, setMonthIndex] = useState<number>(0);
   const { data: initialSpendings, error } = useSWR<Spending[], Error>(
-    `/api/spending/month/${monthIndex}`,
-    fetcher
+    `/api/spending/month/${monthIndex}`
   );
   useEffect(() => {
     setSpendings(initialSpendings ?? []);
