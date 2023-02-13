@@ -1,5 +1,5 @@
 import { showNotification, updateNotification } from "@mantine/notifications";
-import { Check as IconCheck } from "tabler-icons-react";
+import { Check as CheckIcon } from "tabler-icons-react";
 
 export const showLoadingNotification = (id: string, title: string, message: string) => {
   showNotification({
@@ -18,7 +18,7 @@ export const updateToSuccessNotification = (id: string, title: string, message: 
     color: "teal",
     title,
     message,
-    icon: <IconCheck size={16} />,
+    icon: <CheckIcon size={16} />,
     autoClose: 4000,
   });
 };
