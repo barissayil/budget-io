@@ -66,7 +66,7 @@ const Tracking: NextPage = () => {
         <AddSpendingModal
           setOpenedSpendingModal={setOpenedSpendingModal}
           spendings={spendings}
-          setSpendings={setSpendings}
+          monthIndex={monthIndex}
         />
       )}
       {openedSpendingModal === "EDIT" && (
@@ -74,7 +74,7 @@ const Tracking: NextPage = () => {
           spendingToUpdate={getSpending(selectedSpendingId as string)}
           setOpenedSpendingModal={setOpenedSpendingModal}
           spendings={spendings}
-          setSpendings={setSpendings}
+          monthIndex={monthIndex}
           setSelectedSpendingId={setSelectedSpendingId}
         />
       )}
@@ -83,7 +83,7 @@ const Tracking: NextPage = () => {
           spendingIdToDelete={selectedSpendingId as string}
           setOpenedSpendingModal={setOpenedSpendingModal}
           spendings={spendings}
-          setSpendings={setSpendings}
+          monthIndex={monthIndex}
           setSelectedSpendingId={setSelectedSpendingId}
         />
       )}

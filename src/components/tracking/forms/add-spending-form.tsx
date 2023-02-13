@@ -7,17 +7,19 @@ import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import SpendingFormSchema from "@modeling/spending-form-schema";
 import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";
 import dayjs from "dayjs";
+import { getTempUUID } from "@lib/uuid";
+import { useSWRConfig } from "swr";
 
 type Props = {
   spendings: Spending[];
-  setSpendings: Dispatch<SetStateAction<Spending[]>>;
+  monthIndex: number;
   setModalIsOpened: Dispatch<SetStateAction<boolean>>;
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
 };
 
 const AddSpendingForm = ({
   spendings,
-  setSpendings,
+  monthIndex,
   setModalIsOpened,
   setOpenedSpendingModal,
 }: Props) => {
@@ -28,7 +30,13 @@ const AddSpendingForm = ({
     validate: SpendingFormSchema,
   });
 
-  const addSpending = async ({ date, amount, category }: SpendingFormValues) => {
+  const { mutate } = useSWRConfig();
+
+  const addSpending = async ({
+    date,
+    amount,
+    category,
+  }: SpendingFormValues): Promise<Spending[]> => {
     const body = {
       date: dayjs(date).format().substring(0, 10),
       amount,
@@ -41,7 +49,7 @@ const AddSpendingForm = ({
         body: JSON.stringify(body),
       })
     ).json();
-    setSpendings([...spendings, spending]);
+    return [...spendings, spending];
   };
 
   const handleSubmit = async ({ date, amount, category }: SpendingFormValues) => {
@@ -52,7 +60,19 @@ const AddSpendingForm = ({
       "Adding",
       "The spending is being added."
     );
-    await addSpending({ date, amount, category });
+    await mutate(`/api/spending/month/${monthIndex}`, addSpending({ date, amount, category }), {
+      optimisticData: [
+        ...spendings,
+        {
+          id: getTempUUID(),
+          date: dayjs(date).format().substring(0, 10),
+          amount,
+          category,
+          userId: getTempUUID(),
+          userEmail: getTempUUID(),
+        },
+      ],
+    });
     updateToSuccessNotification(
       `add-spending-${date}-${amount}-${category}`,
       "Added",

@@ -8,11 +8,13 @@ import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import SpendingFormSchema from "@modeling/spending-form-schema";
 import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";
 import dayjs from "dayjs";
+import { useSWRConfig } from "swr";
+import { getTempUUID } from "@lib/uuid";
 
 type Props = {
   spendingToUpdate: Spending;
   spendings: Spending[];
-  setSpendings: Dispatch<SetStateAction<Spending[]>>;
+  monthIndex: number;
   setModalIsOpened: Dispatch<SetStateAction<boolean>>;
   setSelectedSpendingId: Dispatch<SetStateAction<string | null>>;
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
@@ -21,7 +23,7 @@ type Props = {
 const EditSpendingForm = ({
   spendingToUpdate,
   spendings,
-  setSpendings,
+  monthIndex,
   setModalIsOpened,
   setSelectedSpendingId,
   setOpenedSpendingModal,
@@ -35,7 +37,13 @@ const EditSpendingForm = ({
     validate: SpendingFormSchema,
   });
 
-  const editSpending = async ({ date, amount, category }: SpendingFormValues) => {
+  const { mutate } = useSWRConfig();
+
+  const editSpending = async ({
+    date,
+    amount,
+    category,
+  }: SpendingFormValues): Promise<Spending[]> => {
     const body = {
       date: dayjs(date).format().substring(0, 10),
       amount,
@@ -48,10 +56,10 @@ const EditSpendingForm = ({
         body: JSON.stringify(body),
       })
     ).json();
-    setSpendings([
+    return [
       ...spendings.filter((spending) => spending.id !== spendingToUpdate.id),
       updatedSpending,
-    ]);
+    ];
   };
 
   const handleSubmit = async ({ date, amount, category }: SpendingFormValues) => {
@@ -63,7 +71,19 @@ const EditSpendingForm = ({
       "Editing",
       "The spending is being edited."
     );
-    await editSpending({ date, amount, category });
+    await mutate(`/api/spending/month/${monthIndex}`, editSpending({ date, amount, category }), {
+      optimisticData: [
+        ...spendings.filter((spending) => spending.id !== spendingToUpdate.id),
+        {
+          id: getTempUUID(),
+          date: dayjs(date).format().substring(0, 10),
+          amount,
+          category,
+          userId: getTempUUID(),
+          userEmail: getTempUUID(),
+        },
+      ],
+    });
     updateToSuccessNotification(
       `edit-spending-${date}-${amount}-${category}`,
       "Edited",

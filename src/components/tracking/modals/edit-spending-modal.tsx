@@ -8,7 +8,7 @@ type Props = {
   spendingToUpdate: Spending;
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
   spendings: Spending[];
-  setSpendings: Dispatch<SetStateAction<Spending[]>>;
+  monthIndex: number;
   setSelectedSpendingId: Dispatch<SetStateAction<string | null>>;
 };
 
@@ -16,7 +16,7 @@ const EditSpendingModal = ({
   spendingToUpdate,
   setOpenedSpendingModal,
   spendings,
-  setSpendings,
+  monthIndex,
   setSelectedSpendingId,
 }: Props) => {
   const [isOpened, setIsOpened] = useState<boolean>(true);
@@ -30,7 +30,7 @@ const EditSpendingModal = ({
       <EditSpendingForm
         spendingToUpdate={spendingToUpdate}
         spendings={spendings}
-        setSpendings={setSpendings}
+        monthIndex={monthIndex}
         setModalIsOpened={setIsOpened}
         setSelectedSpendingId={setSelectedSpendingId}
         setOpenedSpendingModal={setOpenedSpendingModal}

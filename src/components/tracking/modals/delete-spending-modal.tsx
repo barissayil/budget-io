@@ -3,12 +3,13 @@ import { Spending } from "@prisma/client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";
+import { useSWRConfig } from "swr";
 
 type Props = {
   spendingIdToDelete: string;
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
   spendings: Spending[];
-  setSpendings: Dispatch<SetStateAction<Spending[]>>;
+  monthIndex: number;
   setSelectedSpendingId: Dispatch<SetStateAction<string | null>>;
 };
 
@@ -16,18 +17,20 @@ const DeleteSpendingModal = ({
   spendingIdToDelete,
   setOpenedSpendingModal,
   spendings,
-  setSpendings,
+  monthIndex,
   setSelectedSpendingId,
 }: Props) => {
   const [isOpened, setIsOpened] = useState<boolean>(true);
 
-  const deleteSpending = async (): Promise<void> => {
+  const { mutate } = useSWRConfig();
+
+  const deleteSpending = async (): Promise<Spending[]> => {
     const deletedSpending = await (
       await fetch(`/api/spending/${spendingIdToDelete}`, {
         method: "DELETE",
       })
     ).json();
-    setSpendings(spendings.filter((spending) => spending.id !== deletedSpending.id));
+    return spendings.filter((spending) => spending.id !== deletedSpending.id);
   };
 
   const handleSubmit = async () => {
@@ -39,7 +42,10 @@ const DeleteSpendingModal = ({
       "Deleting",
       "The spending is being deleted."
     );
-    await deleteSpending();
+    await mutate(`/api/spending/month/${monthIndex}`, deleteSpending(), {
+      optimisticData: [...spendings.filter((spending) => spending.id !== spendingIdToDelete)],
+      revalidate: false,
+    });
     updateToSuccessNotification(
       `delete-spending-${spendingIdToDelete}`,
       "Deleted",

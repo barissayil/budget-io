@@ -1,16 +1,16 @@
 import { Modal } from "@mantine/core";
 import { Spending } from "@prisma/client";
-import { Dispatch, SetStateAction, useState } from "react";
+import { SetStateAction, useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import AddSpendingForm from "@components/tracking/forms/add-spending-form";
 
 type Props = {
   spendings: Spending[];
-  setSpendings: Dispatch<SetStateAction<Spending[]>>;
+  monthIndex: number;
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
 };
 
-const EditSpendingModal = ({ setOpenedSpendingModal, spendings, setSpendings }: Props) => {
+const EditSpendingModal = ({ setOpenedSpendingModal, spendings, monthIndex }: Props) => {
   const [isOpened, setIsOpened] = useState<boolean>(true);
   return (
     <Modal
@@ -21,7 +21,7 @@ const EditSpendingModal = ({ setOpenedSpendingModal, spendings, setSpendings }: 
     >
       <AddSpendingForm
         spendings={spendings}
-        setSpendings={setSpendings}
+        monthIndex={monthIndex}
         setModalIsOpened={setIsOpened}
         setOpenedSpendingModal={setOpenedSpendingModal}
       />
