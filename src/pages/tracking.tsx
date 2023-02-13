@@ -10,8 +10,9 @@ import { useSession } from "next-auth/react";
 import AddSpendingModal from "@components/tracking/modals/add-spending-modal";
 import DeleteSpendingModal from "@components/tracking/modals/delete-spending-modal";
 import EditSpendingModal from "@components/tracking/modals/edit-spending-modal";
-import { Loader } from "@mantine/core";
+import { Alert, Loader } from "@mantine/core";
 import useSWR from "swr";
+import { AlertCircle as AlertCircleIcon } from "tabler-icons-react";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -89,11 +90,17 @@ const Tracking: NextPage = () => {
           setSelectedSpendingId={setSelectedSpendingId}
         />
       )}
-      {status === "loading" || error ? (
+      {status === "loading" && !error && (
         <div className="m-10 self-center">
           <Loader />
         </div>
-      ) : (
+      )}
+      {error && (
+        <Alert icon={<AlertCircleIcon size={16} />} title={error.name} color="red">
+          {error.message}
+        </Alert>
+      )}
+      {status === "authenticated" && !error && (
         <ModifiableSpendingTable
           spendings={spendings}
           monthIndex={monthIndex}
