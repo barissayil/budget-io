@@ -24,7 +24,7 @@ const DeleteSpendingModal = ({
 
   const { mutate } = useSWRConfig();
 
-  const deleteSpending = async (): Promise<Spending[]> => {
+  const handleRequest = async (): Promise<Spending[]> => {
     const deletedSpending = await (
       await fetch(`/api/spending/${spendingIdToDelete}`, {
         method: "DELETE",
@@ -42,7 +42,7 @@ const DeleteSpendingModal = ({
       "Deleting",
       "The spending is being deleted."
     );
-    await mutate(`/api/spending/month/${monthIndex}`, deleteSpending(), {
+    await mutate(`/api/spending/month/${monthIndex}`, handleRequest(), {
       optimisticData: [...spendings.filter((spending) => spending.id !== spendingIdToDelete)],
       revalidate: false,
     });

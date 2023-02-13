@@ -39,7 +39,7 @@ const EditSpendingForm = ({
 
   const { mutate } = useSWRConfig();
 
-  const editSpending = async ({
+  const handleRequest = async ({
     date,
     amount,
     category,
@@ -71,7 +71,7 @@ const EditSpendingForm = ({
       "Editing",
       "The spending is being edited."
     );
-    await mutate(`/api/spending/month/${monthIndex}`, editSpending({ date, amount, category }), {
+    await mutate(`/api/spending/month/${monthIndex}`, handleRequest({ date, amount, category }), {
       optimisticData: [
         ...spendings.filter((spending) => spending.id !== spendingToUpdate.id),
         {

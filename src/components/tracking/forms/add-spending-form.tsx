@@ -32,7 +32,7 @@ const AddSpendingForm = ({
 
   const { mutate } = useSWRConfig();
 
-  const addSpending = async ({
+  const handleRequest = async ({
     date,
     amount,
     category,
@@ -60,7 +60,7 @@ const AddSpendingForm = ({
       "Adding",
       "The spending is being added."
     );
-    await mutate(`/api/spending/month/${monthIndex}`, addSpending({ date, amount, category }), {
+    await mutate(`/api/spending/month/${monthIndex}`, handleRequest({ date, amount, category }), {
       optimisticData: [
         ...spendings,
         {
