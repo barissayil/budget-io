@@ -18,14 +18,14 @@ export const createSpending = (userEmail: string, { date, amount, category }: Bo
   });
 };
 
-export const getThisMonthsSpendings = (userEmail: string) => {
+export const getSpendingsOfMonth = (userEmail: string, monthIndex: number) => {
   return prisma.spending.findMany({
     where: {
       user: {
         email: userEmail,
       },
       date: {
-        contains: dayjs().format().substring(0, 7),
+        contains: dayjs().subtract(monthIndex, "months").format().substring(0, 7),
       },
     },
   });
