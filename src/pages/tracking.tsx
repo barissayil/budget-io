@@ -4,7 +4,7 @@ import { Spending } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
 import ModifiableSpendingTable from "@components/tracking/modifiable-spending-table";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import { useSession } from "next-auth/react";
 import AddSpendingModal from "@components/tracking/modals/add-spending-modal";
@@ -32,14 +32,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const Tracking: NextPage = () => {
-  const [spendings, setSpendings] = useState<Spending[]>([]);
   const [monthIndex, setMonthIndex] = useState<number>(0);
-  const { data: initialSpendings, error } = useSWR<Spending[], Error>(
-    `/api/spending/month/${monthIndex}`
-  );
-  useEffect(() => {
-    setSpendings(initialSpendings ?? []);
-  }, [initialSpendings]);
+
+  const { data: spendings, error } = useSWR<Spending[], Error>(`/api/spending/month/${monthIndex}`);
 
   const [openedSpendingModal, setOpenedSpendingModal] = useState<OpenedSpendingModal>(null);
 
@@ -48,7 +43,7 @@ const Tracking: NextPage = () => {
   const { status } = useSession();
 
   const getSpending = (id: string): Spending => {
-    return spendings.find((spending) => spending.id === id) as Spending;
+    return (spendings as Spending[]).find((spending) => spending.id === id) as Spending;
   };
 
   const openEditSpendingModal = (id: string) => {
@@ -65,7 +60,7 @@ const Tracking: NextPage = () => {
       {openedSpendingModal === "ADD" && (
         <AddSpendingModal
           setOpenedSpendingModal={setOpenedSpendingModal}
-          spendings={spendings}
+          spendings={spendings as Spending[]}
           monthIndex={monthIndex}
         />
       )}
@@ -73,7 +68,7 @@ const Tracking: NextPage = () => {
         <EditSpendingModal
           spendingToUpdate={getSpending(selectedSpendingId as string)}
           setOpenedSpendingModal={setOpenedSpendingModal}
-          spendings={spendings}
+          spendings={spendings as Spending[]}
           monthIndex={monthIndex}
           setSelectedSpendingId={setSelectedSpendingId}
         />
@@ -82,7 +77,7 @@ const Tracking: NextPage = () => {
         <DeleteSpendingModal
           spendingIdToDelete={selectedSpendingId as string}
           setOpenedSpendingModal={setOpenedSpendingModal}
-          spendings={spendings}
+          spendings={spendings as Spending[]}
           monthIndex={monthIndex}
           setSelectedSpendingId={setSelectedSpendingId}
         />

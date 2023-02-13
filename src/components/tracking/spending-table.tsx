@@ -6,7 +6,7 @@ import { useState } from "react";
 import { sortBy } from "lodash";
 
 type Props = {
-  spendings: Spending[];
+  spendings: Spending[] | undefined;
   selectedCategory: string | null;
   openEditSpendingModal: (id: string) => void;
   openDeleteSpendingModal: (id: string) => void;
@@ -22,7 +22,7 @@ const SpendingTable = ({
     columnAccessor: "date",
     direction: "asc",
   });
-  const filteredSpendings = spendings.filter(
+  const filteredSpendings = spendings?.filter(
     (spending) => !selectedCategory || spending.category === selectedCategory
   );
   const sortedFilteredSpendings = sortBy(filteredSpendings, [sortStatus.columnAccessor, "id"]);
@@ -38,6 +38,7 @@ const SpendingTable = ({
       records={records}
       sortStatus={sortStatus}
       onSortStatusChange={setSortStatus}
+      fetching={spendings === undefined}
       columns={[
         { accessor: "date", sortable: true },
         { accessor: "amount", sortable: true },

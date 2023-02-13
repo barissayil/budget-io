@@ -7,7 +7,7 @@ import SpendingCategory from "@modeling/spending-category";
 import { ArrowRight as ArrowRightIcon, ArrowLeft as ArrowLeftIcon } from "tabler-icons-react";
 
 type Props = {
-  spendings: Spending[];
+  spendings: Spending[] | undefined;
   monthIndex: number;
   setMonthIndex: Dispatch<SetStateAction<number>>;
   setOpenedSpendingModal: Dispatch<SetStateAction<OpenedSpendingModal>>;
@@ -53,7 +53,11 @@ const ModifiableSpendingTable = ({
           <ActionIcon color="cyan" size="xl" onClick={() => setMonthIndex(monthIndex + 1)}>
             <ArrowLeftIcon size={80} strokeWidth={2} />
           </ActionIcon>
-          <Button onClick={() => setOpenedSpendingModal("ADD")} color="cyan">
+          <Button
+            onClick={() => setOpenedSpendingModal("ADD")}
+            color="cyan"
+            loading={spendings === undefined}
+          >
             Add spending
           </Button>
           <ActionIcon
