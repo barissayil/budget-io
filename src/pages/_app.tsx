@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <SessionProvider session={pageProps.session}>
           <SWRConfig
             value={{
-              refreshInterval: 3000,
+              // refreshInterval: 3000,
               fetcher: (url: URL, init?: RequestInit) => fetch(url, init).then((res) => res.json()),
             }}
           >
