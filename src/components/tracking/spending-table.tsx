@@ -46,7 +46,7 @@ const SpendingTable = ({
       columns={[
         { accessor: "date", sortable: true },
         { accessor: "amount", sortable: true },
-        { accessor: "category", sortable: true },
+        { accessor: "category" },
         {
           accessor: "actions",
           title: <Text mr="xs"></Text>,
