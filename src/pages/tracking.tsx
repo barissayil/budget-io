@@ -94,7 +94,6 @@ const Tracking: NextPage = () => {
       )}
       {status === "authenticated" && !error && (
         <ModifiableSpendingTable
-          spendings={spendings}
           monthIndex={monthIndex}
           setMonthIndex={setMonthIndex}
           setOpenedSpendingModal={setOpenedSpendingModal}

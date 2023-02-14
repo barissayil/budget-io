@@ -4,16 +4,17 @@ import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import SpendingActionsGroup from "@components/tracking/spending-actions-group";
 import { useState } from "react";
 import { sortBy } from "lodash";
+import useSWR from "swr";
 
 type Props = {
-  spendings: Spending[] | undefined;
+  monthIndex: number;
   selectedCategory: string | null;
   openEditSpendingModal: (id: string) => void;
   openDeleteSpendingModal: (id: string) => void;
 };
 
 const SpendingTable = ({
-  spendings,
+  monthIndex,
   selectedCategory,
   openEditSpendingModal,
   openDeleteSpendingModal,
@@ -22,6 +23,9 @@ const SpendingTable = ({
     columnAccessor: "date",
     direction: "asc",
   });
+
+  const { data: spendings } = useSWR<Spending[], Error>(`/api/spending/month/${monthIndex}`);
+
   const filteredSpendings = spendings?.filter(
     (spending) => !selectedCategory || spending.category === selectedCategory
   );

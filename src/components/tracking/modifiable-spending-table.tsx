@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Spending } from "@prisma/client";
 import SpendingTable from "@components/tracking/spending-table";
 import { ActionIcon, Button, Group, Loader, Select } from "@mantine/core";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
@@ -7,7 +6,6 @@ import { ArrowRight as ArrowRightIcon, ArrowLeft as ArrowLeftIcon } from "tabler
 import useSWR from "swr";
 
 type Props = {
-  spendings: Spending[] | undefined;
   monthIndex: number;
   setMonthIndex: Dispatch<SetStateAction<number>>;
   setOpenedSpendingModal: Dispatch<SetStateAction<OpenedSpendingModal>>;
@@ -16,7 +14,6 @@ type Props = {
 };
 
 const ModifiableSpendingTable = ({
-  spendings,
   monthIndex,
   setMonthIndex,
   setOpenedSpendingModal,
@@ -48,7 +45,7 @@ const ModifiableSpendingTable = ({
         </div>
         <div>
           <SpendingTable
-            spendings={spendings}
+            monthIndex={monthIndex}
             selectedCategory={selectedCategory}
             openEditSpendingModal={openEditSpendingModal}
             openDeleteSpendingModal={openDeleteSpendingModal}
@@ -58,11 +55,7 @@ const ModifiableSpendingTable = ({
           <ActionIcon color="cyan" size="xl" onClick={() => setMonthIndex(monthIndex + 1)}>
             <ArrowLeftIcon size={80} strokeWidth={2} />
           </ActionIcon>
-          <Button
-            onClick={() => setOpenedSpendingModal("ADD")}
-            color="cyan"
-            loading={spendings === undefined}
-          >
+          <Button onClick={() => setOpenedSpendingModal("ADD")} color="cyan">
             Add spending
           </Button>
           <ActionIcon
