@@ -53,3 +53,15 @@ export const deleteSpending = (id: string, userEmail: string) => {
     },
   });
 };
+
+export const getSpendingCategories = async (userEmail: string) => {
+  const spendingsWithDistinctCategories = await prisma.spending.findMany({
+    where: {
+      user: {
+        email: userEmail,
+      },
+    },
+    distinct: "category",
+  });
+  return spendingsWithDistinctCategories.map((spending) => spending.category);
+};

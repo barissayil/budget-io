@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Spending } from "@prisma/client";
 import SpendingTable from "@components/tracking/spending-table";
-import { ActionIcon, Button, Group, Select } from "@mantine/core";
+import { ActionIcon, Button, Group, Loader, Select } from "@mantine/core";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
-import SpendingCategory from "@modeling/spending-category";
 import { ArrowRight as ArrowRightIcon, ArrowLeft as ArrowLeftIcon } from "tabler-icons-react";
+import useSWR from "swr";
 
 type Props = {
   spendings: Spending[] | undefined;
@@ -25,21 +25,26 @@ const ModifiableSpendingTable = ({
 }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
+  const { data: categories } = useSWR<string[], Error>(`/api/spending/categories`);
+
   return (
     <>
       <div className="flex flex-auto flex-col items-center justify-between gap-2 p-2">
         <div className="flex">
-          <Select
-            value={selectedCategory}
-            onChange={setSelectedCategory}
-            data={Object.entries(SpendingCategory).map(([label, value]) => ({
-              label,
-              value,
-            }))}
-            clearable
-            mx={1}
-            placeholder="Filter by category"
-          />
+          {categories ? (
+            <Select
+              value={selectedCategory}
+              onChange={setSelectedCategory}
+              data={categories}
+              clearable
+              searchable
+              mx={1}
+              placeholder="Filter by category"
+              maxDropdownHeight={280}
+            />
+          ) : (
+            <Loader />
+          )}
         </div>
         <div>
           <SpendingTable

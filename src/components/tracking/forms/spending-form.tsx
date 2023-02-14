@@ -1,10 +1,10 @@
-import { Button, Group, NumberInput, Select } from "@mantine/core";
+import { Button, Group, Loader, NumberInput, Select } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { UseFormReturnType } from "@mantine/form";
-import SpendingCategory from "@modeling/spending-category";
 import SpendingFormValues from "@modeling/spending-form-values";
-import { SetStateAction } from "react";
+import { SetStateAction, useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
+import useSWR from "swr";
 
 type Props = {
   handleSubmit: ({ date, amount, category }: SpendingFormValues) => Promise<void>;
@@ -14,6 +14,9 @@ type Props = {
 };
 
 const SpendingForm = ({ handleSubmit, form, formType, setOpenedSpendingModal }: Props) => {
+  const { data: initialCategories } = useSWR<string[], Error>(`/api/spending/categories`);
+  const [categories, setCategories] = useState(initialCategories);
+
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <DatePicker
@@ -23,14 +26,24 @@ const SpendingForm = ({ handleSubmit, form, formType, setOpenedSpendingModal }: 
         data-autofocus
       />
       <NumberInput placeholder="Amount" {...form.getInputProps("amount")} className="mb-3" />
-      <Select
-        placeholder="Category"
-        data={Object.entries(SpendingCategory).map(([label, value]) => ({
-          label,
-          value,
-        }))}
-        {...form.getInputProps("category")}
-      />
+      {categories ? (
+        <Select
+          placeholder="Category"
+          data={categories}
+          {...form.getInputProps("category")}
+          maxDropdownHeight={280}
+          searchable
+          clearable
+          creatable
+          getCreateLabel={(query) => `+ ${query}`}
+          onCreate={(query) => {
+            setCategories([...categories, query]);
+            return query;
+          }}
+        />
+      ) : (
+        <Loader />
+      )}
       <Group position="right" mt="md">
         <Button type="button" variant="default" onClick={() => setOpenedSpendingModal(null)}>
           Cancel

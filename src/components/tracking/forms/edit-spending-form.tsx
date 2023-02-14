@@ -1,6 +1,5 @@
 import { useForm } from "@mantine/form";
 import { Spending } from "@prisma/client";
-import SpendingCategory from "@modeling/spending-category";
 import { Dispatch, SetStateAction } from "react";
 import SpendingForm from "@components/tracking/forms/spending-form";
 import SpendingFormValues from "@modeling/spending-form-values";
@@ -32,7 +31,7 @@ const EditSpendingForm = ({
     initialValues: {
       date: new Date(spendingToUpdate.date),
       amount: spendingToUpdate.amount,
-      category: spendingToUpdate.category as SpendingCategory,
+      category: spendingToUpdate.category,
     },
     validate: SpendingFormSchema,
   });
