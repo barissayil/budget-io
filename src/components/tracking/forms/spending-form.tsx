@@ -4,9 +4,9 @@ import { UseFormReturnType } from "@mantine/form";
 import SpendingFormValues from "@modeling/spending-form-values";
 import { SetStateAction } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
-import SubcategorySelect from "@components/tracking/subcategory-select";
-import CategorySelect from "@components/tracking/category-select";
-import DetailsSelect from "../details-select";
+import SubcategorySelect from "@components/tracking/selects/subcategory-select";
+import CategorySelect from "@components/tracking/selects/category-select";
+import DetailsSelect from "@components/tracking/selects/details-select";
 
 type Props = {
   handleSubmit: ({
