@@ -43,12 +43,22 @@ const ModifiableSpendingTable = ({
             <Loader />
           )}
         </div>
-        <div>
+        <div className="hidden md:flex">
           <SpendingTable
             monthIndex={monthIndex}
             selectedCategory={selectedCategory}
             openEditSpendingModal={openEditSpendingModal}
             openDeleteSpendingModal={openDeleteSpendingModal}
+            mobileView={false}
+          />
+        </div>
+        <div className="flex md:hidden">
+          <SpendingTable
+            monthIndex={monthIndex}
+            selectedCategory={selectedCategory}
+            openEditSpendingModal={openEditSpendingModal}
+            openDeleteSpendingModal={openDeleteSpendingModal}
+            mobileView={true}
           />
         </div>
         <Group>

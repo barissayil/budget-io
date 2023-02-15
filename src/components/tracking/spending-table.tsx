@@ -11,6 +11,7 @@ type Props = {
   selectedCategory: string | null;
   openEditSpendingModal: (id: string) => void;
   openDeleteSpendingModal: (id: string) => void;
+  mobileView: boolean;
 };
 
 const SpendingTable = ({
@@ -18,6 +19,7 @@ const SpendingTable = ({
   selectedCategory,
   openEditSpendingModal,
   openDeleteSpendingModal,
+  mobileView,
 }: Props) => {
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
     columnAccessor: "date",
@@ -49,9 +51,9 @@ const SpendingTable = ({
         { accessor: "category" },
         {
           accessor: "subcategory",
-          visibleMediaQuery: () => `(min-width: 640px)`,
+          hidden: mobileView,
         },
-        { accessor: "details", visibleMediaQuery: () => `(min-width: 640px)` },
+        { accessor: "details", hidden: mobileView },
         {
           accessor: "actions",
           title: <Text mr="xs"></Text>,
