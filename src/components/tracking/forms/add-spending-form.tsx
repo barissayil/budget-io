@@ -36,11 +36,15 @@ const AddSpendingForm = ({
     date,
     amount,
     category,
+    subcategory,
+    details,
   }: SpendingFormValues): Promise<Spending[]> => {
     const body = {
       date: dayjs(date).format().substring(0, 10),
       amount,
       category,
+      subcategory,
+      details,
     };
     const spending: Spending = await (
       await fetch(`/api/spending`, {
@@ -52,29 +56,41 @@ const AddSpendingForm = ({
     return [...spendings, spending];
   };
 
-  const handleSubmit = async ({ date, amount, category }: SpendingFormValues) => {
+  const handleSubmit = async ({
+    date,
+    amount,
+    category,
+    subcategory,
+    details,
+  }: SpendingFormValues) => {
     setModalIsOpened(false);
     setOpenedSpendingModal(null);
     showLoadingNotification(
-      `add-spending-${date}-${amount}-${category}`,
+      `add-spending-${date}-${amount}-${category}-${subcategory}-${details}`,
       "Adding",
       "The spending is being added."
     );
-    await mutate(`/api/spending/month/${monthIndex}`, handleRequest({ date, amount, category }), {
-      optimisticData: [
-        ...spendings,
-        {
-          id: getTempUUID(),
-          date: dayjs(date).format().substring(0, 10),
-          amount,
-          category,
-          userId: getTempUUID(),
-          userEmail: getTempUUID(),
-        },
-      ],
-    });
+    await mutate(
+      `/api/spending/month/${monthIndex}`,
+      handleRequest({ date, amount, category, subcategory, details }),
+      {
+        optimisticData: [
+          ...spendings,
+          {
+            id: getTempUUID(),
+            date: dayjs(date).format().substring(0, 10),
+            amount,
+            category,
+            subcategory,
+            details,
+            userId: getTempUUID(),
+            userEmail: getTempUUID(),
+          },
+        ],
+      }
+    );
     updateToSuccessNotification(
-      `add-spending-${date}-${amount}-${category}`,
+      `add-spending-${date}-${amount}-${category}-${subcategory}-${details}`,
       "Added",
       "The spending is added."
     );

@@ -8,10 +8,12 @@ datasource db {
 }
 
 model Spending {
-  id       String @id @default(cuid())
-  date     String @db.Char(10)
-  amount   Int
-  category String
+  id          String @id @default(cuid())
+  date        String @db.Char(10)
+  amount      Int
+  category    String
+  subcategory String
+  details     String
 
   user      User   @relation(fields: [userId, userEmail], references: [id, email], onDelete: Cascade)
   userId    String

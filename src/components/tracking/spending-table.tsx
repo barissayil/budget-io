@@ -48,6 +48,11 @@ const SpendingTable = ({
         { accessor: "amount", sortable: true },
         { accessor: "category" },
         {
+          accessor: "subcategory",
+          visibleMediaQuery: () => `(min-width: 640px)`,
+        },
+        { accessor: "details", visibleMediaQuery: () => `(min-width: 640px)` },
+        {
           accessor: "actions",
           title: <Text mr="xs"></Text>,
           textAlignment: "right",

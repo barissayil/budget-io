@@ -5,14 +5,21 @@ type Body = {
   date: string;
   amount: number;
   category: string;
+  subcategory: string;
+  details: string;
 };
 
-export const createSpending = (userEmail: string, { date, amount, category }: Body) => {
+export const createSpending = (
+  userEmail: string,
+  { date, amount, category, subcategory, details }: Body
+) => {
   return prisma.spending.create({
     data: {
       date,
       amount,
       category,
+      subcategory,
+      details,
       user: { connect: { email: userEmail } },
     },
   });
@@ -31,7 +38,11 @@ export const getSpendingsOfMonth = (userEmail: string, monthIndex: number) => {
   });
 };
 
-export const updateSpending = (id: string, userEmail: string, { date, amount, category }: Body) => {
+export const updateSpending = (
+  id: string,
+  userEmail: string,
+  { date, amount, category, subcategory, details }: Body
+) => {
   return prisma.spending.update({
     where: {
       id_userEmail: {
@@ -39,7 +50,7 @@ export const updateSpending = (id: string, userEmail: string, { date, amount, ca
         userEmail,
       },
     },
-    data: { date, amount, category },
+    data: { date, amount, category, subcategory, details },
   });
 };
 
@@ -64,4 +75,35 @@ export const getSpendingCategories = async (userEmail: string) => {
     distinct: "category",
   });
   return spendingsWithDistinctCategories.map((spending) => spending.category);
+};
+
+export const getSpendingSubcategories = async (category: string, userEmail: string) => {
+  const spendingsWithDistinctSubcategories = await prisma.spending.findMany({
+    where: {
+      category,
+      user: {
+        email: userEmail,
+      },
+    },
+    distinct: "subcategory",
+  });
+  return spendingsWithDistinctSubcategories.map((spending) => spending.subcategory);
+};
+
+export const getSpendingDetails = async (
+  category: string,
+  subcategory: string,
+  userEmail: string
+) => {
+  const spendingsWithDistinctDetails = await prisma.spending.findMany({
+    where: {
+      category,
+      subcategory,
+      user: {
+        email: userEmail,
+      },
+    },
+    distinct: "details",
+  });
+  return spendingsWithDistinctDetails.map((spending) => spending.details);
 };

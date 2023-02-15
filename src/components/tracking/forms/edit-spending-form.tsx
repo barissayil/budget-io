@@ -32,6 +32,8 @@ const EditSpendingForm = ({
       date: new Date(spendingToUpdate.date),
       amount: spendingToUpdate.amount,
       category: spendingToUpdate.category,
+      subcategory: spendingToUpdate.subcategory,
+      details: spendingToUpdate.details,
     },
     validate: SpendingFormSchema,
   });
@@ -42,11 +44,15 @@ const EditSpendingForm = ({
     date,
     amount,
     category,
+    subcategory,
+    details,
   }: SpendingFormValues): Promise<Spending[]> => {
     const body = {
       date: dayjs(date).format().substring(0, 10),
       amount,
       category,
+      subcategory,
+      details,
     };
     const updatedSpending: Spending = await (
       await fetch(`/api/spending/${spendingToUpdate.id}`, {
@@ -61,30 +67,42 @@ const EditSpendingForm = ({
     ];
   };
 
-  const handleSubmit = async ({ date, amount, category }: SpendingFormValues) => {
+  const handleSubmit = async ({
+    date,
+    amount,
+    category,
+    subcategory,
+    details,
+  }: SpendingFormValues) => {
     setModalIsOpened(false);
     setSelectedSpendingId(null);
     setOpenedSpendingModal(null);
     showLoadingNotification(
-      `edit-spending-${date}-${amount}-${category}`,
+      `edit-spending-${date}-${amount}-${category}-${subcategory}-${details}`,
       "Editing",
       "The spending is being edited."
     );
-    await mutate(`/api/spending/month/${monthIndex}`, handleRequest({ date, amount, category }), {
-      optimisticData: [
-        ...spendings.filter((spending) => spending.id !== spendingToUpdate.id),
-        {
-          id: getTempUUID(),
-          date: dayjs(date).format().substring(0, 10),
-          amount,
-          category,
-          userId: getTempUUID(),
-          userEmail: getTempUUID(),
-        },
-      ],
-    });
+    await mutate(
+      `/api/spending/month/${monthIndex}`,
+      handleRequest({ date, amount, category, subcategory, details }),
+      {
+        optimisticData: [
+          ...spendings.filter((spending) => spending.id !== spendingToUpdate.id),
+          {
+            id: getTempUUID(),
+            date: dayjs(date).format().substring(0, 10),
+            amount,
+            category,
+            subcategory,
+            details,
+            userId: getTempUUID(),
+            userEmail: getTempUUID(),
+          },
+        ],
+      }
+    );
     updateToSuccessNotification(
-      `edit-spending-${date}-${amount}-${category}`,
+      `edit-spending-${date}-${amount}-${category}-${subcategory}-${details}`,
       "Edited",
       "The spending is edited."
     );
