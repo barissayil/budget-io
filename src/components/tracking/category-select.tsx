@@ -9,7 +9,7 @@ type Props = {
 };
 
 const CategorySelect = ({ form }: Props) => {
-  const { data: initialData } = useSWR<string[], Error>(`/api/spending/categories`);
+  const { data: initialData } = useSWR<string[], Error>(`/api/spending/category`);
   const [data, setData] = useState<string[]>([]);
   useEffect(() => {
     setData(initialData ?? []);

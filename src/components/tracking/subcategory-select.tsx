@@ -10,7 +10,7 @@ type Props = {
 };
 
 const SubcategorySelect = ({ form, category }: Props) => {
-  const { data: initialData } = useSWR<string[], Error>(`/api/spending/subcategories/${category}`);
+  const { data: initialData } = useSWR<string[], Error>(`/api/spending/subcategory/${category}`);
   const [data, setData] = useState<string[]>([]);
   useEffect(() => {
     setData(initialData ?? []);

@@ -22,7 +22,7 @@ const ModifiableSpendingTable = ({
 }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const { data: categories } = useSWR<string[], Error>(`/api/spending/categories`);
+  const { data: categories } = useSWR<string[], Error>(`/api/spending/category`);
 
   return (
     <>
