@@ -7,7 +7,7 @@ import { Session } from "next-auth";
 jest.mock("next-auth/react");
 const mockSession: Session = {
   expires: new Date(Date.now() + 2 * 86400).toISOString(),
-  user: { name: "baris" },
+  user: { email: "barissayil@protonmail.com" },
 };
 (useSession as jest.Mock).mockReturnValue([mockSession, "authenticated"]);
 

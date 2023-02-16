@@ -1,4 +1,4 @@
-import { prisma } from "@db/prisma";
+import prisma from "@db/prisma";
 import dayjs from "dayjs";
 
 type Body = {

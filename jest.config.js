@@ -7,7 +7,7 @@ const createJestConfig = nextJest({
 
 /** @type {import('jest').Config} */
 const customJestConfig = {
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts", "<rootDir>/db/prisma-mock.setup.ts"],
   moduleDirectories: ["node_modules", "<rootDir>/"],
   moduleNameMapper: {
     "^@modeling/(.*)$": "src/modeling/$1",
@@ -20,6 +20,7 @@ const customJestConfig = {
   },
   testEnvironment: "jest-environment-jsdom",
   clearMocks: true,
+  preset: "ts-jest",
 };
 
 const asyncConfig = createJestConfig(customJestConfig);
