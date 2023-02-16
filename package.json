@@ -11,8 +11,8 @@
     "db:push": "prisma db push",
     "studio": "prisma studio",
     "prepare": "husky install",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "jest -i",
+    "test:watch": "jest -i --watch"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
