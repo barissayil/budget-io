@@ -11,6 +11,8 @@ const mockSession: Session = {
 };
 (useSession as jest.Mock).mockReturnValue([mockSession, "authenticated"]);
 
+jest.mock("next/router", () => require("next-router-mock"));
+
 describe("Index", () => {
   render(<Index />);
   it("renders headings", () => {
