@@ -16,6 +16,7 @@ const customJestConfig = {
     "^@lib/(.*)$": "src/lib/$1",
     "^@pages/(.*)$": "src/pages/$1",
     "^@api/(.*)$": "src/pages/api/$1",
+    "^@hooks/(.*)$": "src/hooks/$1",
   },
   testEnvironment: "jest-environment-jsdom",
 };

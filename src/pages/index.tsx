@@ -3,12 +3,10 @@ import Layout from "@components/layout";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
 import { Loader } from "@mantine/core";
-import { useSession } from "next-auth/react";
 import Hero from "@components/index/hero";
 import Features from "@components/index/features";
 import { useScrollIntoView } from "@mantine/hooks";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import useRouterAuth from "@hooks/use-router-auth";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -26,13 +24,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const Index: NextPage = () => {
-  const { status } = useSession();
-  const router = useRouter();
+  const { status } = useRouterAuth({ isProtected: false });
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>();
-
-  useEffect(() => {
-    if (status === "authenticated") router.push("/tracking");
-  }, [router, status]);
 
   return (
     <Layout>
