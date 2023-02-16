@@ -4,7 +4,7 @@ import { Spending } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
 import ModifiableSpendingTable from "@components/tracking/modifiable-spending-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
 import { useSession } from "next-auth/react";
 import AddSpendingModal from "@components/tracking/modals/add-spending-modal";
@@ -13,6 +13,7 @@ import EditSpendingModal from "@components/tracking/modals/edit-spending-modal";
 import { Alert, Loader } from "@mantine/core";
 import useSWR from "swr";
 import { AlertCircle as AlertCircleIcon } from "tabler-icons-react";
+import { useRouter } from "next/router";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -33,14 +34,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const Tracking: NextPage = () => {
   const [monthIndex, setMonthIndex] = useState<number>(0);
-
   const { data: spendings, error } = useSWR<Spending[], Error>(`/api/spending/month/${monthIndex}`);
-
   const [openedSpendingModal, setOpenedSpendingModal] = useState<OpenedSpendingModal>(null);
-
   const [selectedSpendingId, setSelectedSpendingId] = useState<string | null>(null);
-
   const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") router.push("/");
+  }, [router, status]);
 
   const getSpending = (id: string): Spending => {
     return (spendings as Spending[]).find((spending) => spending.id === id) as Spending;
