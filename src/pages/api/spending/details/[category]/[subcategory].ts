@@ -10,7 +10,7 @@ const handle = async (req: NextApiRequest, res: NextApiResponse<string[]>) => {
 
   switch (req.method) {
     case "GET": {
-      const details = await getSpendingDetails(category, subcategory, userEmail);
+      const details = await getSpendingDetails(userEmail, category, subcategory);
       res.json(details);
       break;
     }

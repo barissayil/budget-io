@@ -77,7 +77,7 @@ export const getSpendingCategories = async (userEmail: string) => {
   return spendingsWithDistinctCategories.map((spending) => spending.category);
 };
 
-export const getSpendingSubcategories = async (category: string, userEmail: string) => {
+export const getSpendingSubcategories = async (userEmail: string, category: string) => {
   const spendingsWithDistinctSubcategories = await prisma.spending.findMany({
     where: {
       category,
@@ -91,9 +91,9 @@ export const getSpendingSubcategories = async (category: string, userEmail: stri
 };
 
 export const getSpendingDetails = async (
+  userEmail: string,
   category: string,
-  subcategory: string,
-  userEmail: string
+  subcategory: string
 ) => {
   const spendingsWithDistinctDetails = await prisma.spending.findMany({
     where: {
