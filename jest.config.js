@@ -7,7 +7,7 @@ const createJestConfig = nextJest({
 
 /** @type {import('jest').Config} */
 const customJestConfig = {
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   moduleDirectories: ["node_modules", "<rootDir>/"],
   moduleNameMapper: {
     "^@modeling/(.*)$": "src/modeling/$1",
@@ -19,6 +19,7 @@ const customJestConfig = {
     "^@hooks/(.*)$": "src/hooks/$1",
   },
   testEnvironment: "jest-environment-jsdom",
+  clearMocks: true,
 };
 
 const asyncConfig = createJestConfig(customJestConfig);
