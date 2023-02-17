@@ -10,6 +10,7 @@
     "prettier": "prettier --write .",
     "db:push": "prisma db push",
     "studio": "prisma studio",
+    "studio:test": "dotenv -e .env.test -- prisma studio",
     "prepare": "husky install",
     "test": "jest -i",
     "test:watch": "jest -i --watch"
