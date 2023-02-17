@@ -10,7 +10,7 @@ type Props = {
   setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
 };
 
-const EditSpendingModal = ({ setOpenedSpendingModal, spendings, monthIndex }: Props) => {
+const AddSpendingModal = ({ setOpenedSpendingModal, spendings, monthIndex }: Props) => {
   const [isOpened, setIsOpened] = useState<boolean>(true);
   return (
     <Modal
@@ -29,4 +29,4 @@ const EditSpendingModal = ({ setOpenedSpendingModal, spendings, monthIndex }: Pr
   );
 };
 
-export default EditSpendingModal;
+export default AddSpendingModal;
