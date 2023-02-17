@@ -37,6 +37,7 @@ next-env.d.ts
 
 # env files
 .env
+.env.test
 
 # text files
 *.txt
