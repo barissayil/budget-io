@@ -13,7 +13,9 @@
     "studio:test": "dotenv -e .env.test -- prisma studio",
     "prepare": "husky install",
     "test": "jest -i",
-    "test:watch": "jest -i --watch"
+    "test:watch": "jest -i --watch",
+    "up": "docker-compose up -d",
+    "down": "docker-compose down"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
