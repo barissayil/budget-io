@@ -15,7 +15,7 @@ model Transaction {
   id          String          @id @default(cuid())
   date        String          @db.Char(10)
   type        TransactionType
-  amount      Int
+  amount      Float
   category    String
   subcategory String
   details     String

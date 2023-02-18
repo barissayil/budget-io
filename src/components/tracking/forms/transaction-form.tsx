@@ -33,7 +33,13 @@ const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionMod
         className="mb-3"
         data-autofocus
       />
-      <NumberInput placeholder="Amount" {...form.getInputProps("amount")} className="mb-3" />
+      <NumberInput
+        hideControls
+        placeholder="Amount"
+        {...form.getInputProps("amount")}
+        precision={2}
+        className="mb-3"
+      />
       <CategorySelect form={form} />
       {form.values.category ? (
         <SubcategorySelect form={form} category={form.values.category} />
