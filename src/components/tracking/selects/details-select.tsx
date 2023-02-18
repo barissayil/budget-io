@@ -1,18 +1,21 @@
 import { LoadingOverlay, Select } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
-import SpendingFormValues from "@modeling/spending-form-values";
+import TransactionFormValues from "@modeling/transaction-form-values";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 type Props = {
-  form: UseFormReturnType<SpendingFormValues, (values: SpendingFormValues) => SpendingFormValues>;
+  form: UseFormReturnType<
+    TransactionFormValues,
+    (values: TransactionFormValues) => TransactionFormValues
+  >;
   category: string;
   subcategory: string;
 };
 
 const DetailsSelect = ({ form, category, subcategory }: Props) => {
   const { data: initialData } = useSWR<string[], Error>(
-    `/api/spending/details/${category}/${subcategory}`
+    `/api/transaction/details/${category}/${subcategory}`
   );
   const [data, setData] = useState<string[]>([]);
   useEffect(() => {

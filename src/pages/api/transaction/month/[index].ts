@@ -1,17 +1,17 @@
 import { NextApiResponse, NextApiRequest } from "next";
-import { Spending } from "@prisma/client";
+import { Transaction } from "@prisma/client";
 import { authOptions } from "@api/auth/[...nextauth]";
-import { getSpendingsOfMonth } from "@lib/db/spending";
+import { getTransactionsOfMonth } from "@lib/db/transaction";
 import { getUserEmail } from "@lib/auth";
 
-const handle = async (req: NextApiRequest, res: NextApiResponse<Spending[]>) => {
+const handle = async (req: NextApiRequest, res: NextApiResponse<Transaction[]>) => {
   const userEmail = await getUserEmail(req, res, authOptions);
   const monthIndex = Number(req.query.index);
 
   switch (req.method) {
     case "GET": {
-      const spendings = await getSpendingsOfMonth(userEmail, monthIndex);
-      res.json(spendings);
+      const transaction = await getTransactionsOfMonth(userEmail, monthIndex);
+      res.json(transaction);
       break;
     }
     default:

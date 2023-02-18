@@ -1,4 +1,4 @@
-type SpendingFormValues = {
+type TransactionFormValues = {
   date: Date;
   amount?: number;
   category?: string;
@@ -6,4 +6,4 @@ type SpendingFormValues = {
   details?: string;
 };
 
-export default SpendingFormValues;
+export default TransactionFormValues;

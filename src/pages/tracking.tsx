@@ -1,14 +1,14 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Layout from "@components/layout";
-import { Spending } from "@prisma/client";
+import { Transaction } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
-import ModifiableSpendingTable from "@components/tracking/modifiable-spending-table";
+import ModifiableTransactionTable from "@components/tracking/modifiable-transaction-table";
 import { useState } from "react";
-import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
-import AddSpendingModal from "@components/tracking/modals/add-spending-modal";
-import DeleteSpendingModal from "@components/tracking/modals/delete-spending-modal";
-import EditSpendingModal from "@components/tracking/modals/edit-spending-modal";
+import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
+import AddTransactionModal from "@components/tracking/modals/add-transaction-modal";
+import DeleteTransactionModal from "@components/tracking/modals/delete-transaction-modal";
+import EditTransactionModal from "@components/tracking/modals/edit-transaction-modal";
 import { Alert, Loader } from "@mantine/core";
 import useSWR from "swr";
 import { AlertCircle as AlertCircleIcon } from "tabler-icons-react";
@@ -34,48 +34,53 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Tracking: NextPage = () => {
   const { status } = useRouterAuth({ isProtected: true });
   const [monthIndex, setMonthIndex] = useState<number>(0);
-  const { data: spendings, error } = useSWR<Spending[], Error>(`/api/spending/month/${monthIndex}`);
-  const [openedSpendingModal, setOpenedSpendingModal] = useState<OpenedSpendingModal>(null);
-  const [selectedSpendingId, setSelectedSpendingId] = useState<string | null>(null);
+  const { data: transactions, error } = useSWR<Transaction[], Error>(
+    `/api/transaction/month/${monthIndex}`
+  );
+  const [openedTransactionModal, setOpenedTransactionModal] =
+    useState<OpenedTransactionModal>(null);
+  const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null);
 
-  const getSpending = (id: string): Spending => {
-    return (spendings as Spending[]).find((spending) => spending.id === id) as Spending;
+  const getTransaction = (id: string): Transaction => {
+    return (transactions as Transaction[]).find(
+      (transaction) => transaction.id === id
+    ) as Transaction;
   };
 
-  const openEditSpendingModal = (id: string) => {
-    setSelectedSpendingId(id);
-    setOpenedSpendingModal("EDIT");
+  const openEditTransactionModal = (id: string) => {
+    setSelectedTransactionId(id);
+    setOpenedTransactionModal("EDIT");
   };
 
-  const openDeleteSpendingModal = (id: string) => {
-    setSelectedSpendingId(id);
-    setOpenedSpendingModal("DELETE");
+  const openDeleteTransactionModal = (id: string) => {
+    setSelectedTransactionId(id);
+    setOpenedTransactionModal("DELETE");
   };
   return (
     <Layout>
-      {openedSpendingModal === "ADD" && (
-        <AddSpendingModal
-          setOpenedSpendingModal={setOpenedSpendingModal}
-          spendings={spendings as Spending[]}
+      {openedTransactionModal === "ADD" && (
+        <AddTransactionModal
+          setOpenedTransactionModal={setOpenedTransactionModal}
+          transactions={transactions as Transaction[]}
           monthIndex={monthIndex}
         />
       )}
-      {openedSpendingModal === "EDIT" && (
-        <EditSpendingModal
-          spendingToUpdate={getSpending(selectedSpendingId as string)}
-          setOpenedSpendingModal={setOpenedSpendingModal}
-          spendings={spendings as Spending[]}
+      {openedTransactionModal === "EDIT" && (
+        <EditTransactionModal
+          transactionToUpdate={getTransaction(selectedTransactionId as string)}
+          setOpenedTransactionModal={setOpenedTransactionModal}
+          transactions={transactions as Transaction[]}
           monthIndex={monthIndex}
-          setSelectedSpendingId={setSelectedSpendingId}
+          setSelectedTransactionId={setSelectedTransactionId}
         />
       )}
-      {openedSpendingModal === "DELETE" && (
-        <DeleteSpendingModal
-          spendingIdToDelete={selectedSpendingId as string}
-          setOpenedSpendingModal={setOpenedSpendingModal}
-          spendings={spendings as Spending[]}
+      {openedTransactionModal === "DELETE" && (
+        <DeleteTransactionModal
+          transactionIdToDelete={selectedTransactionId as string}
+          setOpenedTransactionModal={setOpenedTransactionModal}
+          transactions={transactions as Transaction[]}
           monthIndex={monthIndex}
-          setSelectedSpendingId={setSelectedSpendingId}
+          setSelectedTransactionId={setSelectedTransactionId}
         />
       )}
       {status === "loading" && !error && (
@@ -89,12 +94,12 @@ const Tracking: NextPage = () => {
         </Alert>
       )}
       {status === "authenticated" && !error && (
-        <ModifiableSpendingTable
+        <ModifiableTransactionTable
           monthIndex={monthIndex}
           setMonthIndex={setMonthIndex}
-          setOpenedSpendingModal={setOpenedSpendingModal}
-          openEditSpendingModal={openEditSpendingModal}
-          openDeleteSpendingModal={openDeleteSpendingModal}
+          setOpenedTransactionModal={setOpenedTransactionModal}
+          openEditTransactionModal={openEditTransactionModal}
+          openDeleteTransactionModal={openDeleteTransactionModal}
         />
       )}
     </Layout>

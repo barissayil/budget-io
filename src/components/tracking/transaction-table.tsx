@@ -1,7 +1,7 @@
 import { Text } from "@mantine/core";
-import { Spending } from "@prisma/client";
+import { Transaction } from "@prisma/client";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
-import SpendingActionsGroup from "@components/tracking/spending-actions-group";
+import TransactionActionsGroup from "@components/tracking/transaction-actions-group";
 import { useState } from "react";
 import { sortBy } from "lodash";
 import useSWR from "swr";
@@ -9,16 +9,16 @@ import useSWR from "swr";
 type Props = {
   monthIndex: number;
   selectedCategory: string | null;
-  openEditSpendingModal: (id: string) => void;
-  openDeleteSpendingModal: (id: string) => void;
+  openEditTransactionModal: (id: string) => void;
+  openDeleteTransactionModal: (id: string) => void;
   mobileView: boolean;
 };
 
-const SpendingTable = ({
+const TransactionTable = ({
   monthIndex,
   selectedCategory,
-  openEditSpendingModal,
-  openDeleteSpendingModal,
+  openEditTransactionModal,
+  openDeleteTransactionModal,
   mobileView,
 }: Props) => {
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
@@ -26,14 +26,21 @@ const SpendingTable = ({
     direction: "asc",
   });
 
-  const { data: spendings } = useSWR<Spending[], Error>(`/api/spending/month/${monthIndex}`);
-
-  const filteredSpendings = spendings?.filter(
-    (spending) => !selectedCategory || spending.category === selectedCategory
+  const { data: transaction } = useSWR<Transaction[], Error>(
+    `/api/transaction/month/${monthIndex}`
   );
-  const sortedFilteredSpendings = sortBy(filteredSpendings, [sortStatus.columnAccessor, "id"]);
+
+  const filteredTransactions = transaction?.filter(
+    (transaction) => !selectedCategory || transaction.category === selectedCategory
+  );
+  const sortedFilteredTransactions = sortBy(filteredTransactions, [
+    sortStatus.columnAccessor,
+    "id",
+  ]);
   const records =
-    sortStatus.direction === "desc" ? sortedFilteredSpendings.reverse() : sortedFilteredSpendings;
+    sortStatus.direction === "desc"
+      ? sortedFilteredTransactions.reverse()
+      : sortedFilteredTransactions;
 
   return (
     <DataTable
@@ -44,7 +51,7 @@ const SpendingTable = ({
       records={records}
       sortStatus={sortStatus}
       onSortStatusChange={setSortStatus}
-      fetching={spendings === undefined}
+      fetching={transaction === undefined}
       columns={[
         { accessor: "date", sortable: true },
         { accessor: "amount", sortable: true },
@@ -58,11 +65,11 @@ const SpendingTable = ({
           accessor: "actions",
           title: <Text mr="xs"></Text>,
           textAlignment: "right",
-          render: (spending) => (
-            <SpendingActionsGroup
-              spendingId={spending.id}
-              openEditSpendingModal={openEditSpendingModal}
-              openDeleteSpendingModal={openDeleteSpendingModal}
+          render: (transaction) => (
+            <TransactionActionsGroup
+              transactionId={transaction.id}
+              openEditTransactionModal={openEditTransactionModal}
+              openDeleteTransactionModal={openDeleteTransactionModal}
             />
           ),
         },
@@ -71,4 +78,4 @@ const SpendingTable = ({
   );
 };
 
-export default SpendingTable;
+export default TransactionTable;

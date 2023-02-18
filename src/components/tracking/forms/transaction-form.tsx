@@ -1,9 +1,9 @@
 import { Button, Group, NumberInput, Select } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { UseFormReturnType } from "@mantine/form";
-import SpendingFormValues from "@modeling/spending-form-values";
+import TransactionFormValues from "@modeling/transaction-form-values";
 import { SetStateAction } from "react";
-import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
+import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
 import SubcategorySelect from "@components/tracking/selects/subcategory-select";
 import CategorySelect from "@components/tracking/selects/category-select";
 import DetailsSelect from "@components/tracking/selects/details-select";
@@ -15,13 +15,16 @@ type Props = {
     category,
     subcategory,
     details,
-  }: SpendingFormValues) => Promise<void>;
-  form: UseFormReturnType<SpendingFormValues, (values: SpendingFormValues) => SpendingFormValues>;
+  }: TransactionFormValues) => Promise<void>;
+  form: UseFormReturnType<
+    TransactionFormValues,
+    (values: TransactionFormValues) => TransactionFormValues
+  >;
   formType: "ADD" | "UPDATE";
-  setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
+  setOpenedTransactionModal: (value: SetStateAction<OpenedTransactionModal>) => void;
 };
 
-const SpendingForm = ({ handleSubmit, form, formType, setOpenedSpendingModal }: Props) => {
+const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionModal }: Props) => {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <DatePicker
@@ -47,7 +50,7 @@ const SpendingForm = ({ handleSubmit, form, formType, setOpenedSpendingModal }: 
         <Select placeholder="Detail" data={[]} disabled={true} className="mb-3" />
       )}
       <Group position="right" mt="md">
-        <Button type="button" variant="default" onClick={() => setOpenedSpendingModal(null)}>
+        <Button type="button" variant="default" onClick={() => setOpenedTransactionModal(null)}>
           Cancel
         </Button>
         <Button type="submit" color={formType === "ADD" ? "cyan" : "teal"}>
@@ -58,4 +61,4 @@ const SpendingForm = ({ handleSubmit, form, formType, setOpenedSpendingModal }: 
   );
 };
 
-export default SpendingForm;
+export default TransactionForm;

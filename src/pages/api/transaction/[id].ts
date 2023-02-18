@@ -1,22 +1,22 @@
 import { NextApiResponse, NextApiRequest } from "next";
-import { Spending } from "@prisma/client";
+import { Transaction } from "@prisma/client";
 import { authOptions } from "@api/auth/[...nextauth]";
-import { deleteSpending, updateSpending } from "@lib/db/spending";
+import { deleteTransaction, updateTransaction } from "@lib/db/transaction";
 import { getUserEmail } from "@lib/auth";
 
-const handle = async (req: NextApiRequest, res: NextApiResponse<Spending>) => {
+const handle = async (req: NextApiRequest, res: NextApiResponse<Transaction>) => {
   const userEmail = await getUserEmail(req, res, authOptions);
   const id = req.query.id as string;
 
   switch (req.method) {
     case "DELETE": {
-      const spending = await deleteSpending(id, userEmail);
-      res.json(spending);
+      const transaction = await deleteTransaction(id, userEmail);
+      res.json(transaction);
       break;
     }
     case "PUT": {
-      const spending = await updateSpending(id, userEmail, req.body);
-      res.json(spending);
+      const transaction = await updateTransaction(id, userEmail, req.body);
+      res.json(transaction);
       break;
     }
     default:

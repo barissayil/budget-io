@@ -1,15 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { Transaction } from "@prisma/client";
 import { authOptions } from "@api/auth/[...nextauth]";
-import { getSpendingCategories } from "@lib/db/spending";
+import { createTransaction } from "@lib/db/transaction";
 import { getUserEmail } from "@lib/auth";
 
-const handle = async (req: NextApiRequest, res: NextApiResponse<string[]>) => {
+const handle = async (req: NextApiRequest, res: NextApiResponse<Transaction>) => {
   const userEmail = await getUserEmail(req, res, authOptions);
 
   switch (req.method) {
-    case "GET": {
-      const categories = await getSpendingCategories(userEmail);
-      res.json(categories);
+    case "POST": {
+      const transaction = await createTransaction(userEmail, req.body);
+      res.json(transaction);
       break;
     }
     default:

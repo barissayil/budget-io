@@ -1,28 +1,28 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import SpendingTable from "@components/tracking/spending-table";
+import TransactionTable from "@components/tracking/transaction-table";
 import { ActionIcon, Button, Group, Loader, Select } from "@mantine/core";
-import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
+import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
 import { ArrowRight as ArrowRightIcon, ArrowLeft as ArrowLeftIcon } from "tabler-icons-react";
 import useSWR from "swr";
 
 type Props = {
   monthIndex: number;
   setMonthIndex: Dispatch<SetStateAction<number>>;
-  setOpenedSpendingModal: Dispatch<SetStateAction<OpenedSpendingModal>>;
-  openEditSpendingModal: (id: string) => void;
-  openDeleteSpendingModal: (id: string) => void;
+  setOpenedTransactionModal: Dispatch<SetStateAction<OpenedTransactionModal>>;
+  openEditTransactionModal: (id: string) => void;
+  openDeleteTransactionModal: (id: string) => void;
 };
 
-const ModifiableSpendingTable = ({
+const ModifiableTransactionTable = ({
   monthIndex,
   setMonthIndex,
-  setOpenedSpendingModal,
-  openEditSpendingModal,
-  openDeleteSpendingModal,
+  setOpenedTransactionModal,
+  openEditTransactionModal,
+  openDeleteTransactionModal,
 }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const { data: categories } = useSWR<string[], Error>(`/api/spending/category`);
+  const { data: categories } = useSWR<string[], Error>(`/api/transaction/category`);
 
   return (
     <>
@@ -44,20 +44,20 @@ const ModifiableSpendingTable = ({
           )}
         </div>
         <div className="hidden md:flex">
-          <SpendingTable
+          <TransactionTable
             monthIndex={monthIndex}
             selectedCategory={selectedCategory}
-            openEditSpendingModal={openEditSpendingModal}
-            openDeleteSpendingModal={openDeleteSpendingModal}
+            openEditTransactionModal={openEditTransactionModal}
+            openDeleteTransactionModal={openDeleteTransactionModal}
             mobileView={false}
           />
         </div>
         <div className="flex md:hidden">
-          <SpendingTable
+          <TransactionTable
             monthIndex={monthIndex}
             selectedCategory={selectedCategory}
-            openEditSpendingModal={openEditSpendingModal}
-            openDeleteSpendingModal={openDeleteSpendingModal}
+            openEditTransactionModal={openEditTransactionModal}
+            openDeleteTransactionModal={openDeleteTransactionModal}
             mobileView={true}
           />
         </div>
@@ -65,8 +65,8 @@ const ModifiableSpendingTable = ({
           <ActionIcon color="cyan" size="xl" onClick={() => setMonthIndex(monthIndex + 1)}>
             <ArrowLeftIcon size={80} strokeWidth={2} />
           </ActionIcon>
-          <Button onClick={() => setOpenedSpendingModal("ADD")} color="cyan">
-            Add spending
+          <Button onClick={() => setOpenedTransactionModal("ADD")} color="cyan">
+            Add transaction
           </Button>
           <ActionIcon
             color="cyan"
@@ -82,4 +82,4 @@ const ModifiableSpendingTable = ({
   );
 };
 
-export default ModifiableSpendingTable;
+export default ModifiableTransactionTable;

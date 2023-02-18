@@ -1,33 +1,33 @@
 import { useForm } from "@mantine/form";
-import { Spending } from "@prisma/client";
+import { Transaction, TransactionType } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
-import SpendingFormValues from "@modeling/spending-form-values";
-import SpendingForm from "@components/tracking/forms/spending-form";
-import { OpenedSpendingModal } from "@modeling/opened-spending-modal";
-import SpendingFormSchema from "@modeling/spending-form-schema";
+import TransactionFormValues from "@modeling/transaction-form-values";
+import TransactionForm from "@components/tracking/forms/transaction-form";
+import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
+import TransactionFormSchema from "@modeling/transaction-form-schema";
 import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";
 import dayjs from "dayjs";
 import { getTempUUID } from "@lib/uuid";
 import { useSWRConfig } from "swr";
 
 type Props = {
-  spendings: Spending[];
+  transactions: Transaction[];
   monthIndex: number;
   setModalIsOpened: Dispatch<SetStateAction<boolean>>;
-  setOpenedSpendingModal: (value: SetStateAction<OpenedSpendingModal>) => void;
+  setOpenedTransactionModal: (value: SetStateAction<OpenedTransactionModal>) => void;
 };
 
-const AddSpendingForm = ({
-  spendings,
+const AddTransactionForm = ({
+  transactions,
   monthIndex,
   setModalIsOpened,
-  setOpenedSpendingModal,
+  setOpenedTransactionModal,
 }: Props) => {
-  const form = useForm<SpendingFormValues>({
+  const form = useForm<TransactionFormValues>({
     initialValues: {
       date: new Date(),
     },
-    validate: SpendingFormSchema,
+    validate: TransactionFormSchema,
   });
 
   const { mutate } = useSWRConfig();
@@ -38,22 +38,23 @@ const AddSpendingForm = ({
     category,
     subcategory,
     details,
-  }: SpendingFormValues): Promise<Spending[]> => {
+  }: TransactionFormValues): Promise<Transaction[]> => {
     const body = {
       date: dayjs(date).format().substring(0, 10),
       amount,
+      type: TransactionType.SPENDING,
       category,
       subcategory,
       details,
     };
-    const spending: Spending = await (
-      await fetch(`/api/spending`, {
+    const transaction: Transaction = await (
+      await fetch(`/api/transaction`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       })
     ).json();
-    return [...spendings, spending];
+    return [...transactions, transaction];
   };
 
   const handleSubmit = async ({
@@ -62,24 +63,25 @@ const AddSpendingForm = ({
     category,
     subcategory,
     details,
-  }: SpendingFormValues) => {
+  }: TransactionFormValues) => {
     setModalIsOpened(false);
-    setOpenedSpendingModal(null);
+    setOpenedTransactionModal(null);
     showLoadingNotification(
-      `add-spending-${date}-${amount}-${category}-${subcategory}-${details}`,
+      `add-transaction-${date}-${amount}-${category}-${subcategory}-${details}`,
       "Adding",
-      "The spending is being added."
+      "The transaction is being added."
     );
     await mutate(
-      `/api/spending/month/${monthIndex}`,
+      `/api/transaction/month/${monthIndex}`,
       handleRequest({ date, amount, category, subcategory, details }),
       {
         optimisticData: [
-          ...spendings,
+          ...transactions,
           {
             id: getTempUUID(),
             date: dayjs(date).format().substring(0, 10),
             amount,
+            type: TransactionType.SPENDING,
             category,
             subcategory,
             details,
@@ -90,20 +92,20 @@ const AddSpendingForm = ({
       }
     );
     updateToSuccessNotification(
-      `add-spending-${date}-${amount}-${category}-${subcategory}-${details}`,
+      `add-transaction-${date}-${amount}-${category}-${subcategory}-${details}`,
       "Added",
-      "The spending is added."
+      "The transaction is added."
     );
   };
 
   return (
-    <SpendingForm
+    <TransactionForm
       handleSubmit={handleSubmit}
       form={form}
       formType={"ADD"}
-      setOpenedSpendingModal={setOpenedSpendingModal}
+      setOpenedTransactionModal={setOpenedTransactionModal}
     />
   );
 };
 
-export default AddSpendingForm;
+export default AddTransactionForm;
