@@ -37,6 +37,8 @@ const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionMod
         hideControls
         placeholder="Amount"
         {...form.getInputProps("amount")}
+        min={0}
+        max={10000}
         precision={2}
         className="mb-3"
       />
