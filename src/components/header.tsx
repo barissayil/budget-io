@@ -22,7 +22,7 @@ const Header = () => {
   const { status } = useSession();
   const { toggle, fullscreen } = useFullscreen();
 
-  // const links = ["Spendings"];
+  // const links = ["Tracking"];
   // const linksCommonClasses =
   //   "flex items-center px-4 text-sm font-medium text-black " +
   //   "no-underline decoration-current decoration-solid decoration-auto ";
