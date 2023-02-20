@@ -11,33 +11,33 @@ import {
 import { Transaction, TransactionType } from "@prisma/client";
 import dayjs from "dayjs";
 
-const userEmail = "barissayil@protonmail.com";
-const differentUserEmail = "somedude@gmail.com";
-
-const today = dayjs().format().substring(0, 10);
-const firstOfCurrentMonth = today.slice(0, 8) + "01";
-const twentiethOfCurrentMonth = today.slice(0, 8) + "20";
-const oneMonthAgo = dayjs().subtract(1, "month").format().substring(0, 10);
-
-let spending10FoodOrderDominosToday: Transaction;
-let spending12p5FoodOrderBurgerKingToday: Transaction;
-let spending24p99FoodRestaurantOliveChickenToday: Transaction;
-let spending20FoodRestaurantPNYToday: Transaction;
-let spending1000HousingRentLodgisToday: Transaction;
-let spending50ClothingTurtleneckUniqloToday: Transaction;
-let spending10ClothingShirtUniqloToday: Transaction;
-let spending10ClothingShirtCelioToday: Transaction;
-let spending22p57FoodGroceriesMonoprixFirstCurrentMonth: Transaction;
-let spending17p03FoodGroceriesCasinoTwentiethCurrentMonth: Transaction;
-let spending1000HousingRentLodgisOneMonthAgo: Transaction;
-let spending1255p44TransitAirplaneTurkeyOneMonthAgo: Transaction;
-
-let spending20FoodOrderDominosToday: Transaction;
-let spending1255p44TravelAirplaneTurkeyOneMonthAgo: Transaction;
-let spending12p5ClothingJeansBonoboToday: Transaction;
-let spending10ClothingShirtUniqloOneMonthAgo: Transaction;
-
 describe("spendings (soon: transactions)", () => {
+  const userEmail = "barissayil@protonmail.com";
+  const differentUserEmail = "somedude@gmail.com";
+
+  const today = dayjs().format().substring(0, 10);
+  const firstOfCurrentMonth = today.slice(0, 8) + "01";
+  const twentiethOfCurrentMonth = today.slice(0, 8) + "20";
+  const oneMonthAgo = dayjs().subtract(1, "month").format().substring(0, 10);
+
+  let spending10FoodOrderDominosToday: Transaction;
+  let spending12p5FoodOrderBurgerKingToday: Transaction;
+  let spending24p99FoodRestaurantOliveChickenToday: Transaction;
+  let spending20FoodRestaurantPNYToday: Transaction;
+  let spending1000HousingRentLodgisToday: Transaction;
+  let spending50ClothingTurtleneckUniqloToday: Transaction;
+  let spending10ClothingShirtUniqloToday: Transaction;
+  let spending10ClothingShirtCelioToday: Transaction;
+  let spending22p57FoodGroceriesMonoprixFirstCurrentMonth: Transaction;
+  let spending17p03FoodGroceriesCasinoTwentiethCurrentMonth: Transaction;
+  let spending1000HousingRentLodgisOneMonthAgo: Transaction;
+  let spending1255p44TransitAirplaneTurkeyOneMonthAgo: Transaction;
+
+  let spending20FoodOrderDominosToday: Transaction;
+  let spending1255p44TravelAirplaneTurkeyOneMonthAgo: Transaction;
+  let spending12p5ClothingJeansBonoboToday: Transaction;
+  let spending10ClothingShirtUniqloOneMonthAgo: Transaction;
+
   beforeAll(async () => {
     await prisma.$transaction([
       prisma.account.deleteMany(),
