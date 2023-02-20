@@ -7,8 +7,8 @@ import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
 import TransactionFormSchema from "@modeling/transaction-form-schema";
 import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";
 import dayjs from "dayjs";
-import { getTempUUID } from "@lib/uuid";
 import { useSWRConfig } from "swr";
+import { getTempUUID } from "@lib/temp";
 
 type Props = {
   transactions: Transaction[];

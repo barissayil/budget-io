@@ -1,4 +1,4 @@
-import { isTempTransaction } from "@lib/transactions";
+import { isTemp } from "@lib/temp";
 import { Group, ActionIcon } from "@mantine/core";
 import { Edit as EditIcon, Trash as TrashIcon } from "tabler-icons-react";
 
@@ -18,14 +18,14 @@ const TransactionActionsGroup = ({
       <ActionIcon
         color="teal"
         onClick={() => openEditTransactionModal(transactionId)}
-        loading={isTempTransaction(transactionId)}
+        loading={isTemp(transactionId)}
       >
         <EditIcon size={16} />
       </ActionIcon>
       <ActionIcon
         color="red"
         onClick={() => openDeleteTransactionModal(transactionId)}
-        loading={isTempTransaction(transactionId)}
+        loading={isTemp(transactionId)}
       >
         <TrashIcon size={16} />
       </ActionIcon>

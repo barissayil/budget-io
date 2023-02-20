@@ -8,7 +8,7 @@ import TransactionFormSchema from "@modeling/transaction-form-schema";
 import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";
 import dayjs from "dayjs";
 import { useSWRConfig } from "swr";
-import { getTempUUID } from "@lib/uuid";
+import { getTempUUID } from "@lib/temp";
 
 type Props = {
   transactionToUpdate: Transaction;
