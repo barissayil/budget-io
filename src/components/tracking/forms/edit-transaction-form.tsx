@@ -78,11 +78,8 @@ const EditTransactionForm = ({
     setModalIsOpened(false);
     setSelectedTransactionId(null);
     setOpenedTransactionModal(null);
-    showLoadingNotification(
-      `edit-transaction-${date}-${amount}-${category}-${subcategory}-${details}`,
-      "Editing",
-      "The transaction is being edited."
-    );
+    const notificationId = getTempUUID();
+    showLoadingNotification(notificationId, "Editing", "The transaction is being edited.");
     await mutate(
       `/api/transaction/month/${monthIndex}`,
       handleRequest({ date, amount, category, subcategory, details }),
@@ -103,11 +100,7 @@ const EditTransactionForm = ({
         ],
       }
     );
-    updateToSuccessNotification(
-      `edit-transaction-${date}-${amount}-${category}-${subcategory}-${details}`,
-      "Edited",
-      "The transaction is edited."
-    );
+    updateToSuccessNotification(notificationId, "Edited", "The transaction is edited.");
   };
 
   return (

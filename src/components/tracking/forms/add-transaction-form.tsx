@@ -66,11 +66,8 @@ const AddTransactionForm = ({
   }: TransactionFormValues) => {
     setModalIsOpened(false);
     setOpenedTransactionModal(null);
-    showLoadingNotification(
-      `add-transaction-${date}-${amount}-${category}-${subcategory}-${details}`,
-      "Adding",
-      "The transaction is being added."
-    );
+    const notificationId = getTempUUID();
+    showLoadingNotification(notificationId, "Adding", "The transaction is being added.");
     await mutate(
       `/api/transaction/month/${monthIndex}`,
       handleRequest({ date, amount, category, subcategory, details }),
@@ -91,11 +88,7 @@ const AddTransactionForm = ({
         ],
       }
     );
-    updateToSuccessNotification(
-      `add-transaction-${date}-${amount}-${category}-${subcategory}-${details}`,
-      "Added",
-      "The transaction is added."
-    );
+    updateToSuccessNotification(notificationId, "Added", "The transaction is added.");
   };
 
   return (

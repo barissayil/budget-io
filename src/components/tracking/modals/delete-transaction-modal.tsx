@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
 import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";
 import { useSWRConfig } from "swr";
+import { getTempUUID } from "@lib/temp";
 
 type Props = {
   transactionIdToDelete: string;
@@ -37,22 +38,15 @@ const DeleteTransactionModal = ({
     setIsOpened(false);
     setSelectedTransactionId(null);
     setOpenedTransactionModal(null);
-    showLoadingNotification(
-      `delete-transaction-${transactionIdToDelete}`,
-      "Deleting",
-      "The transaction is being deleted."
-    );
+    const notificationId = getTempUUID();
+    showLoadingNotification(notificationId, "Deleting", "The transaction is being deleted.");
     await mutate(`/api/transaction/month/${monthIndex}`, handleRequest(), {
       optimisticData: [
         ...transactions.filter((transaction) => transaction.id !== transactionIdToDelete),
       ],
       revalidate: false,
     });
-    updateToSuccessNotification(
-      `delete-transaction-${transactionIdToDelete}`,
-      "Deleted",
-      "The transaction is deleted."
-    );
+    updateToSuccessNotification(notificationId, "Deleted", "The transaction is deleted.");
   };
 
   return (
