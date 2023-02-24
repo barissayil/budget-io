@@ -32,7 +32,6 @@ describe("spendings (soon: transactions)", () => {
   let spending17p03FoodGroceriesCasinoTwentiethCurrentMonth: Transaction;
   let spending1000HousingRentLodgisOneMonthAgo: Transaction;
   let spending1255p44TransitAirplaneTurkeyOneMonthAgo: Transaction;
-
   let spending20FoodOrderDominosToday: Transaction;
   let spending1255p44TravelAirplaneTurkeyOneMonthAgo: Transaction;
   let spending12p5ClothingJeansBonoboToday: Transaction;
@@ -708,6 +707,59 @@ describe("spendings (soon: transactions)", () => {
         "Order"
       );
       expect(details).toEqual([]);
+    });
+  });
+  describe("errors", () => {
+    it("should throw when trying to update a spending with invalid id", async () => {
+      await expect(
+        updateTransaction("invalidId", userEmail, {
+          date: today,
+          amount: 10,
+          type: TransactionType.SPENDING,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "PNY",
+        })
+      ).rejects.toThrowError("Record to update not found.");
+    });
+    it("should throw when trying to delete a spending with invalid id", async () => {
+      await expect(deleteTransaction("invalidId", userEmail)).rejects.toThrowError(
+        "Record to delete does not exist."
+      );
+    });
+    it("should throw when trying to update a deleted spending", async () => {
+      await expect(
+        updateTransaction(spending1255p44TravelAirplaneTurkeyOneMonthAgo.id, userEmail, {
+          date: today,
+          amount: 10,
+          type: TransactionType.SPENDING,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "PNY",
+        })
+      ).rejects.toThrowError("Record to update not found.");
+    });
+    it("should throw when trying to delete a deleted spending", async () => {
+      await expect(
+        deleteTransaction(spending1255p44TravelAirplaneTurkeyOneMonthAgo.id, userEmail)
+      ).rejects.toThrowError("Record to delete does not exist.");
+    });
+    it("should throw when trying to update a different user's spending", async () => {
+      await expect(
+        updateTransaction(spending10ClothingShirtCelioToday.id, differentUserEmail, {
+          date: today,
+          amount: 11,
+          type: TransactionType.SPENDING,
+          category: "Clothing",
+          subcategory: "Shirt",
+          details: "Celio",
+        })
+      ).rejects.toThrowError("Record to update not found.");
+    });
+    it("should throw when trying to delete a different user's spending", async () => {
+      await expect(
+        deleteTransaction(spending10ClothingShirtCelioToday.id, differentUserEmail)
+      ).rejects.toThrowError("Record to delete does not exist.");
     });
   });
 });
