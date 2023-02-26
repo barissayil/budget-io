@@ -26,7 +26,7 @@ const DetailsSelect = ({ form, category, subcategory }: Props) => {
     <div className="relative mb-3">
       <LoadingOverlay visible={!initialData} overlayBlur={2} loaderProps={{ size: "sm" }} />
       <Select
-        placeholder="Detail"
+        placeholder="Details"
         data={data}
         {...form.getInputProps("details")}
         maxDropdownHeight={280}

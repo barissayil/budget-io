@@ -55,7 +55,7 @@ const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionMod
           subcategory={form.values.subcategory}
         />
       ) : (
-        <Select placeholder="Detail" data={[]} disabled={true} className="mb-3" />
+        <Select placeholder="Details" data={[]} disabled={true} className="mb-3" />
       )}
       <Group position="right" mt="md">
         <Button type="button" variant="default" onClick={() => setOpenedTransactionModal(null)}>
