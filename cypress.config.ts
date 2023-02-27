@@ -2,16 +2,18 @@ import prisma from "@db/prisma";
 import { defineConfig } from "cypress";
 import dayjs from "dayjs";
 
+const email = "user@e2e.com";
+
 export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on) {
       on("task", {
         async "db:seed:user"() {
-          await prisma.user.deleteMany({ where: { email: "user@e2e.com" } });
+          await prisma.user.deleteMany({ where: { email } });
           return prisma.user.create({
             data: {
-              email: "user@e2e.com",
+              email,
             },
           });
         },
@@ -21,7 +23,7 @@ export default defineConfig({
           });
           return prisma.session.create({
             data: {
-              user: { connect: { email: "user@e2e.com" } },
+              user: { connect: { email } },
               expires: dayjs().add(1, "year").toDate(),
               sessionToken,
             },
