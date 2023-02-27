@@ -70,13 +70,14 @@ export const deleteTransaction = (id: string, userEmail: string) => {
 
 export const getCategories = async (userEmail: string, type: TransactionType) => {
   const transactionsWithDistinctCategories = await prisma.transaction.findMany({
+    distinct: "category",
     where: {
       user: {
         email: userEmail,
       },
       type,
     },
-    distinct: "category",
+    orderBy: { category: "asc" },
   });
   return transactionsWithDistinctCategories.map((transaction) => transaction.category);
 };
@@ -87,6 +88,7 @@ export const getSubcategories = async (
   category: string
 ) => {
   const transactionsWithDistinctSubcategories = await prisma.transaction.findMany({
+    distinct: "subcategory",
     where: {
       user: {
         email: userEmail,
@@ -94,7 +96,7 @@ export const getSubcategories = async (
       type,
       category,
     },
-    distinct: "subcategory",
+    orderBy: { subcategory: "asc" },
   });
   return transactionsWithDistinctSubcategories.map((transaction) => transaction.subcategory);
 };
@@ -106,6 +108,7 @@ export const getDetails = async (
   subcategory: string
 ) => {
   const transactionsWithDistinctDetails = await prisma.transaction.findMany({
+    distinct: "details",
     where: {
       user: {
         email: userEmail,
@@ -114,7 +117,7 @@ export const getDetails = async (
       category,
       subcategory,
     },
-    distinct: "details",
+    orderBy: { details: "asc" },
   });
   return transactionsWithDistinctDetails.map((transaction) => transaction.details);
 };
