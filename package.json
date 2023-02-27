@@ -14,7 +14,7 @@
     "test": "jest -i",
     "up": "docker-compose up -d",
     "down": "docker-compose down",
-    "cypress:open": "cypress open"
+    "cypress": "cypress open"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
