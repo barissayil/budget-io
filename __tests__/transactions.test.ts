@@ -12,8 +12,8 @@ import { Transaction, TransactionType } from "@prisma/client";
 import dayjs from "dayjs";
 
 describe("spendings (soon: transactions)", () => {
-  const userEmail = "barissayil@protonmail.com";
-  const differentUserEmail = "somedude@gmail.com";
+  const userEmail = "user@test.com";
+  const differentUserEmail = "different-user@test.com";
 
   const today = dayjs().format().substring(0, 10);
   const firstOfCurrentMonth = today.slice(0, 8) + "01";
@@ -38,16 +38,8 @@ describe("spendings (soon: transactions)", () => {
   let spending10ClothingShirtUniqloOneMonthAgo: Transaction;
 
   beforeAll(async () => {
-    await prisma.$transaction([
-      prisma.account.deleteMany(),
-      prisma.session.deleteMany(),
-      prisma.transaction.deleteMany(),
-      prisma.user.deleteMany(),
-      prisma.verificationToken.deleteMany(),
-    ]);
-
-    await prisma.user.create({ data: { email: userEmail } });
-    await prisma.user.create({ data: { email: differentUserEmail } });
+    await prisma.user.deleteMany({ where: { email: { contains: "@test.com" } } });
+    await prisma.user.createMany({ data: [{ email: userEmail }, { email: differentUserEmail }] });
   });
   describe("initial state", () => {
     it("should have no spendings in current month", async () => {
