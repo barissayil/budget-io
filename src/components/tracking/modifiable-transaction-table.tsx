@@ -43,7 +43,7 @@ const ModifiableTransactionTable = ({
             <Loader />
           )}
         </div>
-        <div className="hidden md:flex">
+        <div className="hidden sm:flex">
           <TransactionTable
             monthIndex={monthIndex}
             selectedCategory={selectedCategory}
@@ -52,7 +52,7 @@ const ModifiableTransactionTable = ({
             mobileView={false}
           />
         </div>
-        <div className="flex md:hidden">
+        <div className="flex sm:hidden">
           <TransactionTable
             monthIndex={monthIndex}
             selectedCategory={selectedCategory}

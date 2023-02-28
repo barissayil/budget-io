@@ -36,7 +36,7 @@ const Header = () => {
             Budget IO
           </Text>
 
-          {/* <Group spacing={0} className="hidden h-full md:flex">
+          {/* <Group spacing={0} className="hidden h-full sm:flex">
             {links.map((link) => (
               <a
                 key={link}
@@ -48,7 +48,7 @@ const Header = () => {
             ))}
           </Group> */}
 
-          <Group className="hidden md:flex">
+          <Group className="hidden sm:flex">
             <Button variant="default" className="px-1.5" onClick={toggle}>
               {fullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
             </Button>
@@ -61,7 +61,7 @@ const Header = () => {
             )}
           </Group>
 
-          <Burger opened={drawerOpened} onClick={toggleDrawer} className="md:hidden" />
+          <Burger opened={drawerOpened} onClick={toggleDrawer} className="sm:hidden" />
         </Group>
       </MantineHeader>
 
@@ -71,7 +71,7 @@ const Header = () => {
         size="100%"
         padding="md"
         title="Navigation"
-        className="md:hidden"
+        className="sm:hidden"
         zIndex={1000000}
       >
         <ScrollArea sx={{ height: "calc(100vh - 60px)" }} mx="-md">

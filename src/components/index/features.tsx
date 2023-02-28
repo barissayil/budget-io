@@ -43,7 +43,7 @@ const Features = ({ containerRef }: Props) => {
         </Badge>
       </Group>
 
-      <Title order={2} className="text-2xl font-black md:text-4xl" align="center" mt="sm">
+      <Title order={2} className="text-2xl font-black sm:text-4xl" align="center" mt="sm">
         A new kind of budgeting app just for you
       </Title>
 
