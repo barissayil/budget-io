@@ -12,6 +12,7 @@
     "db:push": "prisma db push",
     "studio": "prisma studio",
     "test": "jest -i",
+    "e2e": "cypress run",
     "up": "docker-compose up -d",
     "down": "docker-compose down",
     "cypress": "cypress open"
