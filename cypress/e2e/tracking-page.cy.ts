@@ -1,3 +1,4 @@
+import { simulateDelay } from "@lib/delay";
 import dayjs from "dayjs";
 
 before(() => {
@@ -67,10 +68,16 @@ describe("testing the tracking page", { testIsolation: false }, () => {
   });
 
   it("should be able to edit a transaction", () => {
-    cy.intercept({
-      method: "PUT",
-      url: "/api/transaction/*",
-    }).as("updateTransaction");
+    cy.intercept(
+      {
+        method: "PUT",
+        url: "/api/transaction/*",
+      },
+      async (req) => {
+        await simulateDelay(1000);
+        req.continue();
+      }
+    ).as("updateTransaction");
 
     cy.get(".hidden .icon-tabler-edit").first().click();
     cy.get("form")
@@ -124,10 +131,16 @@ describe("testing the tracking page", { testIsolation: false }, () => {
   });
 
   it("should be able to delete a transaction", () => {
-    cy.intercept({
-      method: "DELETE",
-      url: "/api/transaction/*",
-    }).as("deleteTransaction");
+    cy.intercept(
+      {
+        method: "DELETE",
+        url: "/api/transaction/*",
+      },
+      async (req) => {
+        await simulateDelay(1000);
+        req.continue();
+      }
+    ).as("deleteTransaction");
 
     cy.get(".hidden .icon-tabler-trash").eq(1).click();
     cy.contains(/^Delete$/).click();

@@ -1,3 +1,5 @@
+import { simulateDelay } from "@lib/delay";
+
 Cypress.Commands.add("register", () => {
   cy.log("register");
 
@@ -41,10 +43,16 @@ Cypress.Commands.add(
       method: "GET",
       url: "/api/transaction/details/*/*",
     }).as("getDetails");
-    cy.intercept({
-      method: "POST",
-      url: "/api/transaction",
-    }).as("createTransaction");
+    cy.intercept(
+      {
+        method: "POST",
+        url: "/api/transaction",
+      },
+      async (req) => {
+        await simulateDelay(1000);
+        req.continue();
+      }
+    ).as("createTransaction");
 
     cy.contains("Add transaction").click();
 
