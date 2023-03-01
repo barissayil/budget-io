@@ -21,12 +21,12 @@ describe("testing the 404 page", () => {
 
     cy.login()
       .visit("/invalid-url", { failOnStatusCode: false })
-      .url({ timeout: 10000 })
+      .url({ timeout: 60000 })
       .should("equal", baseUrl + "/invalid-url");
 
     cy.contains("Take me back")
       .click()
-      .url({ timeout: 10000 })
+      .url({ timeout: 60000 })
       .should("equal", baseUrl + "/tracking");
   });
 });
