@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 const email = "user@e2e.com";
 
 export default defineConfig({
+  video: false,
   e2e: {
     baseUrl: "http://localhost:3000",
     setupNodeEvents(on) {
