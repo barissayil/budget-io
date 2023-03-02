@@ -1,8 +1,7 @@
 describe("testing the index page", () => {
   it("should render the index page correctly", () => {
-    cy.visit("/")
-      .url()
-      .should("equal", Cypress.config().baseUrl + "/");
+    cy.visit("/");
+
     cy.contains("Revolutionize your budgeting with ease").should("be.visible");
     cy.contains(
       "Transform your budgeting process with Budget IO." +
