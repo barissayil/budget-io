@@ -1,9 +1,6 @@
 import { simulateDelay } from "@lib/delay";
 import dayjs from "dayjs";
 
-before(() => {
-  cy.register().login();
-});
 describe("testing the tracking page", { testIsolation: false }, () => {
   const today = dayjs().format().substring(0, 10);
   const firstOfPreviousMonth =
@@ -13,8 +10,14 @@ describe("testing the tracking page", { testIsolation: false }, () => {
   const tenthOfCurrentMonth = today.slice(0, 8) + "10";
   const eleventhOfCurrentMonth = today.slice(0, 8) + "11";
 
+  before(() => {
+    cy.register();
+    cy.login();
+    cy.visit("/");
+  });
+
   it("should have no transactions in the current month", () => {
-    cy.visit("/").contains("No records").should("be.visible");
+    cy.contains("No records").should("be.visible");
   });
 
   it("should be able to add a transaction", () => {

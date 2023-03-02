@@ -1,8 +1,9 @@
-before(() => {
-  cy.register();
-});
 describe("testing the 404 page", () => {
   const { baseUrl } = Cypress.config();
+
+  before(() => {
+    cy.register();
+  });
 
   it("should render the 404 page correctly", () => {
     cy.visit("/invalid-url", { failOnStatusCode: false })

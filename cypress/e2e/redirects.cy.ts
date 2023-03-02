@@ -1,41 +1,38 @@
+const { baseUrl } = Cypress.config();
+
 before(() => {
   cy.register();
 });
-describe("testing redirects", () => {
+
+describe("testing redirects before logging in", () => {
   it("should redirect correctly", () => {
-    const { baseUrl } = Cypress.config();
+    cy.visit("/");
+    cy.url().should("equal", baseUrl + "/");
 
-    cy.visit("/")
-      .url()
-      .should("equal", baseUrl + "/");
+    cy.visit("/tracking");
+    cy.url().should("equal", baseUrl + "/");
 
-    cy.contains("Get started")
-      .click()
-      .url()
-      .should("include", baseUrl + "/auth/signin");
+    cy.contains("Get started").click();
+    cy.url().should("include", baseUrl + "/auth/signin");
+  });
+});
 
-    cy.login()
-      .url({ timeout: 60000 })
-      .should("equal", baseUrl + "/tracking");
-    cy.visit("/")
-      .url()
-      .should("equal", baseUrl + "/tracking");
+describe("testing redirects after logging in", () => {
+  before(() => {
+    cy.login();
+  });
+  it("should redirect correctly", () => {
+    cy.visit("/");
+    cy.url().should("equal", baseUrl + "/tracking");
 
-    cy.contains("Sign out")
-      .click()
-      .url()
-      .should("equal", baseUrl + "/");
-    cy.visit("/tracking")
-      .url()
-      .should("equal", baseUrl + "/");
-    cy.contains("Sign in")
-      .click()
-      .url()
-      .should("include", baseUrl + "/auth/signin");
+    cy.visit("/tracking");
+    cy.url().should("equal", baseUrl + "/tracking");
 
-    cy.login()
-      .url({ timeout: 60000 })
-      .should("equal", baseUrl + "/tracking");
+    cy.contains("Sign out").click();
+    cy.url().should("equal", baseUrl + "/");
+
+    cy.visit("/tracking");
+    cy.url().should("equal", baseUrl + "/");
   });
 });
 
