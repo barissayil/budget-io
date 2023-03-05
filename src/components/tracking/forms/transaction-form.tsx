@@ -62,7 +62,7 @@ const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionMod
           Cancel
         </Button>
         <Button type="submit" color={formType === "ADD" ? "cyan" : "teal"}>
-          {formType === "ADD" ? "Add" : "Update"}
+          {formType === "ADD" ? "Add" : "Edit"}
         </Button>
       </Group>
     </form>
