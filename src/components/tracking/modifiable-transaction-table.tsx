@@ -2,7 +2,10 @@ import { Dispatch, SetStateAction, useState } from "react";
 import TransactionTable from "@components/tracking/transaction-table";
 import { ActionIcon, Button, Group, Loader, Select } from "@mantine/core";
 import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
-import { ArrowRight as ArrowRightIcon, ArrowLeft as ArrowLeftIcon } from "tabler-icons-react";
+import {
+  SquareArrowRight as ArrowRightIcon,
+  SquareArrowLeft as ArrowLeftIcon,
+} from "tabler-icons-react";
 import useSWR from "swr";
 
 type Props = {

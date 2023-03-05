@@ -236,7 +236,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
   });
 
   it("should have no transactions in the previous month", () => {
-    cy.get(".icon-tabler-arrow-left").click();
+    cy.get(".icon-tabler-square-arrow-left").click();
     cy.contains("No records").should("be.visible");
   });
 
