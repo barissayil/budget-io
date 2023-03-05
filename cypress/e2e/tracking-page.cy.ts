@@ -92,7 +92,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           .type("Company Y")
           .type("{downarrow}")
           .type("{enter}");
-        cy.contains("Update").click();
+        cy.contains("Edit").click();
       });
 
     cy.contains("Editing").should("be.visible");
