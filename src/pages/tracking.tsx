@@ -3,15 +3,15 @@ import Layout from "@components/layout";
 import { Transaction } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
-import ModifiableTransactionTable from "@components/tracking/modifiable-transaction-table";
 import { useState } from "react";
 import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
-import { Alert, Loader, Title } from "@mantine/core";
+import { Alert, Button, Loader } from "@mantine/core";
 import useSWR from "swr";
 import { AlertCircle as AlertCircleIcon } from "tabler-icons-react";
 import useRouterAuth from "@hooks/use-router-auth";
-import dayjs from "dayjs";
 import TransactionModals from "@components/tracking/transaction-modals";
+import FilterableTransactionTable from "@components/tracking/filterable-transaction-table";
+import MonthPaper from "@components/tracking/month-paper";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -72,16 +72,15 @@ const Tracking: NextPage = () => {
             monthIndex={monthIndex}
             setSelectedTransactionId={setSelectedTransactionId}
           />
-          <Title className="m-5" order={1}>
-            {dayjs().subtract(monthIndex, "months").format("MMMM YYYY")}
-          </Title>
-          <ModifiableTransactionTable
+          <MonthPaper monthIndex={monthIndex} setMonthIndex={setMonthIndex} />
+          <FilterableTransactionTable
             monthIndex={monthIndex}
-            setMonthIndex={setMonthIndex}
-            setOpenedTransactionModal={setOpenedTransactionModal}
             openEditTransactionModal={openEditTransactionModal}
             openDeleteTransactionModal={openDeleteTransactionModal}
           />
+          <Button className="m-5" onClick={() => setOpenedTransactionModal("ADD")} color="cyan">
+            Add transaction
+          </Button>
         </div>
       )}
     </Layout>
