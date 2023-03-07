@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import Head from "next/head";
 
 type Props = {
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 const Layout = ({ children }: Props) => {
