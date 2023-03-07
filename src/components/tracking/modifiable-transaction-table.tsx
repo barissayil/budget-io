@@ -28,8 +28,11 @@ const ModifiableTransactionTable = ({
   const { data: categories } = useSWR<string[], Error>(`/api/transaction/category`);
 
   return (
-    <>
-      <div className="flex flex-auto flex-col items-center justify-between gap-2 p-2">
+    <div className="flex flex-auto flex-col items-center gap-2 p-2">
+      <Group>
+        <ActionIcon color="cyan" size="xl" onClick={() => setMonthIndex(monthIndex + 1)}>
+          <ArrowLeftIcon size={80} strokeWidth={2} />
+        </ActionIcon>
         <div className="flex">
           {categories ? (
             <Select
@@ -46,42 +49,37 @@ const ModifiableTransactionTable = ({
             <Loader />
           )}
         </div>
-        <div className="hidden sm:flex">
-          <TransactionTable
-            monthIndex={monthIndex}
-            selectedCategory={selectedCategory}
-            openEditTransactionModal={openEditTransactionModal}
-            openDeleteTransactionModal={openDeleteTransactionModal}
-            mobileView={false}
-          />
-        </div>
-        <div className="flex sm:hidden">
-          <TransactionTable
-            monthIndex={monthIndex}
-            selectedCategory={selectedCategory}
-            openEditTransactionModal={openEditTransactionModal}
-            openDeleteTransactionModal={openDeleteTransactionModal}
-            mobileView={true}
-          />
-        </div>
-        <Group>
-          <ActionIcon color="cyan" size="xl" onClick={() => setMonthIndex(monthIndex + 1)}>
-            <ArrowLeftIcon size={80} strokeWidth={2} />
-          </ActionIcon>
-          <Button onClick={() => setOpenedTransactionModal("ADD")} color="cyan">
-            Add transaction
-          </Button>
-          <ActionIcon
-            color="cyan"
-            size="xl"
-            className={monthIndex === 0 ? "collapse" : ""}
-            onClick={() => setMonthIndex(monthIndex - 1)}
-          >
-            <ArrowRightIcon size={80} strokeWidth={2} />
-          </ActionIcon>
-        </Group>
+        <ActionIcon
+          color="cyan"
+          size="xl"
+          className={monthIndex === 0 ? "collapse" : ""}
+          onClick={() => setMonthIndex(monthIndex - 1)}
+        >
+          <ArrowRightIcon size={80} strokeWidth={2} />
+        </ActionIcon>
+      </Group>
+      <div className="hidden sm:flex">
+        <TransactionTable
+          monthIndex={monthIndex}
+          selectedCategory={selectedCategory}
+          openEditTransactionModal={openEditTransactionModal}
+          openDeleteTransactionModal={openDeleteTransactionModal}
+          mobileView={false}
+        />
       </div>
-    </>
+      <div className="flex sm:hidden">
+        <TransactionTable
+          monthIndex={monthIndex}
+          selectedCategory={selectedCategory}
+          openEditTransactionModal={openEditTransactionModal}
+          openDeleteTransactionModal={openDeleteTransactionModal}
+          mobileView={true}
+        />
+      </div>
+      <Button onClick={() => setOpenedTransactionModal("ADD")} color="cyan">
+        Add transaction
+      </Button>
+    </div>
   );
 };
 
