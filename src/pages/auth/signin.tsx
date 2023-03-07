@@ -28,30 +28,28 @@ const SignIn = () => {
 
   return (
     <Layout>
-      <div className="flex flex-1 justify-center">
-        <Paper radius="md" p="xl" withBorder className="m-3 self-center">
-          <Text size="lg" weight={500}>
-            Welcome to Budget IO!
-          </Text>
-          <Group mb="md" mt="md">
-            <Button
-              leftIcon={<GithubIcon />}
-              onClick={() => signIn("github")}
-              className="bg-zinc-800 text-white hover:bg-zinc-700"
-            >
-              Continue with GitHub
-            </Button>
-            <Button
-              leftIcon={<GoogleIcon />}
-              variant="default"
-              color="gray"
-              onClick={() => signIn("google")}
-            >
-              Continue with Google
-            </Button>
-          </Group>
-        </Paper>
-      </div>
+      <Paper radius="md" p="xl" withBorder className="m-3 self-center">
+        <Text size="lg" weight={500}>
+          Welcome to Budget IO!
+        </Text>
+        <Group mb="md" mt="md">
+          <Button
+            leftIcon={<GithubIcon />}
+            onClick={() => signIn("github")}
+            className="bg-zinc-800 text-white hover:bg-zinc-700"
+          >
+            Continue with GitHub
+          </Button>
+          <Button
+            leftIcon={<GoogleIcon />}
+            variant="default"
+            color="gray"
+            onClick={() => signIn("google")}
+          >
+            Continue with Google
+          </Button>
+        </Group>
+      </Paper>
     </Layout>
   );
 };
