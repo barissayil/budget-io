@@ -9,10 +9,11 @@ import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
 import AddTransactionModal from "@components/tracking/modals/add-transaction-modal";
 import DeleteTransactionModal from "@components/tracking/modals/delete-transaction-modal";
 import EditTransactionModal from "@components/tracking/modals/edit-transaction-modal";
-import { Alert, Loader } from "@mantine/core";
+import { Alert, Loader, Title } from "@mantine/core";
 import useSWR from "swr";
 import { AlertCircle as AlertCircleIcon } from "tabler-icons-react";
 import useRouterAuth from "@hooks/use-router-auth";
+import dayjs from "dayjs";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -94,13 +95,18 @@ const Tracking: NextPage = () => {
         </Alert>
       )}
       {status === "authenticated" && !error && (
-        <ModifiableTransactionTable
-          monthIndex={monthIndex}
-          setMonthIndex={setMonthIndex}
-          setOpenedTransactionModal={setOpenedTransactionModal}
-          openEditTransactionModal={openEditTransactionModal}
-          openDeleteTransactionModal={openDeleteTransactionModal}
-        />
+        <div className="flex flex-auto flex-col items-center">
+          <Title className="m-5" order={1}>
+            {dayjs().subtract(monthIndex, "months").format("MMMM YYYY")}
+          </Title>
+          <ModifiableTransactionTable
+            monthIndex={monthIndex}
+            setMonthIndex={setMonthIndex}
+            setOpenedTransactionModal={setOpenedTransactionModal}
+            openEditTransactionModal={openEditTransactionModal}
+            openDeleteTransactionModal={openDeleteTransactionModal}
+          />
+        </div>
       )}
     </Layout>
   );
