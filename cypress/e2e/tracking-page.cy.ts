@@ -10,14 +10,18 @@ describe("testing the tracking page", { testIsolation: false }, () => {
   const tenthOfCurrentMonth = today.slice(0, 8) + "10";
   const eleventhOfCurrentMonth = today.slice(0, 8) + "11";
 
+  const currentMonthAndYear = dayjs().format("MMMM YYYY");
+  const previousMonthAndYear = dayjs().subtract(1, "months").format("MMMM YYYY");
+
   before(() => {
     cy.register();
     cy.login();
     cy.visit("/");
   });
 
-  it("should have no transactions in the current month", () => {
+  it("should have no transactions in the current month and have current month and year as title", () => {
     cy.contains("No records").should("be.visible");
+    cy.get("h1").contains(currentMonthAndYear);
   });
 
   it("should be able to add a transaction", () => {
@@ -235,9 +239,10 @@ describe("testing the tracking page", { testIsolation: false }, () => {
     ]);
   });
 
-  it("should have no transactions in the previous month", () => {
+  it("should have no transactions in the previous month and have previous month and year as title", () => {
     cy.get(".icon-tabler-square-arrow-left").click();
     cy.contains("No records").should("be.visible");
+    cy.get("h1").contains(previousMonthAndYear);
   });
 
   it("should be able to add a transaction to the previous month", () => {
