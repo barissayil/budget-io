@@ -6,14 +6,12 @@ import { authOptions } from "@api/auth/[...nextauth]";
 import ModifiableTransactionTable from "@components/tracking/modifiable-transaction-table";
 import { useState } from "react";
 import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
-import AddTransactionModal from "@components/tracking/modals/add-transaction-modal";
-import DeleteTransactionModal from "@components/tracking/modals/delete-transaction-modal";
-import EditTransactionModal from "@components/tracking/modals/edit-transaction-modal";
 import { Alert, Loader, Title } from "@mantine/core";
 import useSWR from "swr";
 import { AlertCircle as AlertCircleIcon } from "tabler-icons-react";
 import useRouterAuth from "@hooks/use-router-auth";
 import dayjs from "dayjs";
+import TransactionModals from "@components/tracking/transaction-modals";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
@@ -42,12 +40,6 @@ const Tracking: NextPage = () => {
     useState<OpenedTransactionModal>(null);
   const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null);
 
-  const getTransaction = (id: string): Transaction => {
-    return (transactions as Transaction[]).find(
-      (transaction) => transaction.id === id
-    ) as Transaction;
-  };
-
   const openEditTransactionModal = (id: string) => {
     setSelectedTransactionId(id);
     setOpenedTransactionModal("EDIT");
@@ -57,33 +49,9 @@ const Tracking: NextPage = () => {
     setSelectedTransactionId(id);
     setOpenedTransactionModal("DELETE");
   };
+
   return (
     <Layout>
-      {openedTransactionModal === "ADD" && (
-        <AddTransactionModal
-          setOpenedTransactionModal={setOpenedTransactionModal}
-          transactions={transactions as Transaction[]}
-          monthIndex={monthIndex}
-        />
-      )}
-      {openedTransactionModal === "EDIT" && (
-        <EditTransactionModal
-          transactionToUpdate={getTransaction(selectedTransactionId as string)}
-          setOpenedTransactionModal={setOpenedTransactionModal}
-          transactions={transactions as Transaction[]}
-          monthIndex={monthIndex}
-          setSelectedTransactionId={setSelectedTransactionId}
-        />
-      )}
-      {openedTransactionModal === "DELETE" && (
-        <DeleteTransactionModal
-          transactionIdToDelete={selectedTransactionId as string}
-          setOpenedTransactionModal={setOpenedTransactionModal}
-          transactions={transactions as Transaction[]}
-          monthIndex={monthIndex}
-          setSelectedTransactionId={setSelectedTransactionId}
-        />
-      )}
       {status === "loading" && !error && (
         <div className="m-10 self-center">
           <Loader />
@@ -96,6 +64,14 @@ const Tracking: NextPage = () => {
       )}
       {status === "authenticated" && !error && (
         <div className="flex flex-auto flex-col items-center">
+          <TransactionModals
+            selectedTransactionId={selectedTransactionId}
+            openedTransactionModal={openedTransactionModal}
+            setOpenedTransactionModal={setOpenedTransactionModal}
+            transactions={transactions}
+            monthIndex={monthIndex}
+            setSelectedTransactionId={setSelectedTransactionId}
+          />
           <Title className="m-5" order={1}>
             {dayjs().subtract(monthIndex, "months").format("MMMM YYYY")}
           </Title>
