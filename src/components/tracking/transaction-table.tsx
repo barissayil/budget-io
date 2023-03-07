@@ -4,19 +4,16 @@ import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import TransactionActionsGroup from "@components/tracking/transaction-actions-group";
 import { useState } from "react";
 import { sortBy } from "lodash";
-import useSWR from "swr";
 
 type Props = {
-  monthIndex: number;
-  selectedCategory: string | null;
+  transactions?: Transaction[];
   openEditTransactionModal: (id: string) => void;
   openDeleteTransactionModal: (id: string) => void;
   mobileView: boolean;
 };
 
 const TransactionTable = ({
-  monthIndex,
-  selectedCategory,
+  transactions,
   openEditTransactionModal,
   openDeleteTransactionModal,
   mobileView,
@@ -26,32 +23,20 @@ const TransactionTable = ({
     direction: "asc",
   });
 
-  const { data: transaction } = useSWR<Transaction[], Error>(
-    `/api/transaction/month/${monthIndex}`
-  );
-
-  const filteredTransactions = transaction?.filter(
-    (transaction) => !selectedCategory || transaction.category === selectedCategory
-  );
-  const sortedFilteredTransactions = sortBy(filteredTransactions, [
-    sortStatus.columnAccessor,
-    "id",
-  ]);
-  const records =
-    sortStatus.direction === "desc"
-      ? sortedFilteredTransactions.reverse()
-      : sortedFilteredTransactions;
+  const sortedTransactions = sortBy(transactions, [sortStatus.columnAccessor, "id"]);
+  const orderedSortedTransactions =
+    sortStatus.direction === "desc" ? sortedTransactions.reverse() : sortedTransactions;
 
   return (
     <DataTable
       withBorder
       textSelectionDisabled
       shadow="xs"
-      minHeight={records.length > 0 ? 0 : 150}
-      records={records}
+      minHeight={orderedSortedTransactions.length > 0 ? 0 : 150}
+      records={orderedSortedTransactions}
       sortStatus={sortStatus}
       onSortStatusChange={setSortStatus}
-      fetching={transaction === undefined}
+      fetching={transactions === undefined}
       columns={[
         { accessor: "date", sortable: true },
         { accessor: "amount", sortable: true },
