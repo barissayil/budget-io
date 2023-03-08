@@ -1,4 +1,4 @@
-import { Text } from "@mantine/core";
+import { Loader, Paper, Text } from "@mantine/core";
 import { Transaction } from "@prisma/client";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import TransactionActionsGroup from "@components/tracking/transaction-actions-group";
@@ -29,38 +29,47 @@ const TransactionTable = ({
       : sortBy(transactions, [sortStatus.columnAccessor, "id"]).reverse();
 
   return (
-    <DataTable
-      withBorder
-      textSelectionDisabled
-      shadow="xs"
-      minHeight={sortedTransactions.length > 0 ? 0 : 150}
-      records={sortedTransactions}
-      sortStatus={sortStatus}
-      onSortStatusChange={setSortStatus}
-      fetching={transactions === undefined}
-      columns={[
-        { accessor: "date", sortable: true },
-        { accessor: "amount", sortable: true },
-        { accessor: "category" },
-        {
-          accessor: "subcategory",
-          hidden: mobileView,
-        },
-        { accessor: "details", hidden: mobileView },
-        {
-          accessor: "actions",
-          title: <Text mr="xs"></Text>,
-          textAlignment: "right",
-          render: (transaction) => (
-            <TransactionActionsGroup
-              transactionId={transaction.id}
-              openEditTransactionModal={openEditTransactionModal}
-              openDeleteTransactionModal={openDeleteTransactionModal}
-            />
-          ),
-        },
-      ]}
-    />
+    <div className="flex flex-auto flex-col items-center gap-2 p-2">
+      <DataTable
+        withBorder
+        textSelectionDisabled
+        shadow="xs"
+        minHeight={sortedTransactions.length > 0 ? 0 : 150}
+        records={sortedTransactions}
+        sortStatus={sortStatus}
+        onSortStatusChange={setSortStatus}
+        fetching={transactions === undefined}
+        columns={[
+          { accessor: "date", sortable: true },
+          { accessor: "amount", sortable: true },
+          { accessor: "category" },
+          {
+            accessor: "subcategory",
+            hidden: mobileView,
+          },
+          { accessor: "details", hidden: mobileView },
+          {
+            accessor: "actions",
+            title: <Text mr="xs"></Text>,
+            textAlignment: "right",
+            render: (transaction) => (
+              <TransactionActionsGroup
+                transactionId={transaction.id}
+                openEditTransactionModal={openEditTransactionModal}
+                openDeleteTransactionModal={openDeleteTransactionModal}
+              />
+            ),
+          },
+        ]}
+      />
+      {transactions ? (
+        <Paper shadow="sm" p="sm">
+          <Text fw={500}>Total: {transactions.reduce((acc, { amount }) => acc + amount, 0)}</Text>
+        </Paper>
+      ) : (
+        <Loader />
+      )}
+    </div>
   );
 };
 

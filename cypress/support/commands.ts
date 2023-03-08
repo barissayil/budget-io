@@ -98,7 +98,8 @@ Cypress.Commands.add(
       category: string;
       subcategory: string;
       details: string;
-    }[]
+    }[],
+    total: number
   ) => {
     cy.log("check transaction table");
 
@@ -118,7 +119,12 @@ Cypress.Commands.add(
         .next()
         .contains(details);
     });
-    cy.get("@rows").eq(transactions.length).should("not.exist");
+
+    transactions.length === 0
+      ? cy.contains("No records").should("be.visible")
+      : cy.get("@rows").eq(transactions.length).should("not.exist");
+
+    cy.contains(`Total: ${total}`).should("be.visible");
   }
 );
 
@@ -143,7 +149,8 @@ declare global {
           category: string;
           subcategory: string;
           details: string;
-        }[]
+        }[],
+        total: number
       ): Chainable<void>;
     }
   }
