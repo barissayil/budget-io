@@ -23,17 +23,18 @@ const TransactionTable = ({
     direction: "asc",
   });
 
-  const sortedTransactions = sortBy(transactions, [sortStatus.columnAccessor, "id"]);
-  const orderedSortedTransactions =
-    sortStatus.direction === "desc" ? sortedTransactions.reverse() : sortedTransactions;
+  const sortedTransactions =
+    sortStatus.direction === "asc"
+      ? sortBy(transactions, [sortStatus.columnAccessor, "id"])
+      : sortBy(transactions, [sortStatus.columnAccessor, "id"]).reverse();
 
   return (
     <DataTable
       withBorder
       textSelectionDisabled
       shadow="xs"
-      minHeight={orderedSortedTransactions.length > 0 ? 0 : 150}
-      records={orderedSortedTransactions}
+      minHeight={sortedTransactions.length > 0 ? 0 : 150}
+      records={sortedTransactions}
       sortStatus={sortStatus}
       onSortStatusChange={setSortStatus}
       fetching={transactions === undefined}
