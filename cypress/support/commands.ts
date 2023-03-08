@@ -121,7 +121,7 @@ Cypress.Commands.add(
     });
 
     transactions.length === 0
-      ? cy.contains("No records").should("be.visible")
+      ? cy.contains("No transactions").should("be.visible")
       : cy.get("@rows").eq(transactions.length).should("not.exist");
 
     cy.contains(`Total: ${total}`).should("be.visible");

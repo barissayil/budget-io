@@ -39,6 +39,7 @@ const TransactionTable = ({
         sortStatus={sortStatus}
         onSortStatusChange={setSortStatus}
         fetching={transactions === undefined}
+        noRecordsText="No transactions"
         columns={[
           { accessor: "date", sortable: true },
           { accessor: "amount", sortable: true },
