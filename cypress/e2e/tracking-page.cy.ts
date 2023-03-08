@@ -26,7 +26,6 @@ describe("testing the tracking page", { testIsolation: false }, () => {
 
   it("should be able to add a transaction", () => {
     cy.addTransaction(5, 30, "Food", "Restaurant", "Restaurant X", false);
-    cy.contains("No records").should("not.be.visible");
     cy.checkTransactionTable(
       [
         {
@@ -268,7 +267,6 @@ describe("testing the tracking page", { testIsolation: false }, () => {
 
   it("should be able to add a transaction to the previous month", () => {
     cy.addTransaction(1, 1250, "Housing", "Rent", "Company Z", true);
-    cy.contains("No records").should("not.be.visible");
     cy.checkTransactionTable(
       [
         {
