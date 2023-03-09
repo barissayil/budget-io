@@ -6,24 +6,34 @@ declare global {
     interface Chainable {
       register(): Chainable<void>;
       login(): Chainable<void>;
-      addTransaction(
-        day: number,
-        amount: number,
-        category: string,
-        subcategory: string,
-        details: string,
-        previousMonth: boolean
-      ): Chainable<void>;
-      checkTransactionTable(
+      addTransaction({
+        dayOfTheMonth,
+        amount,
+        category,
+        subcategory,
+        details,
+        previousMonth,
+      }: {
+        dayOfTheMonth: number;
+        amount: number;
+        category: string;
+        subcategory: string;
+        details: string;
+        previousMonth?: boolean;
+      }): Chainable<void>;
+      checkTransactionTable({
+        transactions,
+        total,
+      }: {
         transactions: {
           date: string;
           amount: number;
           category: string;
           subcategory: string;
           details: string;
-        }[],
-        total: number
-      ): Chainable<void>;
+        }[];
+        total: number;
+      }): Chainable<void>;
     }
   }
 }
@@ -49,14 +59,21 @@ Cypress.Commands.add("login", () => {
 
 Cypress.Commands.add(
   "addTransaction",
-  (
-    day: number,
-    amount: number,
-    category: string,
-    subcategory: string,
-    details: string,
-    previousMonth: boolean
-  ) => {
+  ({
+    dayOfTheMonth,
+    amount,
+    category,
+    subcategory,
+    details,
+    previousMonth,
+  }: {
+    dayOfTheMonth: number;
+    amount: number;
+    category: string;
+    subcategory: string;
+    details: string;
+    previousMonth?: boolean;
+  }) => {
     cy.log("add transaction");
 
     cy.intercept({
@@ -89,7 +106,7 @@ Cypress.Commands.add(
       .within(() => {
         cy.get('input[placeholder*="Date"]').click();
         if (previousMonth) cy.get(".mantine-DatePicker-calendarHeaderControl").first().click();
-        cy.contains(new RegExp("^" + String(day) + "$")).click();
+        cy.contains(new RegExp("^" + String(dayOfTheMonth) + "$")).click();
         cy.get('input[placeholder*="Amount"]').type(String(amount));
         cy.wait("@getCategories", { timeout: 10000 })
           .get('input[placeholder*="Category"]')
@@ -119,16 +136,19 @@ Cypress.Commands.add(
 
 Cypress.Commands.add(
   "checkTransactionTable",
-  (
+  ({
+    transactions,
+    total,
+  }: {
     transactions: {
       date: string;
       amount: number;
       category: string;
       subcategory: string;
       details: string;
-    }[],
-    total: number
-  ) => {
+    }[];
+    total: number;
+  }) => {
     cy.log("check transaction table");
 
     cy.get(".hidden tbody").children().as("rows");
