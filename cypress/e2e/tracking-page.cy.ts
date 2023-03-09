@@ -9,6 +9,12 @@ describe("testing the tracking page", { testIsolation: false }, () => {
   const fifthOfCurrentMonth = today.slice(0, 8) + "05";
   const tenthOfCurrentMonth = today.slice(0, 8) + "10";
   const eleventhOfCurrentMonth = today.slice(0, 8) + "11";
+  const fourteenthOfCurrentMonth = today.slice(0, 8) + "14";
+  const sixteenthOfCurrentMonth = today.slice(0, 8) + "16";
+  const seventeenthOfCurrentMonth = today.slice(0, 8) + "17";
+  const nineteenthOfCurrentMonth = today.slice(0, 8) + "19";
+  const twentiethOfCurrentMonth = today.slice(0, 8) + "20";
+  const twentySecondOfCurrentMonth = today.slice(0, 8) + "22";
 
   const currentMonthAndYear = dayjs().format("MMMM YYYY");
   const previousMonthAndYear = dayjs().subtract(1, "months").format("MMMM YYYY");
@@ -80,6 +86,66 @@ describe("testing the tracking page", { testIsolation: false }, () => {
       previousSubcategories: ["Restaurant"],
       previousDetails: [],
     });
+    cy.addTransaction({
+      dayOfTheMonth: 14,
+      amount: 30,
+      category: "Housing",
+      subcategory: "Hostel",
+      details: "Hostel Y",
+      previousCategories: ["Food", "Housing"],
+      previousSubcategories: ["Rent", "Hostel"],
+      previousDetails: ["Hostel X"],
+    });
+    cy.addTransaction({
+      dayOfTheMonth: 16,
+      amount: 10,
+      category: "Housing",
+      subcategory: "Hostel",
+      details: "Hostel Z",
+      previousCategories: ["Food", "Housing"],
+      previousSubcategories: ["Rent", "Hostel"],
+      previousDetails: ["Hostel X", "Hostel Y"],
+    });
+    cy.addTransaction({
+      dayOfTheMonth: 17,
+      amount: 100,
+      category: "Food",
+      subcategory: "Restaurant",
+      details: "Restaurant Y",
+      previousCategories: ["Food", "Housing"],
+      previousSubcategories: ["Restaurant", "Groceries"],
+      previousDetails: ["Restaurant X"],
+    });
+    cy.addTransaction({
+      dayOfTheMonth: 19,
+      amount: 200,
+      category: "Food",
+      subcategory: "Restaurant",
+      details: "Restaurant Z",
+      previousCategories: ["Food", "Housing"],
+      previousSubcategories: ["Restaurant", "Groceries"],
+      previousDetails: ["Restaurant X", "Restaurant Y"],
+    });
+    cy.addTransaction({
+      dayOfTheMonth: 20,
+      amount: 4,
+      category: "Food",
+      subcategory: "Groceries",
+      details: "Market Y",
+      previousCategories: ["Food", "Housing"],
+      previousSubcategories: ["Restaurant", "Groceries"],
+      previousDetails: ["Market X"],
+    });
+    cy.addTransaction({
+      dayOfTheMonth: 22,
+      amount: 10,
+      category: "Food",
+      subcategory: "Groceries",
+      details: "Market Z",
+      previousCategories: ["Food", "Housing"],
+      previousSubcategories: ["Restaurant", "Groceries"],
+      previousDetails: ["Market X", "Market Y"],
+    });
     cy.checkTransactionTable({
       transactions: [
         {
@@ -110,8 +176,50 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           subcategory: "Hostel",
           details: "Hostel X",
         },
+        {
+          date: fourteenthOfCurrentMonth,
+          amount: 30,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Y",
+        },
+        {
+          date: sixteenthOfCurrentMonth,
+          amount: 10,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Z",
+        },
+        {
+          date: seventeenthOfCurrentMonth,
+          amount: 100,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Y",
+        },
+        {
+          date: nineteenthOfCurrentMonth,
+          amount: 200,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Z",
+        },
+        {
+          date: twentiethOfCurrentMonth,
+          amount: 4,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Y",
+        },
+        {
+          date: twentySecondOfCurrentMonth,
+          amount: 10,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Z",
+        },
       ],
-      total: 1000 + 30 + 9.99 + 25.11,
+      total: 1000 + 30 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
     });
   });
 
@@ -176,8 +284,50 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           subcategory: "Hostel",
           details: "Hostel X",
         },
+        {
+          date: fourteenthOfCurrentMonth,
+          amount: 30,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Y",
+        },
+        {
+          date: sixteenthOfCurrentMonth,
+          amount: 10,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Z",
+        },
+        {
+          date: seventeenthOfCurrentMonth,
+          amount: 100,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Y",
+        },
+        {
+          date: nineteenthOfCurrentMonth,
+          amount: 200,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Z",
+        },
+        {
+          date: twentiethOfCurrentMonth,
+          amount: 4,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Y",
+        },
+        {
+          date: twentySecondOfCurrentMonth,
+          amount: 10,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Z",
+        },
       ],
-      total: 900 + 30 + 9.99 + 25.11,
+      total: 900 + 30 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
     });
   });
 
@@ -225,8 +375,50 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           subcategory: "Hostel",
           details: "Hostel X",
         },
+        {
+          date: fourteenthOfCurrentMonth,
+          amount: 30,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Y",
+        },
+        {
+          date: sixteenthOfCurrentMonth,
+          amount: 10,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Z",
+        },
+        {
+          date: seventeenthOfCurrentMonth,
+          amount: 100,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Y",
+        },
+        {
+          date: nineteenthOfCurrentMonth,
+          amount: 200,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Z",
+        },
+        {
+          date: twentiethOfCurrentMonth,
+          amount: 4,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Y",
+        },
+        {
+          date: twentySecondOfCurrentMonth,
+          amount: 10,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Z",
+        },
       ],
-      total: 900 + 9.99 + 25.11,
+      total: 900 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
     });
   });
 
@@ -241,8 +433,36 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           subcategory: "Groceries",
           details: "Market X",
         },
+        {
+          date: seventeenthOfCurrentMonth,
+          amount: 100,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Y",
+        },
+        {
+          date: nineteenthOfCurrentMonth,
+          amount: 200,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Z",
+        },
+        {
+          date: twentiethOfCurrentMonth,
+          amount: 4,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Y",
+        },
+        {
+          date: twentySecondOfCurrentMonth,
+          amount: 10,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Z",
+        },
       ],
-      total: 9.99,
+      total: 9.99 + 100 + 200 + 4 + 10,
     });
 
     cy.get('input[placeholder*="Filter by category"]').click().type("{downarrow}").type("{enter}");
@@ -262,8 +482,22 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           subcategory: "Hostel",
           details: "Hostel X",
         },
+        {
+          date: fourteenthOfCurrentMonth,
+          amount: 30,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Y",
+        },
+        {
+          date: sixteenthOfCurrentMonth,
+          amount: 10,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Z",
+        },
       ],
-      total: 900 + 25.11,
+      total: 900 + 25.11 + 30 + 10,
     });
 
     cy.get('input[placeholder*="Filter by category"]').click().clear();
@@ -290,8 +524,50 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           subcategory: "Hostel",
           details: "Hostel X",
         },
+        {
+          date: fourteenthOfCurrentMonth,
+          amount: 30,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Y",
+        },
+        {
+          date: sixteenthOfCurrentMonth,
+          amount: 10,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Z",
+        },
+        {
+          date: seventeenthOfCurrentMonth,
+          amount: 100,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Y",
+        },
+        {
+          date: nineteenthOfCurrentMonth,
+          amount: 200,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Z",
+        },
+        {
+          date: twentiethOfCurrentMonth,
+          amount: 4,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Y",
+        },
+        {
+          date: twentySecondOfCurrentMonth,
+          amount: 10,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Z",
+        },
       ],
-      total: 900 + 9.99 + 25.11,
+      total: 900 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
     });
   });
 
