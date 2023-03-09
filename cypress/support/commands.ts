@@ -1,5 +1,33 @@
 import { simulateDelay } from "@lib/delay";
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
+    interface Chainable {
+      register(): Chainable<void>;
+      login(): Chainable<void>;
+      addTransaction(
+        day: number,
+        amount: number,
+        category: string,
+        subcategory: string,
+        details: string,
+        previousMonth: boolean
+      ): Chainable<void>;
+      checkTransactionTable(
+        transactions: {
+          date: string;
+          amount: number;
+          category: string;
+          subcategory: string;
+          details: string;
+        }[],
+        total: number
+      ): Chainable<void>;
+    }
+  }
+}
+
 Cypress.Commands.add("register", () => {
   cy.log("register");
 
@@ -127,31 +155,3 @@ Cypress.Commands.add(
     cy.contains(`Total: ${total}`).should("be.visible");
   }
 );
-
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace Cypress {
-    interface Chainable {
-      register(): Chainable<void>;
-      login(): Chainable<void>;
-      addTransaction(
-        day: number,
-        amount: number,
-        category: string,
-        subcategory: string,
-        details: string,
-        previousMonth: boolean
-      ): Chainable<void>;
-      checkTransactionTable(
-        transactions: {
-          date: string;
-          amount: number;
-          category: string;
-          subcategory: string;
-          details: string;
-        }[],
-        total: number
-      ): Chainable<void>;
-    }
-  }
-}
