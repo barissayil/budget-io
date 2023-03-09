@@ -31,6 +31,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
       category: "Food",
       subcategory: "Restaurant",
       details: "Restaurant X",
+      previousCategories: [],
+      previousSubcategories: [],
+      previousDetails: [],
     });
     cy.checkTransactionTable({
       transactions: [
@@ -53,6 +56,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
       category: "Housing",
       subcategory: "Rent",
       details: "Company X",
+      previousCategories: ["Food"],
+      previousSubcategories: [],
+      previousDetails: [],
     });
     cy.addTransaction({
       dayOfTheMonth: 11,
@@ -60,6 +66,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
       category: "Housing",
       subcategory: "Hostel",
       details: "Hostel X",
+      previousCategories: ["Food", "Housing"],
+      previousSubcategories: ["Rent"],
+      previousDetails: [],
     });
     cy.addTransaction({
       dayOfTheMonth: 10,
@@ -67,6 +76,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
       category: "Food",
       subcategory: "Groceries",
       details: "Market X",
+      previousCategories: ["Food", "Housing"],
+      previousSubcategories: ["Restaurant"],
+      previousDetails: [],
     });
     cy.checkTransactionTable({
       transactions: [
@@ -297,6 +309,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
       subcategory: "Rent",
       details: "Company Z",
       previousMonth: true,
+      previousCategories: ["Food", "Housing"],
+      previousSubcategories: ["Rent", "Hostel"],
+      previousDetails: ["Company Y"],
     });
     cy.checkTransactionTable({
       transactions: [
