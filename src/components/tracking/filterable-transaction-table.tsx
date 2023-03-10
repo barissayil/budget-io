@@ -20,7 +20,9 @@ const FilterableTransactionTable = ({
   const { data: transactions } = useSWR<Transaction[], Error>(
     `/api/transaction/month/${monthIndex}`
   );
-  const { data: categories } = useSWR<string[], Error>(`/api/transaction/category`);
+  const { data: categories } = useSWR<string[], Error>(
+    `/api/transaction/previously-used/SPENDING/category`
+  );
 
   const filteredTransactions = transactions?.filter(
     (transactions) => !selectedCategory || transactions.category === selectedCategory

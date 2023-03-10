@@ -1,16 +1,19 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from "@api/auth/[...nextauth]";
-import { getCategories } from "@lib/db/transaction";
+import { getDetails } from "@lib/db/transaction";
 import { getUserEmail } from "@lib/auth";
 import { TransactionType } from "@prisma/client";
 
 const handle = async (req: NextApiRequest, res: NextApiResponse<string[]>) => {
   const userEmail = await getUserEmail(req, res, authOptions);
+  const type = req.query.type as TransactionType;
+  const category = req.query.category as string;
+  const subcategory = req.query.subcategory as string;
 
   switch (req.method) {
     case "GET": {
-      const categories = await getCategories(userEmail, TransactionType.SPENDING);
-      res.json(categories);
+      const details = await getDetails(userEmail, type, category, subcategory);
+      res.json(details);
       break;
     }
     default:
