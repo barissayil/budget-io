@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prepare": "prisma migrate deploy",
+    "prepare": "prisma migrate deploy & prisma generate",
     "lint": "next lint",
     "prettier": "prettier --write .",
     "db:push": "prisma db push",
