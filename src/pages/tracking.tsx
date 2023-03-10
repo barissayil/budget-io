@@ -10,8 +10,8 @@ import useSWR from "swr";
 import { AlertCircle as AlertCircleIcon } from "tabler-icons-react";
 import useRouterAuth from "@hooks/use-router-auth";
 import TransactionModals from "@components/tracking/transaction-modals";
-import FilterableTransactionTable from "@components/tracking/filterable-transaction-table";
-import MonthPaper from "@components/tracking/month-paper";
+import FilterableTransactionTable from "@components/tracking/tables/filterable-transaction-table";
+import MonthPaper from "@components/tracking/papers/month-paper";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
