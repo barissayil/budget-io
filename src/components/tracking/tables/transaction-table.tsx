@@ -4,7 +4,7 @@ import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import TransactionActionsGroup from "@components/tracking/transaction-actions-group";
 import { useState } from "react";
 import { sortBy } from "lodash";
-import TotalPaper from "@components/tracking/total-paper";
+import TotalPaper from "@components/tracking/papers/total-paper";
 
 type Props = {
   transactions?: Transaction[];

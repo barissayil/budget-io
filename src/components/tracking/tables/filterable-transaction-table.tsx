@@ -1,7 +1,7 @@
 import { Transaction, TransactionType } from "@prisma/client";
 import { useState } from "react";
 import useSWR from "swr";
-import TransactionTable from "@components/tracking/transaction-table";
+import TransactionTable from "@components/tracking/tables/transaction-table";
 import { Select } from "@mantine/core";
 import FilterCategorySelect from "@components/tracking/selects/filter-category-select";
 
