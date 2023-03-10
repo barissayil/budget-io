@@ -1,14 +1,16 @@
-import { Loader, Paper, Text } from "@mantine/core";
-import { Transaction } from "@prisma/client";
+import { Loader, Text } from "@mantine/core";
+import { Transaction, TransactionType } from "@prisma/client";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
 import TransactionActionsGroup from "@components/tracking/transaction-actions-group";
 import { useState } from "react";
 import { sortBy } from "lodash";
+import TotalPaper from "@components/tracking/total-paper";
 
 type Props = {
   transactions?: Transaction[];
   openEditTransactionModal: (id: string) => void;
   openDeleteTransactionModal: (id: string) => void;
+  filtered: boolean;
   mobileView: boolean;
 };
 
@@ -16,6 +18,7 @@ const TransactionTable = ({
   transactions,
   openEditTransactionModal,
   openDeleteTransactionModal,
+  filtered,
   mobileView,
 }: Props) => {
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
@@ -62,14 +65,13 @@ const TransactionTable = ({
             ),
           },
         ]}
+        rowClassName={({ type }) =>
+          type === TransactionType.SPENDING
+            ? "bg-gradient-to-r from-red-100"
+            : "bg-gradient-to-r from-indigo-100"
+        }
       />
-      {transactions ? (
-        <Paper shadow="sm" p="sm">
-          <Text fw={500}>Total: {transactions.reduce((acc, { amount }) => acc + amount, 0)}</Text>
-        </Paper>
-      ) : (
-        <Loader />
-      )}
+      {transactions ? <TotalPaper transactions={transactions} filtered={filtered} /> : <Loader />}
     </div>
   );
 };

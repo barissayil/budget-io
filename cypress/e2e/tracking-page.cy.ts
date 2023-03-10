@@ -6,6 +6,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
   const firstOfPreviousMonth =
     dayjs().subtract(1, "month").format().substring(0, 10).slice(0, 8) + "01";
   const firstOfCurrentMonth = today.slice(0, 8) + "01";
+  const secondOfCurrentMonth = today.slice(0, 8) + "02";
   const fifthOfCurrentMonth = today.slice(0, 8) + "05";
   const tenthOfCurrentMonth = today.slice(0, 8) + "10";
   const eleventhOfCurrentMonth = today.slice(0, 8) + "11";
@@ -27,10 +28,38 @@ describe("testing the tracking page", { testIsolation: false }, () => {
 
   it("should have no transactions in the current month and have current month and year as title", () => {
     cy.get("h1").contains(currentMonthAndYear);
-    cy.checkTransactionTable({ transactions: [], total: 0 });
+    cy.checkTransactionTable({ transactions: [], earned: 0, spent: 0, total: 0 });
   });
 
-  it("should be able to add a transaction", () => {
+  it("should be able to add a transaction of type earning", () => {
+    cy.addTransaction({
+      isEarning: true,
+      dayOfTheMonth: 2,
+      amount: 8000,
+      category: "Salary",
+      subcategory: "Permanent",
+      details: "Company X",
+      previousCategories: [],
+      previousSubcategories: [],
+      previousDetails: [],
+    });
+    cy.checkTransactionTable({
+      transactions: [
+        {
+          date: secondOfCurrentMonth,
+          amount: 8000,
+          category: "Salary",
+          subcategory: "Permanent",
+          details: "Company X",
+        },
+      ],
+      earned: 8000,
+      spent: 0,
+      total: 8000,
+    });
+  });
+
+  it("should be able to add a transaction of type spending", () => {
     cy.addTransaction({
       dayOfTheMonth: 5,
       amount: 30,
@@ -44,6 +73,13 @@ describe("testing the tracking page", { testIsolation: false }, () => {
     cy.checkTransactionTable({
       transactions: [
         {
+          date: secondOfCurrentMonth,
+          amount: 8000,
+          category: "Salary",
+          subcategory: "Permanent",
+          details: "Company X",
+        },
+        {
           date: fifthOfCurrentMonth,
           amount: 30,
           category: "Food",
@@ -51,7 +87,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           details: "Restaurant X",
         },
       ],
-      total: 30,
+      earned: 8000,
+      spent: 30,
+      total: 8000 - 30,
     });
   });
 
@@ -156,6 +194,13 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           details: "Company X",
         },
         {
+          date: secondOfCurrentMonth,
+          amount: 8000,
+          category: "Salary",
+          subcategory: "Permanent",
+          details: "Company X",
+        },
+        {
           date: fifthOfCurrentMonth,
           amount: 30,
           category: "Food",
@@ -219,7 +264,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           details: "Market Z",
         },
       ],
-      total: 1000 + 30 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
+      earned: 8000,
+      spent: 1000 + 30 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
+      total: 8000 - (1000 + 30 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10),
     });
   });
 
@@ -264,6 +311,13 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           details: "Company Y",
         },
         {
+          date: secondOfCurrentMonth,
+          amount: 8000,
+          category: "Salary",
+          subcategory: "Permanent",
+          details: "Company X",
+        },
+        {
           date: fifthOfCurrentMonth,
           amount: 30,
           category: "Food",
@@ -327,7 +381,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           details: "Market Z",
         },
       ],
-      total: 900 + 30 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
+      earned: 8000,
+      spent: 900 + 30 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
+      total: 8000 - (900 + 30 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10),
     });
   });
 
@@ -343,7 +399,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
       }
     ).as("deleteTransaction");
 
-    cy.get(".hidden .icon-tabler-trash").eq(1).click();
+    cy.get(".hidden .icon-tabler-trash").eq(2).click();
     cy.contains(/^Delete$/).click();
 
     cy.contains("Deleting").should("be.visible");
@@ -352,6 +408,104 @@ describe("testing the tracking page", { testIsolation: false }, () => {
     cy.contains("Deleted").should("be.visible");
     cy.contains("The transaction is deleted.").should("be.visible");
 
+    cy.checkTransactionTable({
+      transactions: [
+        {
+          date: firstOfCurrentMonth,
+          amount: 900,
+          category: "Housing",
+          subcategory: "Rent",
+          details: "Company Y",
+        },
+        {
+          date: secondOfCurrentMonth,
+          amount: 8000,
+          category: "Salary",
+          subcategory: "Permanent",
+          details: "Company X",
+        },
+        {
+          date: tenthOfCurrentMonth,
+          amount: 9.99,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market X",
+        },
+        {
+          date: eleventhOfCurrentMonth,
+          amount: 25.11,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel X",
+        },
+        {
+          date: fourteenthOfCurrentMonth,
+          amount: 30,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Y",
+        },
+        {
+          date: sixteenthOfCurrentMonth,
+          amount: 10,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Z",
+        },
+        {
+          date: seventeenthOfCurrentMonth,
+          amount: 100,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Y",
+        },
+        {
+          date: nineteenthOfCurrentMonth,
+          amount: 200,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Z",
+        },
+        {
+          date: twentiethOfCurrentMonth,
+          amount: 4,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Y",
+        },
+        {
+          date: twentySecondOfCurrentMonth,
+          amount: 10,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Z",
+        },
+      ],
+      earned: 8000,
+      spent: 900 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
+      total: 8000 - (900 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10),
+    });
+  });
+
+  it("should be able to filter transactions by type", () => {
+    cy.get('input[placeholder*="Filter by type"]').should("be.visible").click();
+    cy.contains("Earning").should("be.visible").click();
+    cy.checkTransactionTable({
+      transactions: [
+        {
+          date: secondOfCurrentMonth,
+          amount: 8000,
+          category: "Salary",
+          subcategory: "Permanent",
+          details: "Company X",
+        },
+      ],
+      total: 8000,
+      filtered: true,
+    });
+
+    cy.get('input[placeholder*="Filter by type"]').should("be.visible").click();
+    cy.contains("Spending").should("be.visible").click();
     cy.checkTransactionTable({
       transactions: [
         {
@@ -419,6 +573,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
         },
       ],
       total: 900 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
+      filtered: true,
     });
   });
 
@@ -463,6 +618,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
         },
       ],
       total: 9.99 + 100 + 200 + 4 + 10,
+      filtered: true,
     });
 
     cy.get('input[placeholder*="Filter by category"]').click().type("{downarrow}").type("{enter}");
@@ -498,6 +654,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
         },
       ],
       total: 900 + 25.11 + 30 + 10,
+      filtered: true,
     });
 
     cy.get('input[placeholder*="Filter by category"]').click().clear();
@@ -568,13 +725,14 @@ describe("testing the tracking page", { testIsolation: false }, () => {
         },
       ],
       total: 900 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
+      filtered: true,
     });
   });
 
   it("should have no transactions in the previous month and have previous month and year as title", () => {
     cy.get(".icon-tabler-square-arrow-left").click();
     cy.get("h1").contains(previousMonthAndYear);
-    cy.checkTransactionTable({ transactions: [], total: 0 });
+    cy.checkTransactionTable({ transactions: [], total: 0, filtered: true });
   });
 
   it("should be able to add a transaction to the previous month", () => {
@@ -600,6 +758,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
         },
       ],
       total: 1250,
+      filtered: true,
     });
   });
 });

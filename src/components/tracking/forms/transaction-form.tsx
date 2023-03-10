@@ -7,11 +7,13 @@ import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
 import SubcategorySelect from "@components/tracking/selects/subcategory-select";
 import CategorySelect from "@components/tracking/selects/category-select";
 import DetailsSelect from "@components/tracking/selects/details-select";
+import { TransactionType } from "@prisma/client";
 
 type Props = {
   handleSubmit: ({
     date,
     amount,
+    type,
     category,
     subcategory,
     details,
@@ -27,12 +29,21 @@ type Props = {
 const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionModal }: Props) => {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <DatePicker
-        placeholder="Date"
-        {...form.getInputProps("date")}
+      <Select
+        placeholder="Type"
+        data={[
+          { value: "SPENDING", label: "Spending" },
+          { value: "EARNING", label: "Earning" },
+        ]}
+        {...form.getInputProps("type")}
+        onChange={(e) => {
+          form.setFieldValue("type", e as TransactionType);
+          form.setFieldValue("category", "");
+        }}
         className="mb-3"
         data-autofocus
       />
+      <DatePicker placeholder="Date" {...form.getInputProps("date")} className="mb-3" />
       <NumberInput
         hideControls
         placeholder="Amount"
@@ -42,15 +53,16 @@ const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionMod
         precision={2}
         className="mb-3"
       />
-      <CategorySelect form={form} />
+      <CategorySelect form={form} type={form.values.type} />
       {form.values.category ? (
-        <SubcategorySelect form={form} category={form.values.category} />
+        <SubcategorySelect form={form} type={form.values.type} category={form.values.category} />
       ) : (
         <Select placeholder="Subcategory" data={[]} disabled={true} className="mb-3" />
       )}
       {form.values.category && form.values.subcategory ? (
         <DetailsSelect
           form={form}
+          type={form.values.type}
           category={form.values.category}
           subcategory={form.values.subcategory}
         />

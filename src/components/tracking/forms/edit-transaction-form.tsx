@@ -1,5 +1,5 @@
 import { useForm } from "@mantine/form";
-import { Transaction, TransactionType } from "@prisma/client";
+import { Transaction } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 import TransactionForm from "@components/tracking/forms/transaction-form";
 import TransactionFormValues from "@modeling/transaction-form-values";
@@ -31,6 +31,7 @@ const EditTransactionForm = ({
     initialValues: {
       date: new Date(transactionToUpdate.date),
       amount: transactionToUpdate.amount,
+      type: transactionToUpdate.type,
       category: transactionToUpdate.category,
       subcategory: transactionToUpdate.subcategory,
       details: transactionToUpdate.details,
@@ -43,6 +44,7 @@ const EditTransactionForm = ({
   const handleRequest = async ({
     date,
     amount,
+    type,
     category,
     subcategory,
     details,
@@ -50,7 +52,7 @@ const EditTransactionForm = ({
     const body = {
       date: dayjs(date).format().substring(0, 10),
       amount,
-      type: TransactionType.SPENDING,
+      type,
       category,
       subcategory,
       details,
@@ -71,6 +73,7 @@ const EditTransactionForm = ({
   const handleSubmit = async ({
     date,
     amount,
+    type,
     category,
     subcategory,
     details,
@@ -82,7 +85,7 @@ const EditTransactionForm = ({
     showLoadingNotification(notificationId, "Editing", "The transaction is being edited.");
     await mutate(
       `/api/transaction/month/${monthIndex}`,
-      handleRequest({ date, amount, category, subcategory, details }),
+      handleRequest({ date, amount, type, category, subcategory, details }),
       {
         optimisticData: [
           ...transactions.filter((transaction) => transaction.id !== transactionToUpdate.id),
@@ -90,7 +93,7 @@ const EditTransactionForm = ({
             id: getTempUUID(),
             date: dayjs(date).format().substring(0, 10),
             amount,
-            type: TransactionType.SPENDING,
+            type,
             category,
             subcategory,
             details,

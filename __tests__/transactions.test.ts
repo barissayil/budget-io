@@ -11,7 +11,7 @@ import {
 import { Transaction, TransactionType } from "@prisma/client";
 import dayjs from "dayjs";
 
-describe("spendings (soon: transactions)", () => {
+describe("transactions", () => {
   const userEmail = "user@test.com";
   const differentUserEmail = "different-user@test.com";
 
@@ -28,6 +28,7 @@ describe("spendings (soon: transactions)", () => {
   let spending50ClothingTurtleneckUniqloToday: Transaction;
   let spending10ClothingShirtUniqloToday: Transaction;
   let spending10ClothingShirtCelioToday: Transaction;
+  let earning8000SalaryPermanentCompanyXToday: Transaction;
   let spending22p57FoodGroceriesMonoprixFirstCurrentMonth: Transaction;
   let spending17p03FoodGroceriesCasinoTwentiethCurrentMonth: Transaction;
   let spending1000HousingRentLodgisOneMonthAgo: Transaction;
@@ -126,7 +127,7 @@ describe("spendings (soon: transactions)", () => {
         expect(spending12p5FoodOrderBurgerKingToday.subcategory).toEqual("Order");
         expect(spending12p5FoodOrderBurgerKingToday.details).toEqual("BurgerKing");
       });
-      it("should get spendings in current month", async () => {
+      it("should get transactions in current month", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 0);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending10FoodOrderDominosToday,
@@ -197,7 +198,7 @@ describe("spendings (soon: transactions)", () => {
           details: "Celio",
         });
       });
-      it("should get spendings in current month", async () => {
+      it("should get transactions in current month", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 0);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending10FoodOrderDominosToday,
@@ -267,6 +268,45 @@ describe("spendings (soon: transactions)", () => {
         expect(detailsShirt).toIncludeAllMembers(["Uniqlo", "Celio"]);
       });
     });
+
+    describe("earning", () => {
+      it("should create earning", async () => {
+        earning8000SalaryPermanentCompanyXToday = await createTransaction(userEmail, {
+          date: today,
+          amount: 8000,
+          type: TransactionType.EARNING,
+          category: "Salary",
+          subcategory: "Permanent",
+          details: "Company X",
+        });
+      });
+      it("should get transactions in current month", async () => {
+        const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 0);
+        expect(transactionsOfCurrentMonth).toIncludeAllMembers([
+          spending10FoodOrderDominosToday,
+          spending12p5FoodOrderBurgerKingToday,
+          spending1000HousingRentLodgisToday,
+          spending50ClothingTurtleneckUniqloToday,
+          spending20FoodRestaurantPNYToday,
+          spending24p99FoodRestaurantOliveChickenToday,
+          spending10ClothingShirtUniqloToday,
+          spending10ClothingShirtCelioToday,
+          earning8000SalaryPermanentCompanyXToday,
+        ]);
+      });
+      it("should get categories", async () => {
+        const categories = await getCategories(userEmail, TransactionType.EARNING);
+        expect(categories).toIncludeAllMembers(["Salary"]);
+      });
+      it("should get subcategories", async () => {
+        const subcategories = await getSubcategories(userEmail, TransactionType.EARNING, "Salary");
+        expect(subcategories).toIncludeAllMembers(["Permanent"]);
+      });
+      it("should get details", async () => {
+        const details = await getDetails(userEmail, TransactionType.EARNING, "Salary", "Permanent");
+        expect(details).toIncludeAllMembers(["Company X"]);
+      });
+    });
     describe("spendings with different dates in current month", () => {
       it("should create spending which took place on first of current month", async () => {
         spending22p57FoodGroceriesMonoprixFirstCurrentMonth = await createTransaction(userEmail, {
@@ -313,7 +353,7 @@ describe("spendings (soon: transactions)", () => {
         );
         expect(spending17p03FoodGroceriesCasinoTwentiethCurrentMonth.details).toEqual("Casino");
       });
-      it("should get spendings in current month", async () => {
+      it("should get transactions in current month", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 0);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending10FoodOrderDominosToday,
@@ -377,7 +417,7 @@ describe("spendings (soon: transactions)", () => {
         expect(spending1255p44TransitAirplaneTurkeyOneMonthAgo.subcategory).toEqual("Airplane");
         expect(spending1255p44TransitAirplaneTurkeyOneMonthAgo.details).toEqual("Turkey");
       });
-      it("should get spendings in current month", async () => {
+      it("should get transactions in current month", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 0);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending10FoodOrderDominosToday,
@@ -392,7 +432,7 @@ describe("spendings (soon: transactions)", () => {
           spending17p03FoodGroceriesCasinoTwentiethCurrentMonth,
         ]);
       });
-      it("should get spendings in previous month", async () => {
+      it("should get transactions in previous month", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 1);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending1000HousingRentLodgisOneMonthAgo,
@@ -449,7 +489,7 @@ describe("spendings (soon: transactions)", () => {
         expect(spending20FoodOrderDominosToday.subcategory).toEqual("Order");
         expect(spending20FoodOrderDominosToday.details).toEqual("Dominos");
       });
-      it("should get spendings in current month", async () => {
+      it("should get transactions in current month", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 0);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending12p5FoodOrderBurgerKingToday,
@@ -488,7 +528,7 @@ describe("spendings (soon: transactions)", () => {
         expect(spending1255p44TravelAirplaneTurkeyOneMonthAgo.subcategory).toEqual("Airplane");
         expect(spending1255p44TravelAirplaneTurkeyOneMonthAgo.details).toEqual("Turkey");
       });
-      it("should get spendings in previous month", async () => {
+      it("should get transactions in previous month", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 1);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending1000HousingRentLodgisOneMonthAgo,
@@ -537,7 +577,7 @@ describe("spendings (soon: transactions)", () => {
         expect(spending12p5ClothingJeansBonoboToday.subcategory).toEqual("Jeans");
         expect(spending12p5ClothingJeansBonoboToday.details).toEqual("Bonobo");
       });
-      it("should get spendings in current month", async () => {
+      it("should get transactions in current month", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 0);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending1000HousingRentLodgisToday,
@@ -597,7 +637,7 @@ describe("spendings (soon: transactions)", () => {
         expect(spending10ClothingShirtUniqloOneMonthAgo.subcategory).toEqual("Shirt");
         expect(spending10ClothingShirtUniqloOneMonthAgo.details).toEqual("Uniqlo");
       });
-      it("should get spendings in current month, without this one", async () => {
+      it("should get transactions in current month, without this one", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 0);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending1000HousingRentLodgisToday,
@@ -611,7 +651,7 @@ describe("spendings (soon: transactions)", () => {
           spending12p5ClothingJeansBonoboToday,
         ]);
       });
-      it("should get spendings in previous month, this one included", async () => {
+      it("should get transactions in previous month, this one included", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 1);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending1000HousingRentLodgisOneMonthAgo,
@@ -630,7 +670,7 @@ describe("spendings (soon: transactions)", () => {
         );
         expect(deletedSpending).toEqual(spending1255p44TravelAirplaneTurkeyOneMonthAgo);
       });
-      it("should get spendings in previous month, without this one", async () => {
+      it("should get transactions in previous month, without this one", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 1);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending1000HousingRentLodgisOneMonthAgo,
@@ -651,7 +691,7 @@ describe("spendings (soon: transactions)", () => {
         );
         expect(deletedSpending).toEqual(spending20FoodRestaurantPNYToday);
       });
-      it("should get spendings in current month, without this one", async () => {
+      it("should get transactions in current month, without this one", async () => {
         const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 0);
         expect(transactionsOfCurrentMonth).toIncludeAllMembers([
           spending1000HousingRentLodgisToday,
