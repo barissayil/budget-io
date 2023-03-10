@@ -90,15 +90,15 @@ Cypress.Commands.add(
 
     cy.intercept({
       method: "GET",
-      url: "/api/transaction/category",
+      url: "/api/transaction/previously-used/*/category",
     }).as("getCategories");
     cy.intercept({
       method: "GET",
-      url: "/api/transaction/subcategory/*",
+      url: "/api/transaction/previously-used/*/*/subcategory",
     }).as("getSubcategories");
     cy.intercept({
       method: "GET",
-      url: "/api/transaction/details/*/*",
+      url: "/api/transaction/previously-used/*/*/*/details",
     }).as("getDetails");
     cy.intercept(
       {

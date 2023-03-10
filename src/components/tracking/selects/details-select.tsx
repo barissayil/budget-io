@@ -15,7 +15,7 @@ type Props = {
 
 const DetailsSelect = ({ form, category, subcategory }: Props) => {
   const { data: initialData } = useSWR<string[], Error>(
-    `/api/transaction/details/${category}/${subcategory}`
+    `/api/transaction/previously-used/SPENDING/${category}/${subcategory}/details`
   );
   const [data, setData] = useState<string[]>([]);
   useEffect(() => {
