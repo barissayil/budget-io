@@ -26,6 +26,7 @@ const AddTransactionForm = ({
   const form = useForm<TransactionFormValues>({
     initialValues: {
       date: new Date(),
+      type: TransactionType.SPENDING,
     },
     validate: TransactionFormSchema,
   });
@@ -35,6 +36,7 @@ const AddTransactionForm = ({
   const handleRequest = async ({
     date,
     amount,
+    type,
     category,
     subcategory,
     details,
@@ -42,7 +44,7 @@ const AddTransactionForm = ({
     const body = {
       date: dayjs(date).format().substring(0, 10),
       amount,
-      type: TransactionType.SPENDING,
+      type,
       category,
       subcategory,
       details,
@@ -60,6 +62,7 @@ const AddTransactionForm = ({
   const handleSubmit = async ({
     date,
     amount,
+    type,
     category,
     subcategory,
     details,
@@ -70,7 +73,7 @@ const AddTransactionForm = ({
     showLoadingNotification(notificationId, "Adding", "The transaction is being added.");
     await mutate(
       `/api/transaction/month/${monthIndex}`,
-      handleRequest({ date, amount, category, subcategory, details }),
+      handleRequest({ date, amount, type, category, subcategory, details }),
       {
         optimisticData: [
           ...transactions,
@@ -78,7 +81,7 @@ const AddTransactionForm = ({
             id: getTempUUID(),
             date: dayjs(date).format().substring(0, 10),
             amount,
-            type: TransactionType.SPENDING,
+            type,
             category,
             subcategory,
             details,

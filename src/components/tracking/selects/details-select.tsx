@@ -1,6 +1,7 @@
 import { LoadingOverlay, Select } from "@mantine/core";
 import { UseFormReturnType } from "@mantine/form";
 import TransactionFormValues from "@modeling/transaction-form-values";
+import { TransactionType } from "@prisma/client";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
@@ -9,13 +10,14 @@ type Props = {
     TransactionFormValues,
     (values: TransactionFormValues) => TransactionFormValues
   >;
+  type: TransactionType;
   category: string;
   subcategory: string;
 };
 
-const DetailsSelect = ({ form, category, subcategory }: Props) => {
+const DetailsSelect = ({ form, type, category, subcategory }: Props) => {
   const { data: initialData } = useSWR<string[], Error>(
-    `/api/transaction/previously-used/SPENDING/${category}/${subcategory}/details`
+    `/api/transaction/previously-used/${type}/${category}/${subcategory}/details`
   );
   const [data, setData] = useState<string[]>([]);
   useEffect(() => {

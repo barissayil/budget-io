@@ -7,6 +7,7 @@ declare global {
       register(): Chainable<void>;
       login(): Chainable<void>;
       addTransaction({
+        isEarning,
         dayOfTheMonth,
         amount,
         category,
@@ -17,6 +18,7 @@ declare global {
         previousSubcategories,
         previousDetails,
       }: {
+        isEarning?: boolean;
         dayOfTheMonth: number;
         amount: number;
         category: string;
@@ -29,6 +31,9 @@ declare global {
       }): Chainable<void>;
       checkTransactionTable({
         transactions,
+        filtered,
+        earned,
+        spent,
         total,
       }: {
         transactions: {
@@ -38,6 +43,9 @@ declare global {
           subcategory: string;
           details: string;
         }[];
+        filtered?: boolean;
+        earned?: number;
+        spent?: number;
         total: number;
       }): Chainable<void>;
     }
@@ -66,6 +74,7 @@ Cypress.Commands.add("login", () => {
 Cypress.Commands.add(
   "addTransaction",
   ({
+    isEarning,
     dayOfTheMonth,
     amount,
     category,
@@ -76,6 +85,7 @@ Cypress.Commands.add(
     previousSubcategories,
     previousDetails,
   }: {
+    isEarning?: boolean;
     dayOfTheMonth: number;
     amount: number;
     category: string;
@@ -116,6 +126,11 @@ Cypress.Commands.add(
     cy.get("form")
       .should("be.visible")
       .within(() => {
+        if (isEarning) {
+          cy.get('input[placeholder*="Type"]').as("CategorySelect").click();
+          cy.contains("Earning").should("be.visible").click();
+          cy.wait("@getCategories", { timeout: 10000 });
+        }
         cy.get('input[placeholder*="Date"]').click();
         if (previousMonth) cy.get(".mantine-DatePicker-calendarHeaderControl").first().click();
         cy.contains(new RegExp("^" + String(dayOfTheMonth) + "$")).click();
@@ -164,6 +179,9 @@ Cypress.Commands.add(
   "checkTransactionTable",
   ({
     transactions,
+    filtered,
+    earned,
+    spent,
     total,
   }: {
     transactions: {
@@ -173,11 +191,14 @@ Cypress.Commands.add(
       subcategory: string;
       details: string;
     }[];
+    filtered?: boolean;
+    earned?: number;
+    spent?: number;
     total: number;
   }) => {
     cy.log("check transaction table");
 
-    cy.get(".hidden tbody").children().as("rows");
+    cy.get(".mantine-ScrollArea-root tbody").children().as("rows");
     transactions.forEach(({ date, amount, category, subcategory, details }, i) => {
       cy.get("@rows")
         .eq(i)
@@ -194,10 +215,13 @@ Cypress.Commands.add(
         .contains(details);
     });
 
-    transactions.length === 0
-      ? cy.contains("No transactions").should("be.visible")
-      : cy.get("@rows").eq(transactions.length).should("not.exist");
+    if (transactions.length === 0) cy.contains("No transactions").should("be.visible");
 
-    cy.contains(`Total: ${total}`).should("be.visible");
+    earned && cy.contains(`${earned.toFixed(2)}`).should("be.visible");
+    spent && cy.contains(`${spent.toFixed(2)}`).should("be.visible");
+
+    filtered
+      ? cy.contains(`Total: ${total.toFixed(2)}`).should("be.visible")
+      : cy.contains(`${total.toFixed(2)}`).should("be.visible");
   }
 );

@@ -9,6 +9,7 @@ datasource db {
 
 enum TransactionType {
   SPENDING
+  EARNING
 }
 
 model Transaction {
