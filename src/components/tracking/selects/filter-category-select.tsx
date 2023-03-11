@@ -1,25 +1,27 @@
 import { LoadingOverlay, Select } from "@mantine/core";
+import TransactionFilters from "@modeling/transaction-filters";
 import { TransactionType } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 import useSWR from "swr";
 
 type Props = {
-  selectedType: TransactionType;
-  selectedCategory: string | null;
-  setSelectedCategory: Dispatch<SetStateAction<string | null>>;
+  transactionFilters: TransactionFilters;
+  setTransactionFilters: Dispatch<SetStateAction<TransactionFilters>>;
 };
 
-const FilterCategorySelect = ({ selectedType, selectedCategory, setSelectedCategory }: Props) => {
+const FilterCategorySelect = ({ transactionFilters, setTransactionFilters }: Props) => {
   const { data: categories } = useSWR<string[], Error>(
-    `/api/transaction/previously-used/${selectedType}/category`
+    `/api/transaction/previously-used/${transactionFilters.type as TransactionType}/category`
   );
 
   return (
     <div className="relative mb-3">
       <LoadingOverlay visible={!categories} overlayBlur={2} loaderProps={{ size: "sm" }} />
       <Select
-        value={selectedCategory}
-        onChange={setSelectedCategory}
+        value={transactionFilters.category}
+        onChange={(e) => {
+          setTransactionFilters({ type: transactionFilters.type, category: e as string | null });
+        }}
         data={categories ?? []}
         clearable
         searchable
