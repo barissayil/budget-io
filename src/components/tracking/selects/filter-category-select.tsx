@@ -24,6 +24,7 @@ const FilterCategorySelect = ({ transactionFilters, setTransactionFilters }: Pro
             type: transactionFilters.type,
             category: e as string | null,
             subcategory: null,
+            details: null,
           });
         }}
         data={categories ?? []}

@@ -7,6 +7,7 @@ import FilterCategorySelect from "@components/tracking/selects/filter-category-s
 import TransactionFilters from "@modeling/transaction-filters";
 import FilterTypeSelect from "@components/tracking/selects/filter-type-select";
 import FilterSubcategorySelect from "../selects/filter-subcategory-select";
+import FilterDetailsSelect from "../selects/filter-details-select";
 
 type Props = {
   monthIndex: number;
@@ -23,19 +24,22 @@ const FilterableTransactionTable = ({
     type: null,
     category: null,
     subcategory: null,
+    details: null,
   });
 
   const { data: transactions } = useSWR<Transaction[], Error>(
     `/api/transaction/month/${monthIndex}`
   );
 
-  const filteredTransactions = transactions?.filter(({ type, category, subcategory }) => {
+  const filteredTransactions = transactions?.filter(({ type, category, subcategory, details }) => {
     if (!transactionFilters.type) return true;
     if (type !== transactionFilters.type) return false;
     if (!transactionFilters.category) return true;
     if (category !== transactionFilters.category) return false;
     if (!transactionFilters.subcategory) return true;
     if (subcategory !== transactionFilters.subcategory) return false;
+    if (!transactionFilters.details) return true;
+    if (details !== transactionFilters.details) return false;
     return true;
   });
 
@@ -61,6 +65,14 @@ const FilterableTransactionTable = ({
           />
         ) : (
           <Select placeholder="Filter by subcategory" data={[]} disabled={true} />
+        )}
+        {transactionFilters.subcategory ? (
+          <FilterDetailsSelect
+            transactionFilters={transactionFilters}
+            setTransactionFilters={setTransactionFilters}
+          />
+        ) : (
+          <Select placeholder="Filter by details" data={[]} disabled={true} />
         )}
       </div>
       <div className="hidden sm:flex">

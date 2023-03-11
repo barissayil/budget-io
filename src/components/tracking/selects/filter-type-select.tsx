@@ -23,6 +23,7 @@ const FilterTypeSelect = ({ transactionFilters, setTransactionFilters }: Props) 
           type: e as TransactionType | null,
           category: null,
           subcategory: null,
+          details: null,
         });
       }}
     />
