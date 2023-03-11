@@ -63,7 +63,7 @@ const Tracking: NextPage = () => {
         </Alert>
       )}
       {status === "authenticated" && !error && (
-        <div className="flex flex-auto flex-col items-center">
+        <div className="flex flex-auto flex-col items-center gap-3 p-2">
           <TransactionModals
             selectedTransactionId={selectedTransactionId}
             openedTransactionModal={openedTransactionModal}
@@ -78,7 +78,7 @@ const Tracking: NextPage = () => {
             openEditTransactionModal={openEditTransactionModal}
             openDeleteTransactionModal={openDeleteTransactionModal}
           />
-          <Button className="m-5" onClick={() => setOpenedTransactionModal("ADD")} color="cyan">
+          <Button onClick={() => setOpenedTransactionModal("ADD")} color="cyan">
             Add transaction
           </Button>
         </div>

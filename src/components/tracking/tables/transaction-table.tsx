@@ -32,7 +32,7 @@ const TransactionTable = ({
       : sortBy(transactions, [sortStatus.columnAccessor, "id"]).reverse();
 
   return (
-    <div className="flex flex-auto flex-col items-center gap-2 p-2">
+    <div className="flex flex-auto flex-col items-center gap-2">
       <DataTable
         withBorder
         textSelectionDisabled

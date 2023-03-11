@@ -15,7 +15,7 @@ const FilterCategorySelect = ({ transactionFilters, setTransactionFilters }: Pro
   );
 
   return (
-    <div className="relative mb-3">
+    <div className="relative">
       <LoadingOverlay visible={!categories} overlayBlur={2} loaderProps={{ size: "sm" }} />
       <Select
         value={transactionFilters.category}
@@ -25,7 +25,6 @@ const FilterCategorySelect = ({ transactionFilters, setTransactionFilters }: Pro
         data={categories ?? []}
         clearable
         searchable
-        mx={1}
         placeholder="Filter by category"
         maxDropdownHeight={280}
       />

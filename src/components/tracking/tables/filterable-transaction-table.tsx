@@ -35,8 +35,8 @@ const FilterableTransactionTable = ({
   );
 
   return (
-    <div className="flex flex-auto flex-col items-center gap-2 p-2">
-      <div className="flex flex-col">
+    <div className="flex flex-auto flex-col items-center gap-3">
+      <div className="flex flex-col gap-1">
         <FilterTypeSelect
           transactionFilters={transactionFilters}
           setTransactionFilters={setTransactionFilters}
@@ -47,7 +47,7 @@ const FilterableTransactionTable = ({
             setTransactionFilters={setTransactionFilters}
           />
         ) : (
-          <Select placeholder="Filter by category" data={[]} disabled={true} className="mb-3" />
+          <Select placeholder="Filter by category" data={[]} disabled={true} />
         )}
       </div>
       <div className="hidden sm:flex">

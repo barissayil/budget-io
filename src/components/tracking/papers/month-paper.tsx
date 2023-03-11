@@ -13,7 +13,7 @@ type Props = {
 
 const MonthPaper = ({ monthIndex, setMonthIndex }: Props) => {
   return (
-    <Paper shadow="xs" p="md" className="m-5 pb-0">
+    <Paper shadow="xs" p="md" className="pb-0">
       <Title order={1}>{dayjs().subtract(monthIndex, "months").format("MMMM YYYY")}</Title>
       <div className="flex flex-auto flex-col items-center">
         <Group>

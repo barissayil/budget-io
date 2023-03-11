@@ -21,7 +21,6 @@ const FilterTypeSelect = ({ transactionFilters, setTransactionFilters }: Props) 
       onChange={(e) => {
         setTransactionFilters({ type: e as TransactionType | null, category: null });
       }}
-      className="mb-1"
     />
   );
 };
