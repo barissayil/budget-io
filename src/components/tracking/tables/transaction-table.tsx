@@ -45,7 +45,12 @@ const TransactionTable = ({
         noRecordsText="No transactions"
         columns={[
           { accessor: "date", sortable: true },
-          { accessor: "amount", sortable: true },
+          {
+            accessor: "amount",
+            sortable: true,
+            textAlignment: "right",
+            render: ({ amount }) => amount.toFixed(2),
+          },
           { accessor: "category" },
           {
             accessor: "subcategory",

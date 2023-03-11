@@ -206,7 +206,7 @@ Cypress.Commands.add(
         .first()
         .contains(date)
         .next()
-        .contains(new RegExp("^" + String(amount) + "$"))
+        .contains(new RegExp("^" + String(amount.toFixed(2)) + "$"))
         .next()
         .contains(category)
         .next()
