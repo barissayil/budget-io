@@ -4,6 +4,7 @@ import useSWR from "swr";
 import TransactionTable from "@components/tracking/tables/transaction-table";
 import { Select } from "@mantine/core";
 import FilterCategorySelect from "@components/tracking/selects/filter-category-select";
+import TransactionFilters from "@modeling/transaction-filters";
 
 type Props = {
   monthIndex: number;
@@ -16,8 +17,10 @@ const FilterableTransactionTable = ({
   openEditTransactionModal,
   openDeleteTransactionModal,
 }: Props) => {
-  const [selectedType, setSelectedType] = useState<TransactionType | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [transactionFilters, setTransactionFilters] = useState<TransactionFilters>({
+    type: null,
+    category: null,
+  });
 
   const { data: transactions } = useSWR<Transaction[], Error>(
     `/api/transaction/month/${monthIndex}`
@@ -25,16 +28,16 @@ const FilterableTransactionTable = ({
 
   const filteredTransactions = transactions?.filter(
     (transactions) =>
-      !selectedType ||
-      (transactions.type === selectedType &&
-        (!selectedCategory || transactions.category === selectedCategory))
+      !transactionFilters.type ||
+      (transactions.type === transactionFilters.type &&
+        (!transactionFilters.category || transactions.category === transactionFilters.category))
   );
 
   return (
     <div className="flex flex-auto flex-col items-center gap-2 p-2">
       <div>
         <Select
-          value={selectedType}
+          value={transactionFilters.type}
           data={[
             { value: "SPENDING", label: "Spending" },
             { value: "EARNING", label: "Earning" },
@@ -43,17 +46,15 @@ const FilterableTransactionTable = ({
           mx={1}
           placeholder="Filter by type"
           onChange={(e) => {
-            setSelectedType(e as TransactionType);
-            setSelectedCategory(null);
+            setTransactionFilters({ type: e as TransactionType | null, category: null });
           }}
         />
       </div>
       <div className="flex">
-        {selectedType ? (
+        {transactionFilters.type ? (
           <FilterCategorySelect
-            selectedType={selectedType}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
+            transactionFilters={transactionFilters}
+            setTransactionFilters={setTransactionFilters}
           />
         ) : (
           <Select placeholder="Filter by category" data={[]} disabled={true} className="mb-3" />
@@ -64,7 +65,7 @@ const FilterableTransactionTable = ({
           transactions={filteredTransactions}
           openEditTransactionModal={openEditTransactionModal}
           openDeleteTransactionModal={openDeleteTransactionModal}
-          filtered={selectedType !== null}
+          filtered={transactionFilters.type !== null}
           mobileView={false}
         />
       </div>
@@ -73,7 +74,7 @@ const FilterableTransactionTable = ({
           transactions={filteredTransactions}
           openEditTransactionModal={openEditTransactionModal}
           openDeleteTransactionModal={openDeleteTransactionModal}
-          filtered={selectedType !== null}
+          filtered={transactionFilters.type !== null}
           mobileView={true}
         />
       </div>
