@@ -1,10 +1,11 @@
-import { Transaction, TransactionType } from "@prisma/client";
+import { Transaction } from "@prisma/client";
 import { useState } from "react";
 import useSWR from "swr";
 import TransactionTable from "@components/tracking/tables/transaction-table";
 import { Select } from "@mantine/core";
 import FilterCategorySelect from "@components/tracking/selects/filter-category-select";
 import TransactionFilters from "@modeling/transaction-filters";
+import FilterTypeSelect from "@components/tracking/selects/filter-type-select";
 
 type Props = {
   monthIndex: number;
@@ -35,22 +36,11 @@ const FilterableTransactionTable = ({
 
   return (
     <div className="flex flex-auto flex-col items-center gap-2 p-2">
-      <div>
-        <Select
-          value={transactionFilters.type}
-          data={[
-            { value: "SPENDING", label: "Spending" },
-            { value: "EARNING", label: "Earning" },
-          ]}
-          clearable
-          mx={1}
-          placeholder="Filter by type"
-          onChange={(e) => {
-            setTransactionFilters({ type: e as TransactionType | null, category: null });
-          }}
+      <div className="flex flex-col">
+        <FilterTypeSelect
+          transactionFilters={transactionFilters}
+          setTransactionFilters={setTransactionFilters}
         />
-      </div>
-      <div className="flex">
         {transactionFilters.type ? (
           <FilterCategorySelect
             transactionFilters={transactionFilters}
