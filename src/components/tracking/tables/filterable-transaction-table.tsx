@@ -6,6 +6,7 @@ import { Select } from "@mantine/core";
 import FilterCategorySelect from "@components/tracking/selects/filter-category-select";
 import TransactionFilters from "@modeling/transaction-filters";
 import FilterTypeSelect from "@components/tracking/selects/filter-type-select";
+import FilterSubcategorySelect from "../selects/filter-subcategory-select";
 
 type Props = {
   monthIndex: number;
@@ -21,18 +22,22 @@ const FilterableTransactionTable = ({
   const [transactionFilters, setTransactionFilters] = useState<TransactionFilters>({
     type: null,
     category: null,
+    subcategory: null,
   });
 
   const { data: transactions } = useSWR<Transaction[], Error>(
     `/api/transaction/month/${monthIndex}`
   );
 
-  const filteredTransactions = transactions?.filter(
-    (transactions) =>
-      !transactionFilters.type ||
-      (transactions.type === transactionFilters.type &&
-        (!transactionFilters.category || transactions.category === transactionFilters.category))
-  );
+  const filteredTransactions = transactions?.filter(({ type, category, subcategory }) => {
+    if (!transactionFilters.type) return true;
+    if (type !== transactionFilters.type) return false;
+    if (!transactionFilters.category) return true;
+    if (category !== transactionFilters.category) return false;
+    if (!transactionFilters.subcategory) return true;
+    if (subcategory !== transactionFilters.subcategory) return false;
+    return true;
+  });
 
   return (
     <div className="flex flex-auto flex-col items-center gap-3">
@@ -48,6 +53,14 @@ const FilterableTransactionTable = ({
           />
         ) : (
           <Select placeholder="Filter by category" data={[]} disabled={true} />
+        )}
+        {transactionFilters.category ? (
+          <FilterSubcategorySelect
+            transactionFilters={transactionFilters}
+            setTransactionFilters={setTransactionFilters}
+          />
+        ) : (
+          <Select placeholder="Filter by subcategory" data={[]} disabled={true} />
         )}
       </div>
       <div className="hidden sm:flex">

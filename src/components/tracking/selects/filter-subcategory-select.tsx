@@ -9,31 +9,33 @@ type Props = {
   setTransactionFilters: Dispatch<SetStateAction<TransactionFilters>>;
 };
 
-const FilterCategorySelect = ({ transactionFilters, setTransactionFilters }: Props) => {
-  const { data: categories } = useSWR<string[], Error>(
-    `/api/transaction/previously-used/${transactionFilters.type as TransactionType}/category`
+const FilterSubcategorySelect = ({ transactionFilters, setTransactionFilters }: Props) => {
+  const { data: subcategories } = useSWR<string[], Error>(
+    `/api/transaction/previously-used/${transactionFilters.type as TransactionType}/${
+      transactionFilters.category as string
+    }/subcategory`
   );
 
   return (
     <div className="relative">
-      <LoadingOverlay visible={!categories} overlayBlur={2} loaderProps={{ size: "sm" }} />
+      <LoadingOverlay visible={!subcategories} overlayBlur={2} loaderProps={{ size: "sm" }} />
       <Select
-        value={transactionFilters.category}
+        value={transactionFilters.subcategory}
         onChange={(e) => {
           setTransactionFilters({
             type: transactionFilters.type,
-            category: e as string | null,
-            subcategory: null,
+            category: transactionFilters.category,
+            subcategory: e as string | null,
           });
         }}
-        data={categories ?? []}
+        data={subcategories ?? []}
         clearable
         searchable
-        placeholder="Filter by category"
+        placeholder="Filter by subcategory"
         maxDropdownHeight={280}
       />
     </div>
   );
 };
 
-export default FilterCategorySelect;
+export default FilterSubcategorySelect;
