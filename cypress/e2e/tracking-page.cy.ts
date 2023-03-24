@@ -729,6 +729,136 @@ describe("testing the tracking page", { testIsolation: false }, () => {
     });
   });
 
+  it("should be able to filter transactions by subcategory", () => {
+    cy.get('input[placeholder*="Filter by category"]')
+      .click()
+      .type("Food")
+      .type("{downarrow}")
+      .type("{enter}");
+    cy.get('input[placeholder*="Filter by subcategory"]')
+      .click()
+      .type("Groceries")
+      .type("{downarrow}")
+      .type("{enter}");
+    cy.checkTransactionTable({
+      transactions: [
+        {
+          date: tenthOfCurrentMonth,
+          amount: 9.99,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market X",
+        },
+        {
+          date: twentiethOfCurrentMonth,
+          amount: 4,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Y",
+        },
+        {
+          date: twentySecondOfCurrentMonth,
+          amount: 10,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Z",
+        },
+      ],
+      total: 9.99 + 4 + 10,
+      filtered: true,
+    });
+  });
+
+  it("should be able to filter transactions by details", () => {
+    cy.get('input[placeholder*="Filter by details"]').click().type("{downarrow}").type("{enter}");
+    cy.checkTransactionTable({
+      transactions: [
+        {
+          date: tenthOfCurrentMonth,
+          amount: 9.99,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market X",
+        },
+      ],
+      total: 9.99,
+      filtered: true,
+    });
+  });
+
+  it("should be able to remove category filter and all that follows", () => {
+    cy.get('input[placeholder*="Filter by category"]').click().clear();
+    cy.checkTransactionTable({
+      transactions: [
+        {
+          date: firstOfCurrentMonth,
+          amount: 900,
+          category: "Housing",
+          subcategory: "Rent",
+          details: "Company Y",
+        },
+        {
+          date: tenthOfCurrentMonth,
+          amount: 9.99,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market X",
+        },
+        {
+          date: eleventhOfCurrentMonth,
+          amount: 25.11,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel X",
+        },
+        {
+          date: fourteenthOfCurrentMonth,
+          amount: 30,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Y",
+        },
+        {
+          date: sixteenthOfCurrentMonth,
+          amount: 10,
+          category: "Housing",
+          subcategory: "Hostel",
+          details: "Hostel Z",
+        },
+        {
+          date: seventeenthOfCurrentMonth,
+          amount: 100,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Y",
+        },
+        {
+          date: nineteenthOfCurrentMonth,
+          amount: 200,
+          category: "Food",
+          subcategory: "Restaurant",
+          details: "Restaurant Z",
+        },
+        {
+          date: twentiethOfCurrentMonth,
+          amount: 4,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Y",
+        },
+        {
+          date: twentySecondOfCurrentMonth,
+          amount: 10,
+          category: "Food",
+          subcategory: "Groceries",
+          details: "Market Z",
+        },
+      ],
+      total: 900 + 9.99 + 25.11 + 30 + 10 + 100 + 200 + 4 + 10,
+      filtered: true,
+    });
+  });
+
   it("should have no transactions in the previous month and have previous month and year as title", () => {
     cy.get(".icon-tabler-square-arrow-left").click();
     cy.get("h1").contains(previousMonthAndYear);
