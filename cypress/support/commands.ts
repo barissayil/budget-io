@@ -35,6 +35,7 @@ declare global {
         earned,
         spent,
         total,
+        inMobileView,
       }: {
         transactions: {
           date: string;
@@ -47,6 +48,7 @@ declare global {
         earned?: number;
         spent?: number;
         total: number;
+        inMobileView?: boolean;
       }): Chainable<void>;
     }
   }
@@ -183,6 +185,7 @@ Cypress.Commands.add(
     earned,
     spent,
     total,
+    inMobileView,
   }: {
     transactions: {
       date: string;
@@ -195,33 +198,39 @@ Cypress.Commands.add(
     earned?: number;
     spent?: number;
     total: number;
+    inMobileView?: boolean;
   }) => {
     cy.log("check transaction table");
 
-    cy.get(".mantine-ScrollArea-root tbody").children().as("rows");
-    transactions.forEach(({ date, amount, category, subcategory, details }, i) => {
-      cy.get("@rows")
-        .eq(i)
-        .children()
-        .first()
-        .contains(date)
-        .next()
-        .contains(new RegExp("^" + String(amount.toFixed(2)) + "$"))
-        .next()
-        .contains(category)
-        .next()
-        .contains(subcategory)
-        .next()
-        .contains(details);
+    cy.get(
+      `[data-cy="${inMobileView ? "compact-transaction-table" : "non-compact-transaction-table"}"]`
+    ).within(() => {
+      cy.get(".mantine-ScrollArea-root tbody").children().as("rows");
+      transactions.forEach(({ date, amount, category, subcategory, details }, i) => {
+        cy.get("@rows")
+          .eq(i)
+          .children()
+          .first()
+          .contains(date)
+          .next()
+          .contains(new RegExp("^" + String(amount.toFixed(2)) + "$"))
+          .next()
+          .contains(category)
+          .next()
+          .as("subcategoryRow");
+        if (!inMobileView) {
+          cy.get("@subcategoryRow").contains(subcategory).next().contains(details);
+        }
+      });
+
+      if (transactions.length === 0) cy.contains("No transactions").should("be.visible");
+
+      earned && cy.contains(`${earned.toFixed(2)}`).should("be.visible");
+      spent && cy.contains(`${spent.toFixed(2)}`).should("be.visible");
+
+      filtered
+        ? cy.contains(`Total: ${total.toFixed(2)}`).should("be.visible")
+        : cy.contains(`${total.toFixed(2)}`).should("be.visible");
     });
-
-    if (transactions.length === 0) cy.contains("No transactions").should("be.visible");
-
-    earned && cy.contains(`${earned.toFixed(2)}`).should("be.visible");
-    spent && cy.contains(`${spent.toFixed(2)}`).should("be.visible");
-
-    filtered
-      ? cy.contains(`Total: ${total.toFixed(2)}`).should("be.visible")
-      : cy.contains(`${total.toFixed(2)}`).should("be.visible");
   }
 );
