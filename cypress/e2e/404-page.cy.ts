@@ -3,14 +3,14 @@ import { viewports } from "cypress/support/constants";
 describe("testing the 404 page", () => {
   const { baseUrl } = Cypress.config();
 
-  viewports.forEach((viewport) => {
-    describe(`with viewport ${viewport[0]}x${viewport[1]}`, () => {
+  viewports.forEach(([width, height]) => {
+    describe(`with viewport ${width}x${height}`, () => {
       before(() => {
         cy.register();
       });
 
       it("should render the 404 page correctly", () => {
-        cy.viewport(viewport[0], viewport[1]);
+        cy.viewport(width, height);
 
         cy.visit("/invalid-url", { failOnStatusCode: false })
           .url()

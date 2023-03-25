@@ -1,10 +1,10 @@
 import { viewports } from "cypress/support/constants";
 
 describe("testing the index page", () => {
-  viewports.forEach((viewport) => {
-    describe(`with viewport ${viewport[0]}x${viewport[1]}`, () => {
+  viewports.forEach(([width, height]) => {
+    describe(`with viewport ${width}x${height}`, () => {
       it("should render the index page correctly", () => {
-        cy.viewport(viewport[0], viewport[1]);
+        cy.viewport(width, height);
 
         cy.visit("/");
 
