@@ -1,3 +1,5 @@
+import { viewports } from "cypress/support/constants";
+
 const { baseUrl } = Cypress.config();
 
 before(() => {
@@ -5,35 +7,50 @@ before(() => {
 });
 
 describe("testing redirects before logging in", () => {
-  it("should redirect correctly", () => {
-    cy.visit("/");
-    cy.url().should("equal", baseUrl + "/");
+  viewports.forEach(([width, height]) => {
+    describe(`with viewport ${width}x${height}`, () => {
+      it("should redirect correctly", () => {
+        cy.viewport(width, height);
 
-    cy.visit("/tracking");
-    cy.url().should("equal", baseUrl + "/");
+        cy.visit("/");
+        cy.url().should("equal", baseUrl + "/");
 
-    cy.contains("Get started").click();
-    cy.url().should("include", baseUrl + "/auth/signin");
+        cy.visit("/tracking");
+        cy.url().should("equal", baseUrl + "/");
+
+        cy.contains("Get started").click();
+        cy.url().should("include", baseUrl + "/auth/signin");
+      });
+    });
   });
 });
 
 describe("testing redirects after logging in", () => {
-  before(() => {
-    cy.login();
-  });
-  it("should redirect correctly", () => {
-    cy.visit("/");
-    cy.url().should("equal", baseUrl + "/tracking");
+  viewports.forEach(([width, height]) => {
+    describe(`with viewport ${width}x${height}`, () => {
+      before(() => {
+        cy.login();
+      });
+      it("should redirect correctly", () => {
+        cy.viewport(width, height);
 
-    cy.visit("/tracking");
-    cy.url().should("equal", baseUrl + "/tracking");
+        cy.visit("/");
+        cy.url().should("equal", baseUrl + "/tracking");
 
-    cy.contains("Sign out").click();
-    cy.url().should("equal", baseUrl + "/");
+        cy.visit("/tracking");
+        cy.url().should("equal", baseUrl + "/tracking");
 
-    cy.visit("/tracking");
-    cy.url().should("equal", baseUrl + "/");
+        if (width === 360) {
+          cy.get(".mantine-Burger-root").click();
+          cy.get(".mantine-Drawer-root").contains("Sign out").click();
+        } else {
+          cy.contains("Sign out").click();
+        }
+        cy.url().should("equal", baseUrl + "/");
+
+        cy.visit("/tracking");
+        cy.url().should("equal", baseUrl + "/");
+      });
+    });
   });
 });
-
-export {};
