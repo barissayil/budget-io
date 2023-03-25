@@ -32,7 +32,10 @@ const TransactionTable = ({
       : sortBy(transactions, [sortStatus.columnAccessor, "id"]).reverse();
 
   return (
-    <div className="flex flex-auto flex-col items-center gap-2">
+    <div
+      className="flex flex-auto flex-col items-center gap-2"
+      data-cy={mobileView ? "compact-transaction-table" : "non-compact-transaction-table"}
+    >
       <DataTable
         withBorder
         textSelectionDisabled
