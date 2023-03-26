@@ -621,10 +621,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
       it("should be able to filter transactions by category", () => {
         cy.viewport(width, height);
 
-        cy.get('input[placeholder*="Filter by category"]')
-          .click()
-          .type("{downarrow}")
-          .type("{enter}");
+        cy.get('input[placeholder*="Filter by category"]').click();
+        cy.get('[data-cy="filter-category-select"]').contains("Food").click();
+
         cy.checkTransactionTable({
           transactions: [
             {
@@ -668,10 +667,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           inMobileView: width === 360,
         });
 
-        cy.get('input[placeholder*="Filter by category"]')
-          .click()
-          .type("{downarrow}")
-          .type("{enter}");
+        cy.get('input[placeholder*="Filter by category"]').click();
+        cy.get('[data-cy="filter-category-select"]').contains("Housing").click();
+
         cy.checkTransactionTable({
           transactions: [
             {
@@ -708,7 +706,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           inMobileView: width === 360,
         });
 
-        cy.get('input[placeholder*="Filter by category"]').click().clear();
+        cy.get('[data-cy="filter-category-select"] svg').click();
         cy.checkTransactionTable({
           transactions: [
             {
@@ -784,16 +782,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
       it("should be able to filter transactions by subcategory", () => {
         cy.viewport(width, height);
 
-        cy.get('input[placeholder*="Filter by category"]')
-          .click()
-          .type("Food")
-          .type("{downarrow}")
-          .type("{enter}");
-        cy.get('input[placeholder*="Filter by subcategory"]')
-          .click()
-          .type("Groceries")
-          .type("{downarrow}")
-          .type("{enter}");
+        cy.get('[data-cy="filter-category-select"]').click().contains("Food").click();
+        cy.get('[data-cy="filter-subcategory-select"]').click().contains("Groceries").click();
+
         cy.checkTransactionTable({
           transactions: [
             {
@@ -827,10 +818,9 @@ describe("testing the tracking page", { testIsolation: false }, () => {
       it("should be able to filter transactions by details", () => {
         cy.viewport(width, height);
 
-        cy.get('input[placeholder*="Filter by details"]')
-          .click()
-          .type("{downarrow}")
-          .type("{enter}");
+        cy.get('input[placeholder*="Filter by details"]').click();
+        cy.get('[data-cy="filter-details-select"]').contains("Market X").click();
+
         cy.checkTransactionTable({
           transactions: [
             {
@@ -850,7 +840,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
       it("should be able to remove category filter and all that follows", () => {
         cy.viewport(width, height);
 
-        cy.get('input[placeholder*="Filter by category"]').click().clear();
+        cy.get('[data-cy="filter-category-select"] svg').click();
         cy.checkTransactionTable({
           transactions: [
             {
