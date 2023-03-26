@@ -17,7 +17,7 @@ const FilterDetailsSelect = ({ transactionFilters, setTransactionFilters }: Prop
   );
 
   return (
-    <div className="relative">
+    <div className="relative" data-cy="filter-details-select">
       <LoadingOverlay visible={!subcategories} overlayBlur={2} loaderProps={{ size: "sm" }} />
       <Select
         value={transactionFilters.details}
@@ -31,7 +31,6 @@ const FilterDetailsSelect = ({ transactionFilters, setTransactionFilters }: Prop
         }}
         data={subcategories ?? []}
         clearable
-        searchable
         placeholder="Filter by details"
         maxDropdownHeight={280}
       />
