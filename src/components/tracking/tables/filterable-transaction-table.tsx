@@ -81,7 +81,7 @@ const FilterableTransactionTable = ({
           openEditTransactionModal={openEditTransactionModal}
           openDeleteTransactionModal={openDeleteTransactionModal}
           filtered={transactionFilters.type !== null}
-          mobileView={false}
+          isCompact={false}
         />
       </div>
       <div className="flex sm:hidden">
@@ -90,7 +90,7 @@ const FilterableTransactionTable = ({
           openEditTransactionModal={openEditTransactionModal}
           openDeleteTransactionModal={openDeleteTransactionModal}
           filtered={transactionFilters.type !== null}
-          mobileView={true}
+          isCompact={true}
         />
       </div>
     </div>
