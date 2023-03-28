@@ -47,7 +47,13 @@ const TransactionTable = ({
         fetching={transactions === undefined}
         noRecordsText="No transactions"
         columns={[
-          { accessor: "date", sortable: true },
+          { accessor: "date", sortable: true, hidden: isCompact },
+          {
+            accessor: "day",
+            sortable: true,
+            hidden: !isCompact,
+            render: ({ date }) => date.slice(8, 10),
+          },
           {
             accessor: "amount",
             sortable: true,
