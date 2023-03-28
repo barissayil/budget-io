@@ -211,7 +211,7 @@ Cypress.Commands.add(
           .eq(i)
           .children()
           .first()
-          .contains(date)
+          .contains(inMobileView ? date.slice(8, 10) : date)
           .next()
           .contains(new RegExp("^" + String(amount.toFixed(2)) + "$"))
           .next()
