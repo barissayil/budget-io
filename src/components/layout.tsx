@@ -13,7 +13,7 @@ const Layout = ({ children }: Props) => {
       <Head>
         <title>Budget IO</title>
         <meta name="description" content="Budget information" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/piggy-bank.ico" />
       </Head>
       <Header />
       <main className="flex flex-1 flex-col justify-center bg-slate-100">{children}</main>
