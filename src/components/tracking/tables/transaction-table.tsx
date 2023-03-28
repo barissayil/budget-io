@@ -11,7 +11,7 @@ type Props = {
   openEditTransactionModal: (id: string) => void;
   openDeleteTransactionModal: (id: string) => void;
   filtered: boolean;
-  mobileView: boolean;
+  isCompact: boolean;
 };
 
 const TransactionTable = ({
@@ -19,7 +19,7 @@ const TransactionTable = ({
   openEditTransactionModal,
   openDeleteTransactionModal,
   filtered,
-  mobileView,
+  isCompact,
 }: Props) => {
   const [sortStatus, setSortStatus] = useState<DataTableSortStatus>({
     columnAccessor: "date",
@@ -34,7 +34,7 @@ const TransactionTable = ({
   return (
     <div
       className="flex flex-auto flex-col items-center gap-2"
-      data-cy={mobileView ? "compact-transaction-table" : "non-compact-transaction-table"}
+      data-cy={isCompact ? "compact-transaction-table" : "non-compact-transaction-table"}
     >
       <DataTable
         withBorder
@@ -57,9 +57,9 @@ const TransactionTable = ({
           { accessor: "category" },
           {
             accessor: "subcategory",
-            hidden: mobileView,
+            hidden: isCompact,
           },
-          { accessor: "details", hidden: mobileView },
+          { accessor: "details", hidden: isCompact },
           {
             accessor: "actions",
             title: <Text mr="xs"></Text>,
