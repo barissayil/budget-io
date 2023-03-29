@@ -1,4 +1,5 @@
 import { simulateDelay } from "@lib/delay";
+import { shortenString } from "@lib/string";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -215,11 +216,14 @@ Cypress.Commands.add(
           .next()
           .contains(new RegExp("^" + String(amount.toFixed(2)) + "$"))
           .next()
-          .contains(category)
+          .contains(shortenString(category, inMobileView ? 10 : 15))
           .next()
           .as("subcategoryRow");
         if (!inMobileView) {
-          cy.get("@subcategoryRow").contains(subcategory).next().contains(details);
+          cy.get("@subcategoryRow")
+            .contains(shortenString(subcategory, 15))
+            .next()
+            .contains(shortenString(details, 15));
         }
       });
 
