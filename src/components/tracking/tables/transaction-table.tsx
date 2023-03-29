@@ -5,6 +5,7 @@ import TransactionActionsGroup from "@components/tracking/transaction-actions-gr
 import { useState } from "react";
 import { sortBy } from "lodash";
 import TotalPaper from "@components/tracking/papers/total-paper";
+import { shortenString } from "@lib/string";
 
 type Props = {
   transactions?: Transaction[];
@@ -60,12 +61,20 @@ const TransactionTable = ({
             textAlignment: "right",
             render: ({ amount }) => amount.toFixed(2),
           },
-          { accessor: "category" },
+          {
+            accessor: "category",
+            render: ({ category }) => shortenString(category, isCompact ? 10 : 15),
+          },
           {
             accessor: "subcategory",
             hidden: isCompact,
+            render: ({ subcategory }) => shortenString(subcategory, 15),
           },
-          { accessor: "details", hidden: isCompact },
+          {
+            accessor: "details",
+            hidden: isCompact,
+            render: ({ details }) => shortenString(details, 15),
+          },
           {
             accessor: "actions",
             title: <Text mr="xs"></Text>,
