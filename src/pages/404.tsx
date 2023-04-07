@@ -12,7 +12,7 @@ const FourOhFour: NextPage = () => {
       <Title className="text-center text-4xl font-black sm:text-5xl">
         You have found a secret place.
       </Title>
-      <Text color="dimmed" size="lg" align="center" className="m-auto mt-6 mb-9 max-w-lg">
+      <Text color="dimmed" size="lg" align="center" className="m-auto mt-6 mb-9 max-w-lg px-7">
         Unfortunately, this is only a 404 page. You may have mistyped the address, or the page has
         been moved to another URL.
       </Text>
