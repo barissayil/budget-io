@@ -7,7 +7,7 @@ import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
 import SubcategorySelect from "@components/tracking/selects/subcategory-select";
 import CategorySelect from "@components/tracking/selects/category-select";
 import DetailsSelect from "@components/tracking/selects/details-select";
-import { TransactionType } from "@prisma/client";
+import TypeSelect from "@components/tracking/selects/type-select";
 
 type Props = {
   handleSubmit: ({
@@ -29,20 +29,7 @@ type Props = {
 const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionModal }: Props) => {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Select
-        placeholder="Type"
-        data={[
-          { value: "SPENDING", label: "Spending" },
-          { value: "EARNING", label: "Earning" },
-        ]}
-        {...form.getInputProps("type")}
-        onChange={(e) => {
-          form.setFieldValue("type", e as TransactionType);
-          form.setFieldValue("category", "");
-        }}
-        className="mb-3"
-        data-autofocus
-      />
+      <TypeSelect form={form} />
       <DatePicker placeholder="Date" {...form.getInputProps("date")} className="mb-3" />
       <NumberInput
         hideControls
