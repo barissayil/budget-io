@@ -2,7 +2,6 @@ import { Transaction } from "@prisma/client";
 import { useState } from "react";
 import useSWR from "swr";
 import TransactionTable from "@components/tracking/tables/transaction-table";
-import { Select } from "@mantine/core";
 import CategoryFilterSelect from "@components/tracking/selects/filter-selects/category-filter-select";
 import TransactionFilters from "@modeling/transaction-filters";
 import TypeFilterSelect from "@components/tracking/selects/filter-selects/type-filter-select";
@@ -50,30 +49,18 @@ const FilterableTransactionTable = ({
           transactionFilters={transactionFilters}
           setTransactionFilters={setTransactionFilters}
         />
-        {transactionFilters.type ? (
-          <CategoryFilterSelect
-            transactionFilters={transactionFilters}
-            setTransactionFilters={setTransactionFilters}
-          />
-        ) : (
-          <Select placeholder="Filter by category" data={[]} disabled={true} />
-        )}
-        {transactionFilters.category ? (
-          <SubcategoryFilterSelect
-            transactionFilters={transactionFilters}
-            setTransactionFilters={setTransactionFilters}
-          />
-        ) : (
-          <Select placeholder="Filter by subcategory" data={[]} disabled={true} />
-        )}
-        {transactionFilters.subcategory ? (
-          <DetailsFilterSelect
-            transactionFilters={transactionFilters}
-            setTransactionFilters={setTransactionFilters}
-          />
-        ) : (
-          <Select placeholder="Filter by details" data={[]} disabled={true} />
-        )}
+        <CategoryFilterSelect
+          transactionFilters={transactionFilters}
+          setTransactionFilters={setTransactionFilters}
+        />
+        <SubcategoryFilterSelect
+          transactionFilters={transactionFilters}
+          setTransactionFilters={setTransactionFilters}
+        />
+        <DetailsFilterSelect
+          transactionFilters={transactionFilters}
+          setTransactionFilters={setTransactionFilters}
+        />
       </div>
       <div className="hidden sm:flex">
         <TransactionTable

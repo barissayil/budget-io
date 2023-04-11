@@ -1,7 +1,7 @@
 import TransactionFilters from "@modeling/transaction-filters";
-import { TransactionType } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 import TransactionDataFilterSelect from "@components/tracking/selects/filter-selects/transaction-data-filter-select";
+import { Select } from "@mantine/core";
 
 type Props = {
   transactionFilters: TransactionFilters;
@@ -9,24 +9,26 @@ type Props = {
 };
 
 const SubcategoryFilterSelect = ({ transactionFilters, setTransactionFilters }: Props) => {
-  const swrKey = `/api/transaction/previously-used/${transactionFilters.type as TransactionType}/${
-    transactionFilters.category as string
-  }/subcategory`;
-
   return (
-    <TransactionDataFilterSelect
-      swrKey={swrKey}
-      value={transactionFilters.subcategory}
-      dataName="subcategory"
-      onChange={(e) => {
-        setTransactionFilters({
-          type: transactionFilters.type,
-          category: transactionFilters.category,
-          subcategory: e as string | null,
-          details: null,
-        });
-      }}
-    />
+    <>
+      {transactionFilters.type && transactionFilters.category ? (
+        <TransactionDataFilterSelect
+          swrKey={`/api/transaction/previously-used/${transactionFilters.type}/${transactionFilters.category}/subcategory`}
+          value={transactionFilters.subcategory}
+          dataName="subcategory"
+          onChange={(e) => {
+            setTransactionFilters({
+              type: transactionFilters.type,
+              category: transactionFilters.category,
+              subcategory: e as string | null,
+              details: null,
+            });
+          }}
+        />
+      ) : (
+        <Select placeholder="Filter by subcategory" data={[]} disabled={true} />
+      )}
+    </>
   );
 };
 
