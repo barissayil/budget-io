@@ -1,4 +1,4 @@
-import { Button, Group, NumberInput, Select } from "@mantine/core";
+import { Button, Group, NumberInput } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { UseFormReturnType } from "@mantine/form";
 import TransactionFormValues from "@modeling/transaction-form-values";
@@ -41,21 +41,13 @@ const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionMod
         className="mb-3"
       />
       <CategorySelect form={form} type={form.values.type} />
-      {form.values.category ? (
-        <SubcategorySelect form={form} type={form.values.type} category={form.values.category} />
-      ) : (
-        <Select placeholder="Subcategory" data={[]} disabled={true} className="mb-3" />
-      )}
-      {form.values.category && form.values.subcategory ? (
-        <DetailsSelect
-          form={form}
-          type={form.values.type}
-          category={form.values.category}
-          subcategory={form.values.subcategory}
-        />
-      ) : (
-        <Select placeholder="Details" data={[]} disabled={true} className="mb-3" />
-      )}
+      <SubcategorySelect form={form} type={form.values.type} category={form.values.category} />
+      <DetailsSelect
+        form={form}
+        type={form.values.type}
+        category={form.values.category}
+        subcategory={form.values.subcategory}
+      />
       <Group position="right" mt="md">
         <Button type="button" variant="default" onClick={() => setOpenedTransactionModal(null)}>
           Cancel
