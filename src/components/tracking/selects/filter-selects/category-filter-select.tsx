@@ -1,8 +1,7 @@
-import { LoadingOverlay, Select } from "@mantine/core";
 import TransactionFilters from "@modeling/transaction-filters";
 import { TransactionType } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
-import useSWR from "swr";
+import TransactionDataFilterSelect from "@components/tracking/selects/filter-selects/transaction-data-filter-select";
 
 type Props = {
   transactionFilters: TransactionFilters;
@@ -10,29 +9,24 @@ type Props = {
 };
 
 const CategoryFilterSelect = ({ transactionFilters, setTransactionFilters }: Props) => {
-  const { data: categories } = useSWR<string[], Error>(
-    `/api/transaction/previously-used/${transactionFilters.type as TransactionType}/category`
-  );
+  const swrKey = `/api/transaction/previously-used/${
+    transactionFilters.type as TransactionType
+  }/category`;
 
   return (
-    <div className="relative" data-cy="filter-category-select">
-      <LoadingOverlay visible={!categories} overlayBlur={2} loaderProps={{ size: "sm" }} />
-      <Select
-        value={transactionFilters.category}
-        onChange={(e) => {
-          setTransactionFilters({
-            type: transactionFilters.type,
-            category: e as string | null,
-            subcategory: null,
-            details: null,
-          });
-        }}
-        data={categories ?? []}
-        clearable
-        placeholder="Filter by category"
-        maxDropdownHeight={280}
-      />
-    </div>
+    <TransactionDataFilterSelect
+      swrKey={swrKey}
+      value={transactionFilters.category}
+      dataName="category"
+      onChange={(e) => {
+        setTransactionFilters({
+          type: transactionFilters.type,
+          category: e as string | null,
+          subcategory: null,
+          details: null,
+        });
+      }}
+    />
   );
 };
 
