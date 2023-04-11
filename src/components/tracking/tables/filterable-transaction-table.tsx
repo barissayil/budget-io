@@ -3,11 +3,11 @@ import { useState } from "react";
 import useSWR from "swr";
 import TransactionTable from "@components/tracking/tables/transaction-table";
 import { Select } from "@mantine/core";
-import FilterCategorySelect from "@components/tracking/selects/filter-category-select";
+import CategoryFilterSelect from "@components/tracking/selects/category-filter-select";
 import TransactionFilters from "@modeling/transaction-filters";
-import FilterTypeSelect from "@components/tracking/selects/filter-type-select";
-import FilterSubcategorySelect from "../selects/filter-subcategory-select";
-import FilterDetailsSelect from "../selects/filter-details-select";
+import TypeFilterSelect from "@components/tracking/selects/type-filter-select";
+import SubcategoryFilterSelect from "@components/tracking/selects/subcategory-filter-select";
+import DetailsFilterSelect from "@components/tracking/selects/details-filter-select";
 
 type Props = {
   monthIndex: number;
@@ -46,12 +46,12 @@ const FilterableTransactionTable = ({
   return (
     <div className="flex flex-auto flex-col items-center gap-3">
       <div className="flex flex-col gap-1">
-        <FilterTypeSelect
+        <TypeFilterSelect
           transactionFilters={transactionFilters}
           setTransactionFilters={setTransactionFilters}
         />
         {transactionFilters.type ? (
-          <FilterCategorySelect
+          <CategoryFilterSelect
             transactionFilters={transactionFilters}
             setTransactionFilters={setTransactionFilters}
           />
@@ -59,7 +59,7 @@ const FilterableTransactionTable = ({
           <Select placeholder="Filter by category" data={[]} disabled={true} />
         )}
         {transactionFilters.category ? (
-          <FilterSubcategorySelect
+          <SubcategoryFilterSelect
             transactionFilters={transactionFilters}
             setTransactionFilters={setTransactionFilters}
           />
@@ -67,7 +67,7 @@ const FilterableTransactionTable = ({
           <Select placeholder="Filter by subcategory" data={[]} disabled={true} />
         )}
         {transactionFilters.subcategory ? (
-          <FilterDetailsSelect
+          <DetailsFilterSelect
             transactionFilters={transactionFilters}
             setTransactionFilters={setTransactionFilters}
           />

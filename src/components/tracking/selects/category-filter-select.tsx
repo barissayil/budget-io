@@ -9,7 +9,7 @@ type Props = {
   setTransactionFilters: Dispatch<SetStateAction<TransactionFilters>>;
 };
 
-const FilterCategorySelect = ({ transactionFilters, setTransactionFilters }: Props) => {
+const CategoryFilterSelect = ({ transactionFilters, setTransactionFilters }: Props) => {
   const { data: categories } = useSWR<string[], Error>(
     `/api/transaction/previously-used/${transactionFilters.type as TransactionType}/category`
   );
@@ -36,4 +36,4 @@ const FilterCategorySelect = ({ transactionFilters, setTransactionFilters }: Pro
   );
 };
 
-export default FilterCategorySelect;
+export default CategoryFilterSelect;

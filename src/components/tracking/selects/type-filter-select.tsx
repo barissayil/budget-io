@@ -8,7 +8,7 @@ type Props = {
   setTransactionFilters: Dispatch<SetStateAction<TransactionFilters>>;
 };
 
-const FilterTypeSelect = ({ transactionFilters, setTransactionFilters }: Props) => {
+const TypeFilterSelect = ({ transactionFilters, setTransactionFilters }: Props) => {
   return (
     <Select
       value={transactionFilters.type}
@@ -30,4 +30,4 @@ const FilterTypeSelect = ({ transactionFilters, setTransactionFilters }: Props) 
   );
 };
 
-export default FilterTypeSelect;
+export default TypeFilterSelect;
