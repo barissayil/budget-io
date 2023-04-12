@@ -5,7 +5,7 @@ import { NotificationsProvider } from "@mantine/notifications";
 import { SessionProvider } from "next-auth/react";
 import { SWRConfig } from "swr";
 
-function MyApp({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
     <MantineProvider
       withGlobalStyles
@@ -31,6 +31,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       </NotificationsProvider>
     </MantineProvider>
   );
-}
+};
 
-export default MyApp;
+export default App;
