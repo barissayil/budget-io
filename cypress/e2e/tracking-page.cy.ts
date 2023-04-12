@@ -1,6 +1,7 @@
 import { simulateDelay } from "@lib/delay";
 import dayjs from "dayjs";
 import { viewports } from "cypress/support/constants";
+import { getExactRegExp } from "@lib/reg-exp";
 
 describe("testing the tracking page", { testIsolation: false }, () => {
   const today = dayjs().format().substring(0, 10);
@@ -436,7 +437,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
         )
           .eq(2)
           .click();
-        cy.contains(/^Delete$/).click();
+        cy.contains(getExactRegExp("Delete")).click();
 
         cy.contains("Deleting").should("be.visible");
         cy.contains("The transaction is being deleted.").should("be.visible");

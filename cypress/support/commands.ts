@@ -1,4 +1,5 @@
 import { simulateDelay } from "@lib/delay";
+import { getExactRegExp } from "@lib/reg-exp";
 import { shortenString } from "@lib/string";
 
 declare global {
@@ -136,7 +137,7 @@ Cypress.Commands.add(
         }
         cy.get('input[placeholder*="Date"]').click();
         if (previousMonth) cy.get(".mantine-DatePicker-calendarHeaderControl").first().click();
-        cy.contains(new RegExp("^" + String(dayOfTheMonth) + "$")).click();
+        cy.contains(getExactRegExp(String(dayOfTheMonth))).click();
 
         cy.get('input[placeholder*="Amount"]').type(String(amount));
 
@@ -214,7 +215,7 @@ Cypress.Commands.add(
           .first()
           .contains(inMobileView ? date.slice(8, 10) : date)
           .next()
-          .contains(new RegExp("^" + amount.toFixed(2) + "$"))
+          .contains(getExactRegExp(amount.toFixed(2)))
           .next()
           .contains(shortenString(category, inMobileView ? 10 : 15))
           .next()
