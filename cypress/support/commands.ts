@@ -214,7 +214,7 @@ Cypress.Commands.add(
           .first()
           .contains(inMobileView ? date.slice(8, 10) : date)
           .next()
-          .contains(new RegExp("^" + String(amount.toFixed(2)) + "$"))
+          .contains(new RegExp("^" + amount.toFixed(2) + "$"))
           .next()
           .contains(shortenString(category, inMobileView ? 10 : 15))
           .next()
