@@ -2,7 +2,7 @@ import { Modal } from "@mantine/core";
 import { Transaction } from "@prisma/client";
 import { SetStateAction, useState } from "react";
 import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
-import AddTransactionForm from "@components/tracking/forms/add-transaction-form";
+import AddTransactionForm from "@components/forms/add-transaction-form";
 
 type Props = {
   transactions: Transaction[];

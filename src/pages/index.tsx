@@ -3,8 +3,8 @@ import Layout from "@components/layout";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@api/auth/[...nextauth]";
 import { Loader } from "@mantine/core";
-import Hero from "@components/index/hero";
-import Features from "@components/index/features";
+import HeroSection from "@components/sections/hero-section";
+import FeaturesSection from "@components/sections/features-section";
 import { useScrollIntoView } from "@mantine/hooks";
 import useRouterAuth from "@hooks/use-router-auth";
 
@@ -35,8 +35,8 @@ const Index: NextPage = () => {
         </div>
       ) : (
         <>
-          <Hero scrollToFeatures={scrollIntoView} />
-          <Features containerRef={targetRef} />
+          <HeroSection scrollToFeatures={scrollIntoView} />
+          <FeaturesSection containerRef={targetRef} />
         </>
       )}
     </Layout>

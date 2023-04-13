@@ -1,12 +1,12 @@
 import { Transaction } from "@prisma/client";
 import { useState } from "react";
 import useSWR from "swr";
-import TransactionTable from "@components/tracking/tables/transaction-table";
-import CategoryFilterSelect from "@components/tracking/selects/filter-selects/category-filter-select";
+import TransactionTable from "@components/tables/transaction-table";
+import CategoryFilterSelect from "@components/selects/filter-selects/category-filter-select";
 import TransactionFilters from "@modeling/transaction-filters";
-import TypeFilterSelect from "@components/tracking/selects/filter-selects/type-filter-select";
-import SubcategoryFilterSelect from "@components/tracking/selects/filter-selects/subcategory-filter-select";
-import DetailsFilterSelect from "@components/tracking/selects/filter-selects/details-filter-select";
+import TypeFilterSelect from "@components/selects/filter-selects/type-filter-select";
+import SubcategoryFilterSelect from "@components/selects/filter-selects/subcategory-filter-select";
+import DetailsFilterSelect from "@components/selects/filter-selects/details-filter-select";
 
 type Props = {
   monthIndex: number;

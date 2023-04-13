@@ -4,8 +4,8 @@ import { authOptions } from "@api/auth/[...nextauth]";
 import { signIn } from "next-auth/react";
 import Layout from "@components/layout";
 import { Button, Group, Paper, Text } from "@mantine/core";
-import GoogleIcon from "@components/auth/icons/google-icon";
-import GithubIcon from "@components/auth/icons/github-icon";
+import GoogleIcon from "@components/icons/google-icon";
+import GithubIcon from "@components/icons/github-icon";
 import useRouterAuth from "@hooks/use-router-auth";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

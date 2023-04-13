@@ -5,7 +5,7 @@ import {
   UserCheck as UserCheckIcon,
   FreeRights as FreeRightsIcon,
 } from "tabler-icons-react";
-import FeatureCard from "@components/index/feature-card";
+import FeatureCard from "@components/cards/feature-card";
 
 type Props = {
   containerRef: MutableRefObject<HTMLDivElement>;
@@ -34,7 +34,7 @@ const featuresData = [
   },
 ];
 
-const Features = ({ containerRef }: Props) => {
+const FeaturesSection = ({ containerRef }: Props) => {
   return (
     <Container size="lg" py="xl" ref={containerRef}>
       <Group position="center">
@@ -67,4 +67,4 @@ const Features = ({ containerRef }: Props) => {
   );
 };
 
-export default Features;
+export default FeaturesSection;
