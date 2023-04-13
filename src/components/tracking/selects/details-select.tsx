@@ -22,8 +22,8 @@ const DetailsSelect = ({ form, type, category, subcategory }: Props) => {
           form={form}
           swrKey={`/api/transaction/previously-used/${type}/${category}/${subcategory}/details`}
           placeholder={"Details"}
-          onChange={(e) => {
-            form.setFieldValue("details", e);
+          onChange={(details) => {
+            form.setFieldValue("details", details);
           }}
         />
       ) : (

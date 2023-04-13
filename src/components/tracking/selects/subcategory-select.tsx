@@ -21,8 +21,8 @@ const SubcategorySelect = ({ form, type, category }: Props) => {
           form={form}
           swrKey={`/api/transaction/previously-used/${type}/${category}/subcategory`}
           placeholder={"Subcategory"}
-          onChange={(e) => {
-            form.setFieldValue("subcategory", e);
+          onChange={(subcategory) => {
+            form.setFieldValue("subcategory", subcategory);
             form.setFieldValue("details", "");
           }}
         />

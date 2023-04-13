@@ -16,11 +16,11 @@ const SubcategoryFilterSelect = ({ transactionFilters, setTransactionFilters }: 
           swrKey={`/api/transaction/previously-used/${transactionFilters.type}/${transactionFilters.category}/subcategory`}
           value={transactionFilters.subcategory}
           dataName="subcategory"
-          onChange={(e) => {
+          onChange={(subcategory) => {
             setTransactionFilters({
               type: transactionFilters.type,
               category: transactionFilters.category,
-              subcategory: e,
+              subcategory,
               details: null,
             });
           }}
