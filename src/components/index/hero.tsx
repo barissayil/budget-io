@@ -8,7 +8,7 @@ type Props = {
 const Hero = ({ scrollToFeatures }: Props) => {
   return (
     <div
-      className="relative bg-[url('https://i.imgur.com/BT4m7VQ.jpeg')] bg-cover bg-center 
+      className="relative bg-[url('/budget-piggy.jpeg')] bg-cover bg-center 
                  pt-20 pb-12 min-[520px]:pt-44 min-[520px]:pb-32"
     >
       <Overlay color="#000" opacity={0.65} zIndex={1} />
