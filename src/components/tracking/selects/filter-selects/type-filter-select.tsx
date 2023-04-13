@@ -18,9 +18,9 @@ const TypeFilterSelect = ({ transactionFilters, setTransactionFilters }: Props) 
       ]}
       clearable
       placeholder="Filter by type"
-      onChange={(e) => {
+      onChange={(type) => {
         setTransactionFilters({
-          type: e as TransactionType | null,
+          type: type as TransactionType | null,
           category: null,
           subcategory: null,
           details: null,

@@ -16,10 +16,10 @@ const CategoryFilterSelect = ({ transactionFilters, setTransactionFilters }: Pro
           swrKey={`/api/transaction/previously-used/${transactionFilters.type}/category`}
           value={transactionFilters.category}
           dataName="category"
-          onChange={(e) => {
+          onChange={(category) => {
             setTransactionFilters({
               type: transactionFilters.type,
-              category: e,
+              category,
               subcategory: null,
               details: null,
             });

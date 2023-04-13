@@ -19,8 +19,8 @@ const TypeSelect = ({ form }: Props) => {
         { value: "EARNING", label: "Earning" },
       ]}
       {...form.getInputProps("type")}
-      onChange={(e) => {
-        form.setFieldValue("type", e as TransactionType);
+      onChange={(type) => {
+        form.setFieldValue("type", type as TransactionType);
         form.setFieldValue("category", "");
       }}
       className="mb-3"
