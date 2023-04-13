@@ -27,7 +27,7 @@ const DetailsSelect = ({ form, type, category, subcategory }: Props) => {
           }}
         />
       ) : (
-        <Select placeholder="Details" data={[]} disabled={true} className="mb-3" />
+        <Select placeholder="Details" data={[]} disabled={true} />
       )}
     </>
   );

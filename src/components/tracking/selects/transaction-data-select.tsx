@@ -22,7 +22,7 @@ const TransactionDataSelect = ({ form, swrKey, placeholder, onChange }: Props) =
   }, [initialData]);
 
   return (
-    <div className="relative mb-3">
+    <div className="relative">
       <LoadingOverlay visible={!initialData} overlayBlur={2} loaderProps={{ size: "sm" }} />
       <Select
         placeholder={placeholder}

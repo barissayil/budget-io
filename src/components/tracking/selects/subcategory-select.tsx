@@ -27,7 +27,7 @@ const SubcategorySelect = ({ form, type, category }: Props) => {
           }}
         />
       ) : (
-        <Select placeholder="Subcategory" data={[]} disabled={true} className="mb-3" />
+        <Select placeholder="Subcategory" data={[]} disabled={true} />
       )}
     </>
   );
