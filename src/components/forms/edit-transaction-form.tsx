@@ -1,7 +1,7 @@
 import { useForm } from "@mantine/form";
 import { Transaction } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
-import TransactionForm from "@components/tracking/forms/transaction-form";
+import TransactionForm from "@components/forms/transaction-form";
 import TransactionFormValues from "@modeling/transaction-form-values";
 import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
 import TransactionFormSchema from "@modeling/transaction-form-schema";

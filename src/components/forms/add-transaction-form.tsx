@@ -2,7 +2,7 @@ import { useForm } from "@mantine/form";
 import { Transaction, TransactionType } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
 import TransactionFormValues from "@modeling/transaction-form-values";
-import TransactionForm from "@components/tracking/forms/transaction-form";
+import TransactionForm from "@components/forms/transaction-form";
 import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
 import TransactionFormSchema from "@modeling/transaction-form-schema";
 import { showLoadingNotification, updateToSuccessNotification } from "@lib/notifications";

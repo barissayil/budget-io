@@ -1,9 +1,9 @@
 import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
 import { Transaction } from "@prisma/client";
 import { Dispatch, SetStateAction } from "react";
-import AddTransactionModal from "@components/tracking/modals/add-transaction-modal";
-import DeleteTransactionModal from "@components/tracking/modals/delete-transaction-modal";
-import EditTransactionModal from "@components/tracking/modals/edit-transaction-modal";
+import AddTransactionModal from "@components/modals/add-transaction-modal";
+import DeleteTransactionModal from "@components/modals/delete-transaction-modal";
+import EditTransactionModal from "@components/modals/edit-transaction-modal";
 
 type Props = {
   selectedTransactionId: string | null;

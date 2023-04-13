@@ -4,10 +4,10 @@ import { UseFormReturnType } from "@mantine/form";
 import TransactionFormValues from "@modeling/transaction-form-values";
 import { SetStateAction } from "react";
 import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
-import SubcategorySelect from "@components/tracking/selects/subcategory-select";
-import CategorySelect from "@components/tracking/selects/category-select";
-import DetailsSelect from "@components/tracking/selects/details-select";
-import TypeSelect from "@components/tracking/selects/type-select";
+import SubcategorySelect from "@components/selects/subcategory-select";
+import CategorySelect from "@components/selects/category-select";
+import DetailsSelect from "@components/selects/details-select";
+import TypeSelect from "@components/selects/type-select";
 
 type Props = {
   handleSubmit: ({

@@ -1,10 +1,10 @@
 import { Loader, Text } from "@mantine/core";
 import { Transaction, TransactionType } from "@prisma/client";
 import { DataTable, DataTableSortStatus } from "mantine-datatable";
-import TransactionActionsGroup from "@components/tracking/transaction-actions-group";
+import TransactionActionsGroup from "@components/groups/transaction-actions-group";
 import { useState } from "react";
 import { sortBy } from "lodash";
-import TotalPaper from "@components/tracking/papers/total-paper";
+import TotalPaper from "@components/papers/total-paper";
 import { shortenString } from "@lib/string";
 
 type Props = {

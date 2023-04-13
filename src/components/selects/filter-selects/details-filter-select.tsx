@@ -1,6 +1,6 @@
 import TransactionFilters from "@modeling/transaction-filters";
 import { Dispatch, SetStateAction } from "react";
-import TransactionDataFilterSelect from "@components/tracking/selects/filter-selects/transaction-data-filter-select";
+import TransactionDataFilterSelect from "@components/selects/filter-selects/transaction-data-filter-select";
 import { Select } from "@mantine/core";
 
 type Props = {

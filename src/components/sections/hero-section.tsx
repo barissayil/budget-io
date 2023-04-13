@@ -5,7 +5,7 @@ type Props = {
   scrollToFeatures: () => void;
 };
 
-const Hero = ({ scrollToFeatures }: Props) => {
+const HeroSection = ({ scrollToFeatures }: Props) => {
   return (
     <div
       className="relative bg-[url('/budget-piggy.jpeg')] bg-cover bg-center 
@@ -49,4 +49,4 @@ const Hero = ({ scrollToFeatures }: Props) => {
   );
 };
 
-export default Hero;
+export default HeroSection;

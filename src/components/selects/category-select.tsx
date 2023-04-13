@@ -1,7 +1,7 @@
 import { UseFormReturnType } from "@mantine/form";
 import TransactionFormValues from "@modeling/transaction-form-values";
 import { TransactionType } from "@prisma/client";
-import TransactionDataSelect from "@components/tracking/selects/transaction-data-select";
+import TransactionDataSelect from "@components/selects/transaction-data-select";
 
 type Props = {
   form: UseFormReturnType<

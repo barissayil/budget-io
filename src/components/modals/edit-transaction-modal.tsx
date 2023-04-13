@@ -1,5 +1,5 @@
 import { Modal } from "@mantine/core";
-import EditTransactionForm from "@components/tracking/forms/edit-transaction-form";
+import EditTransactionForm from "@components/forms/edit-transaction-form";
 import { Transaction } from "@prisma/client";
 import { Dispatch, SetStateAction, useState } from "react";
 import { OpenedTransactionModal } from "@modeling/opened-transaction-modal";
