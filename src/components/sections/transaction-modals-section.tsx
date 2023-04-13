@@ -14,7 +14,7 @@ type Props = {
   setSelectedTransactionId: Dispatch<SetStateAction<string | null>>;
 };
 
-const TransactionModals = ({
+const TransactionModalsSection = ({
   selectedTransactionId,
   openedTransactionModal,
   setOpenedTransactionModal,
@@ -59,4 +59,4 @@ const TransactionModals = ({
   );
 };
 
-export default TransactionModals;
+export default TransactionModalsSection;
