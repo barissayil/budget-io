@@ -9,7 +9,7 @@ import { Alert, Button, Loader } from "@mantine/core";
 import useSWR from "swr";
 import { AlertCircle as AlertCircleIcon } from "tabler-icons-react";
 import useRouterAuth from "@hooks/use-router-auth";
-import TransactionModals from "@components/modals/transaction-modals";
+import TransactionModalsSection from "@components/sections/transaction-modals-section";
 import FilterableTransactionTable from "@components/tables/filterable-transaction-table";
 import MonthPaper from "@components/papers/month-paper";
 
@@ -64,7 +64,7 @@ const Tracking: NextPage = () => {
       )}
       {status === "authenticated" && !error && (
         <div className="flex flex-auto flex-col items-center gap-3 p-2">
-          <TransactionModals
+          <TransactionModalsSection
             selectedTransactionId={selectedTransactionId}
             openedTransactionModal={openedTransactionModal}
             setOpenedTransactionModal={setOpenedTransactionModal}
