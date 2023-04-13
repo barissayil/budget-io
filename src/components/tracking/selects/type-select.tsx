@@ -23,7 +23,6 @@ const TypeSelect = ({ form }: Props) => {
         form.setFieldValue("type", type as TransactionType);
         form.setFieldValue("category", "");
       }}
-      className="mb-3"
       data-autofocus
     />
   );

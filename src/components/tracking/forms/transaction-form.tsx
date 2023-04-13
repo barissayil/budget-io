@@ -28,9 +28,9 @@ type Props = {
 
 const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionModal }: Props) => {
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit)} className="flex flex-col gap-3">
       <TypeSelect form={form} />
-      <DatePicker placeholder="Date" {...form.getInputProps("date")} className="mb-3" />
+      <DatePicker placeholder="Date" {...form.getInputProps("date")} />
       <NumberInput
         hideControls
         placeholder="Amount"
@@ -38,7 +38,6 @@ const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionMod
         min={0}
         max={10000}
         precision={2}
-        className="mb-3"
       />
       <CategorySelect form={form} type={form.values.type} />
       <SubcategorySelect form={form} type={form.values.type} category={form.values.category} />
@@ -48,7 +47,7 @@ const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionMod
         category={form.values.category}
         subcategory={form.values.subcategory}
       />
-      <Group position="right" mt="md">
+      <Group position="right" className="mt-2">
         <Button type="button" variant="default" onClick={() => setOpenedTransactionModal(null)}>
           Cancel
         </Button>
