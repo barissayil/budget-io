@@ -35,7 +35,7 @@ const TransactionDataSelect = ({ form, swrKey, placeholder, onChange }: Props) =
         creatable
         getCreateLabel={(query) => `+ ${query}`}
         onCreate={(query) => {
-          setData([...(data as string[]), query]);
+          setData([...data, query]);
           return query;
         }}
       />

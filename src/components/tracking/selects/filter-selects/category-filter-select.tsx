@@ -19,7 +19,7 @@ const CategoryFilterSelect = ({ transactionFilters, setTransactionFilters }: Pro
           onChange={(e) => {
             setTransactionFilters({
               type: transactionFilters.type,
-              category: e as string | null,
+              category: e,
               subcategory: null,
               details: null,
             });

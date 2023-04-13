@@ -21,7 +21,7 @@ const DetailsFilterSelect = ({ transactionFilters, setTransactionFilters }: Prop
               type: transactionFilters.type,
               category: transactionFilters.category,
               subcategory: transactionFilters.subcategory,
-              details: e as string | null,
+              details: e,
             });
           }}
         />
