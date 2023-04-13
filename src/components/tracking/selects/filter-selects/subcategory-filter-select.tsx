@@ -20,7 +20,7 @@ const SubcategoryFilterSelect = ({ transactionFilters, setTransactionFilters }: 
             setTransactionFilters({
               type: transactionFilters.type,
               category: transactionFilters.category,
-              subcategory: e as string | null,
+              subcategory: e,
               details: null,
             });
           }}
