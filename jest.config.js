@@ -10,6 +10,7 @@ const customJestConfig = {
   setupFilesAfterEnv: ["jest-extended/all", "<rootDir>/jest.setup.ts"],
   moduleDirectories: ["node_modules", "<rootDir>/"],
   moduleNameMapper: {
+    "^@styles/(.*)$": "src/styles/$1",
     "^@modeling/(.*)$": "src/modeling/$1",
     "^@components/(.*)$": "src/components/$1",
     "^@db/(.*)$": "db/$1",
