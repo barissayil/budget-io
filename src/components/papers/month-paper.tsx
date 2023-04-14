@@ -14,18 +14,13 @@ type Props = {
 const MonthPaper = ({ monthIndex, setMonthIndex }: Props) => {
   return (
     <Paper shadow="xs" p="md" className="pb-0">
-      <Title order={1}>{dayjs().subtract(monthIndex, "months").format("MMMM YYYY")}</Title>
+      <Title order={1}>{dayjs().add(monthIndex, "months").format("MMMM YYYY")}</Title>
       <div className="flex flex-auto flex-col items-center">
         <Group>
-          <ActionIcon color="cyan" size="xl" onClick={() => setMonthIndex(monthIndex + 1)}>
+          <ActionIcon color="cyan" size="xl" onClick={() => setMonthIndex(monthIndex - 1)}>
             <ArrowLeftIcon size={80} strokeWidth={2} />
           </ActionIcon>
-          <ActionIcon
-            color="cyan"
-            size="xl"
-            className={monthIndex === 0 ? "collapse" : ""}
-            onClick={() => setMonthIndex(monthIndex - 1)}
-          >
+          <ActionIcon color="cyan" size="xl" onClick={() => setMonthIndex(monthIndex + 1)}>
             <ArrowRightIcon size={80} strokeWidth={2} />
           </ActionIcon>
         </Group>

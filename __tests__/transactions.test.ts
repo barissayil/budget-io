@@ -19,6 +19,7 @@ describe("transactions", () => {
   const firstOfCurrentMonth = today.slice(0, 8) + "01";
   const twentiethOfCurrentMonth = today.slice(0, 8) + "20";
   const oneMonthAgo = dayjs().subtract(1, "month").format().substring(0, 10);
+  const oneMonthLater = dayjs().add(1, "month").format().substring(0, 10);
 
   let spending10FoodOrderDominosToday: Transaction;
   let spending12p5FoodOrderBurgerKingToday: Transaction;
@@ -37,6 +38,7 @@ describe("transactions", () => {
   let spending1255p44TravelAirplaneTurkeyOneMonthAgo: Transaction;
   let spending12p5ClothingJeansBonoboToday: Transaction;
   let spending10ClothingShirtUniqloOneMonthAgo: Transaction;
+  let spending999p99ElectronicsComputerSamsungOneMonthLater: Transaction;
 
   beforeAll(async () => {
     await prisma.user.deleteMany({ where: { email: { contains: "@test.com" } } });
@@ -48,8 +50,12 @@ describe("transactions", () => {
       expect(transactionsOfCurrentMonth).toEqual([]);
     });
     it("should have no spendings in previous month", async () => {
-      const transactionsOfPreviousMonth = await getTransactionsOfMonth(userEmail, 1);
+      const transactionsOfPreviousMonth = await getTransactionsOfMonth(userEmail, -1);
       expect(transactionsOfPreviousMonth).toEqual([]);
+    });
+    it("should have no spendings in next month", async () => {
+      const transactionsOfNextMonth = await getTransactionsOfMonth(userEmail, 1);
+      expect(transactionsOfNextMonth).toEqual([]);
     });
     it("should have no categories", async () => {
       const categories = await getCategories(userEmail, TransactionType.SPENDING);
@@ -433,8 +439,8 @@ describe("transactions", () => {
         ]);
       });
       it("should get transactions in previous month", async () => {
-        const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 1);
-        expect(transactionsOfCurrentMonth).toIncludeAllMembers([
+        const transactionsOfPreviousMonth = await getTransactionsOfMonth(userEmail, -1);
+        expect(transactionsOfPreviousMonth).toIncludeAllMembers([
           spending1000HousingRentLodgisOneMonthAgo,
           spending1255p44TransitAirplaneTurkeyOneMonthAgo,
         ]);
@@ -459,6 +465,86 @@ describe("transactions", () => {
           "Airplane"
         );
         expect(details).toEqual(["Turkey"]);
+      });
+    });
+    describe("spending in next month", () => {
+      it("should create spending with new category which took place one later ago", async () => {
+        spending999p99ElectronicsComputerSamsungOneMonthLater = await createTransaction(userEmail, {
+          date: oneMonthLater,
+          amount: 999.99,
+          type: TransactionType.SPENDING,
+          category: "Electronics",
+          subcategory: "Computer",
+          details: "Samsung",
+        });
+        expect(spending999p99ElectronicsComputerSamsungOneMonthLater.userEmail).toEqual(userEmail);
+        expect(spending999p99ElectronicsComputerSamsungOneMonthLater.date).toEqual(oneMonthLater);
+        expect(spending999p99ElectronicsComputerSamsungOneMonthLater.amount).toEqual(999.99);
+        expect(spending999p99ElectronicsComputerSamsungOneMonthLater.type).toEqual(
+          TransactionType.SPENDING
+        );
+        expect(spending999p99ElectronicsComputerSamsungOneMonthLater.category).toEqual(
+          "Electronics"
+        );
+        expect(spending999p99ElectronicsComputerSamsungOneMonthLater.subcategory).toEqual(
+          "Computer"
+        );
+        expect(spending999p99ElectronicsComputerSamsungOneMonthLater.details).toEqual("Samsung");
+      });
+      it("should get transactions in current month", async () => {
+        const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 0);
+        expect(transactionsOfCurrentMonth).toIncludeAllMembers([
+          spending10FoodOrderDominosToday,
+          spending12p5FoodOrderBurgerKingToday,
+          spending1000HousingRentLodgisToday,
+          spending50ClothingTurtleneckUniqloToday,
+          spending20FoodRestaurantPNYToday,
+          spending24p99FoodRestaurantOliveChickenToday,
+          spending10ClothingShirtUniqloToday,
+          spending10ClothingShirtCelioToday,
+          spending22p57FoodGroceriesMonoprixFirstCurrentMonth,
+          spending17p03FoodGroceriesCasinoTwentiethCurrentMonth,
+        ]);
+      });
+      it("should get transactions in previous month", async () => {
+        const transactionsOfPreviousMonth = await getTransactionsOfMonth(userEmail, -1);
+        expect(transactionsOfPreviousMonth).toIncludeAllMembers([
+          spending1000HousingRentLodgisOneMonthAgo,
+          spending1255p44TransitAirplaneTurkeyOneMonthAgo,
+        ]);
+      });
+      it("should get transactions in next month", async () => {
+        const transactionsOfNextMonth = await getTransactionsOfMonth(userEmail, 1);
+        expect(transactionsOfNextMonth).toIncludeAllMembers([
+          spending999p99ElectronicsComputerSamsungOneMonthLater,
+        ]);
+      });
+      it("should get categories", async () => {
+        const categories = await getCategories(userEmail, TransactionType.SPENDING);
+        expect(categories).toIncludeAllMembers([
+          "Food",
+          "Housing",
+          "Clothing",
+          "Transit",
+          "Electronics",
+        ]);
+      });
+      it("should get subcategories of new category", async () => {
+        const subcategories = await getSubcategories(
+          userEmail,
+          TransactionType.SPENDING,
+          "Electronics"
+        );
+        expect(subcategories).toEqual(["Computer"]);
+      });
+      it("should get details of new subcategory", async () => {
+        const details = await getDetails(
+          userEmail,
+          TransactionType.SPENDING,
+          "Electronics",
+          "Computer"
+        );
+        expect(details).toEqual(["Samsung"]);
       });
     });
   });
@@ -529,8 +615,8 @@ describe("transactions", () => {
         expect(spending1255p44TravelAirplaneTurkeyOneMonthAgo.details).toEqual("Turkey");
       });
       it("should get transactions in previous month", async () => {
-        const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 1);
-        expect(transactionsOfCurrentMonth).toIncludeAllMembers([
+        const transactionsOfPreviousMonth = await getTransactionsOfMonth(userEmail, -1);
+        expect(transactionsOfPreviousMonth).toIncludeAllMembers([
           spending1000HousingRentLodgisOneMonthAgo,
           spending1255p44TravelAirplaneTurkeyOneMonthAgo,
         ]);
@@ -652,8 +738,8 @@ describe("transactions", () => {
         ]);
       });
       it("should get transactions in previous month, this one included", async () => {
-        const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 1);
-        expect(transactionsOfCurrentMonth).toIncludeAllMembers([
+        const transactionsOfPreviousMonth = await getTransactionsOfMonth(userEmail, -1);
+        expect(transactionsOfPreviousMonth).toIncludeAllMembers([
           spending1000HousingRentLodgisOneMonthAgo,
           spending1255p44TravelAirplaneTurkeyOneMonthAgo,
           spending10ClothingShirtUniqloOneMonthAgo,
@@ -671,8 +757,8 @@ describe("transactions", () => {
         expect(deletedSpending).toEqual(spending1255p44TravelAirplaneTurkeyOneMonthAgo);
       });
       it("should get transactions in previous month, without this one", async () => {
-        const transactionsOfCurrentMonth = await getTransactionsOfMonth(userEmail, 1);
-        expect(transactionsOfCurrentMonth).toIncludeAllMembers([
+        const transactionsOfPreviousMonth = await getTransactionsOfMonth(userEmail, -1);
+        expect(transactionsOfPreviousMonth).toIncludeAllMembers([
           spending1000HousingRentLodgisOneMonthAgo,
           spending10ClothingShirtUniqloOneMonthAgo,
         ]);
