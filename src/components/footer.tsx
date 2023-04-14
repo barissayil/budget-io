@@ -12,10 +12,14 @@ const Footer = () => {
         <PiggyBankIcon size={28} />
         <Group spacing={0} position="right" noWrap>
           <ActionIcon size="lg">
-            <GithubIcon size={18} />
+            <a href="https://github.com/barissayil" target="_blank" rel="noreferrer">
+              <GithubIcon size={18} />
+            </a>
           </ActionIcon>
           <ActionIcon size="lg">
-            <LinkedinIcon size={18} />
+            <a href="https://www.linkedin.com/in/barissayil" target="_blank" rel="noreferrer">
+              <LinkedinIcon size={18} />
+            </a>
           </ActionIcon>
         </Group>
       </Container>
