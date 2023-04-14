@@ -15,7 +15,7 @@ declare global {
         category,
         subcategory,
         details,
-        previousMonth,
+        month,
         previousCategories,
         previousSubcategories,
         previousDetails,
@@ -26,7 +26,7 @@ declare global {
         category: string;
         subcategory: string;
         details: string;
-        previousMonth?: boolean;
+        month: "CURRENT" | "PREVIOUS" | "NEXT";
         previousCategories: string[];
         previousSubcategories: string[];
         previousDetails: string[];
@@ -84,7 +84,7 @@ Cypress.Commands.add(
     category,
     subcategory,
     details,
-    previousMonth,
+    month,
     previousCategories,
     previousSubcategories,
     previousDetails,
@@ -95,7 +95,7 @@ Cypress.Commands.add(
     category: string;
     subcategory: string;
     details: string;
-    previousMonth?: boolean;
+    month: "CURRENT" | "PREVIOUS" | "NEXT";
     previousCategories: string[];
     previousSubcategories: string[];
     previousDetails: string[];
@@ -136,7 +136,10 @@ Cypress.Commands.add(
           cy.wait("@getCategories", { timeout: 10000 });
         }
         cy.get('input[placeholder*="Date"]').click();
-        if (previousMonth) cy.get(".mantine-DatePicker-calendarHeaderControl").first().click();
+        if (month !== "CURRENT")
+          cy.get(".mantine-DatePicker-calendarHeaderControl")
+            .eq(month === "PREVIOUS" ? 0 : 1)
+            .click();
         cy.contains(getExactRegExp(String(dayOfTheMonth))).click();
 
         cy.get('input[placeholder*="Amount"]').type(String(amount));

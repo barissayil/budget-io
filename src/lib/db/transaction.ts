@@ -35,7 +35,7 @@ export const getTransactionsOfMonth = (userEmail: string, monthIndex: number) =>
         email: userEmail,
       },
       date: {
-        contains: dayjs().subtract(monthIndex, "months").format().substring(0, 7),
+        contains: dayjs().add(monthIndex, "months").format().substring(0, 7),
       },
     },
   });

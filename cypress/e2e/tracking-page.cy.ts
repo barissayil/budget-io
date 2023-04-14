@@ -18,9 +18,11 @@ describe("testing the tracking page", { testIsolation: false }, () => {
   const nineteenthOfCurrentMonth = today.slice(0, 8) + "19";
   const twentiethOfCurrentMonth = today.slice(0, 8) + "20";
   const twentySecondOfCurrentMonth = today.slice(0, 8) + "22";
+  const firstOfNextMonth = dayjs().add(1, "month").format().substring(0, 10).slice(0, 8) + "01";
 
   const currentMonthAndYear = dayjs().format("MMMM YYYY");
   const previousMonthAndYear = dayjs().subtract(1, "months").format("MMMM YYYY");
+  const nextMonthAndYear = dayjs().add(1, "months").format("MMMM YYYY");
 
   viewports.forEach(([width, height]) => {
     describe(`with viewport ${width}x${height}`, () => {
@@ -52,6 +54,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Salary",
           subcategory: "Permanent",
           details: "Company X",
+          month: "CURRENT",
           previousCategories: [],
           previousSubcategories: [],
           previousDetails: [],
@@ -82,6 +85,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Food",
           subcategory: "Restaurant",
           details: "Restaurant X",
+          month: "CURRENT",
           previousCategories: [],
           previousSubcategories: [],
           previousDetails: [],
@@ -119,6 +123,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Housing",
           subcategory: "Rent",
           details: "Company X",
+          month: "CURRENT",
           previousCategories: ["Food"],
           previousSubcategories: [],
           previousDetails: [],
@@ -129,6 +134,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Housing",
           subcategory: "Hostel",
           details: "Hostel X",
+          month: "CURRENT",
           previousCategories: ["Food", "Housing"],
           previousSubcategories: ["Rent"],
           previousDetails: [],
@@ -139,6 +145,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Food",
           subcategory: "Groceries",
           details: "Market X",
+          month: "CURRENT",
           previousCategories: ["Food", "Housing"],
           previousSubcategories: ["Restaurant"],
           previousDetails: [],
@@ -149,6 +156,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Housing",
           subcategory: "Hostel",
           details: "Hostel Y",
+          month: "CURRENT",
           previousCategories: ["Food", "Housing"],
           previousSubcategories: ["Rent", "Hostel"],
           previousDetails: ["Hostel X"],
@@ -159,6 +167,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Housing",
           subcategory: "Hostel",
           details: "Hostel Z",
+          month: "CURRENT",
           previousCategories: ["Food", "Housing"],
           previousSubcategories: ["Rent", "Hostel"],
           previousDetails: ["Hostel X", "Hostel Y"],
@@ -169,6 +178,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Food",
           subcategory: "Restaurant",
           details: "Restaurant Y",
+          month: "CURRENT",
           previousCategories: ["Food", "Housing"],
           previousSubcategories: ["Restaurant", "Groceries"],
           previousDetails: ["Restaurant X"],
@@ -179,6 +189,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Food",
           subcategory: "Restaurant",
           details: "Restaurant Z",
+          month: "CURRENT",
           previousCategories: ["Food", "Housing"],
           previousSubcategories: ["Restaurant", "Groceries"],
           previousDetails: ["Restaurant X", "Restaurant Y"],
@@ -189,6 +200,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Food",
           subcategory: "Groceries",
           details: "Market Y",
+          month: "CURRENT",
           previousCategories: ["Food", "Housing"],
           previousSubcategories: ["Restaurant", "Groceries"],
           previousDetails: ["Market X"],
@@ -199,6 +211,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Food",
           subcategory: "Groceries",
           details: "Market Z",
+          month: "CURRENT",
           previousCategories: ["Food", "Housing"],
           previousSubcategories: ["Restaurant", "Groceries"],
           previousDetails: ["Market X", "Market Y"],
@@ -935,7 +948,7 @@ describe("testing the tracking page", { testIsolation: false }, () => {
           category: "Housing",
           subcategory: "Rent",
           details: "Company Z",
-          previousMonth: true,
+          month: "PREVIOUS",
           previousCategories: ["Food", "Housing"],
           previousSubcategories: ["Rent", "Hostel"],
           previousDetails: ["Company Y"],
@@ -951,6 +964,49 @@ describe("testing the tracking page", { testIsolation: false }, () => {
             },
           ],
           total: 1250,
+          filtered: true,
+          inMobileView: width === 360,
+        });
+      });
+
+      it("should have no transactions in the next month and have next month and year as title", () => {
+        cy.viewport(width, height);
+        cy.get(".icon-tabler-square-arrow-right").click();
+        cy.get(".icon-tabler-square-arrow-right").click();
+        cy.get("h1").contains(nextMonthAndYear);
+        cy.checkTransactionTable({
+          transactions: [],
+          total: 0,
+          filtered: true,
+          inMobileView: width === 360,
+        });
+      });
+
+      it("should be able to add a transaction to the next month", () => {
+        cy.viewport(width, height);
+
+        cy.addTransaction({
+          dayOfTheMonth: 1,
+          amount: 999.99,
+          category: "Housing",
+          subcategory: "Rent",
+          details: "Company X",
+          month: "NEXT",
+          previousCategories: ["Food", "Housing"],
+          previousSubcategories: ["Rent", "Hostel"],
+          previousDetails: ["Company Y", "Company Z"],
+        });
+        cy.checkTransactionTable({
+          transactions: [
+            {
+              date: firstOfNextMonth,
+              amount: 999.99,
+              category: "Housing",
+              subcategory: "Rent",
+              details: "Company X",
+            },
+          ],
+          total: 999.99,
           filtered: true,
           inMobileView: width === 360,
         });
