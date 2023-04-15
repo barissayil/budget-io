@@ -127,52 +127,50 @@ Cypress.Commands.add(
 
     cy.contains("Add transaction").click();
 
-    cy.get("form")
-      .should("be.visible")
-      .within(() => {
-        if (isEarning) {
-          cy.get('input[placeholder*="Type"]').as("CategorySelect").click();
-          cy.contains("Earning").should("be.visible").click();
-          cy.wait("@getCategories", { timeout: 10000 });
-        }
-        cy.get('input[placeholder*="Date"]').click();
-        if (month !== "CURRENT")
-          cy.get(".mantine-DatePicker-calendarHeaderControl")
-            .eq(month === "PREVIOUS" ? 0 : 1)
-            .click();
-        cy.contains(getExactRegExp(String(dayOfTheMonth))).click();
+    cy.get("form").should("be.visible");
 
-        cy.get('input[placeholder*="Amount"]').type(String(amount));
+    if (isEarning) {
+      cy.get('input[placeholder*="Type"]').as("CategorySelect").click();
+      cy.contains("Earning").should("be.visible").click();
+      cy.wait("@getCategories", { timeout: 10000 });
+    }
+    cy.get(".mantine-DatePickerInput-input").click();
+    if (month !== "CURRENT")
+      cy.get(".mantine-DatePickerInput-calendarHeaderControlIcon")
+        .eq(month === "PREVIOUS" ? 0 : 1)
+        .click();
+    cy.contains(getExactRegExp(String(dayOfTheMonth))).click();
 
-        cy.wait("@getCategories", { timeout: 10000 })
-          .get('input[placeholder*="Category"]')
-          .as("CategorySelect")
-          .click();
-        previousCategories.forEach((previousCategory) =>
-          cy.contains(previousCategory).should("be.visible")
-        );
-        cy.get("@CategorySelect").type(category).type("{downarrow}").type("{enter}");
+    cy.get('input[placeholder*="Amount"]').type(String(amount));
 
-        cy.wait("@getSubcategories", { timeout: 10000 })
-          .get('input[placeholder*="Subcategory"]')
-          .as("SubcategorySelect")
-          .click();
-        previousSubcategories.forEach((previousSubcategory) =>
-          cy.contains(previousSubcategory).should("be.visible")
-        );
-        cy.get("@SubcategorySelect").type(subcategory).type("{downarrow}").type("{enter}");
+    cy.wait("@getCategories", { timeout: 10000 })
+      .get('input[placeholder*="Category"]')
+      .as("CategorySelect")
+      .click();
+    previousCategories.forEach((previousCategory) =>
+      cy.contains(previousCategory).should("be.visible")
+    );
+    cy.get("@CategorySelect").type(category).type("{downarrow}").type("{enter}");
 
-        cy.wait("@getDetails", { timeout: 10000 })
-          .get('input[placeholder*="Details"]')
-          .as("DetailsSelect")
-          .click();
-        previousDetails.forEach((previousDetailsEach) =>
-          cy.contains(previousDetailsEach).should("be.visible")
-        );
-        cy.get("@DetailsSelect").type(details).type("{downarrow}").type("{enter}");
+    cy.wait("@getSubcategories", { timeout: 10000 })
+      .get('input[placeholder*="Subcategory"]')
+      .as("SubcategorySelect")
+      .click();
+    previousSubcategories.forEach((previousSubcategory) =>
+      cy.contains(previousSubcategory).should("be.visible")
+    );
+    cy.get("@SubcategorySelect").type(subcategory).type("{downarrow}").type("{enter}");
 
-        cy.contains("Add").click();
-      });
+    cy.wait("@getDetails", { timeout: 10000 })
+      .get('input[placeholder*="Details"]')
+      .as("DetailsSelect")
+      .click();
+    previousDetails.forEach((previousDetailsEach) =>
+      cy.contains(previousDetailsEach).should("be.visible")
+    );
+    cy.get("@DetailsSelect").type(details).type("{downarrow}").type("{enter}");
+
+    cy.contains(getExactRegExp("Add")).click();
 
     cy.contains("Adding").should("be.visible");
     cy.contains("The transaction is being added.").should("be.visible");
