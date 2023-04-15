@@ -1,7 +1,7 @@
 import "@styles/globals.css";
 import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
-import { NotificationsProvider } from "@mantine/notifications";
+import { Notifications } from "@mantine/notifications";
 import { SessionProvider } from "next-auth/react";
 import { SWRConfig } from "swr";
 
@@ -17,18 +17,17 @@ const App = ({ Component, pageProps }: AppProps) => {
         },
       }}
     >
-      <NotificationsProvider>
-        <SessionProvider session={pageProps.session}>
-          <SWRConfig
-            value={{
-              refreshInterval: 1000,
-              fetcher: (url: URL, init?: RequestInit) => fetch(url, init).then((res) => res.json()),
-            }}
-          >
-            <Component {...pageProps} />
-          </SWRConfig>
-        </SessionProvider>
-      </NotificationsProvider>
+      <Notifications />
+      <SessionProvider session={pageProps.session}>
+        <SWRConfig
+          value={{
+            refreshInterval: 1000,
+            fetcher: (url: URL, init?: RequestInit) => fetch(url, init).then((res) => res.json()),
+          }}
+        >
+          <Component {...pageProps} />
+        </SWRConfig>
+      </SessionProvider>
     </MantineProvider>
   );
 };

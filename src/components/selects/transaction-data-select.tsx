@@ -38,6 +38,7 @@ const TransactionDataSelect = ({ form, swrKey, placeholder, onChange }: Props) =
           setData([...data, query]);
           return query;
         }}
+        withinPortal
       />
     </div>
   );

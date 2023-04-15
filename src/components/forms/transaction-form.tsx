@@ -1,5 +1,5 @@
 import { Button, Group, NumberInput } from "@mantine/core";
-import { DatePicker } from "@mantine/dates";
+import { DatePickerInput } from "@mantine/dates";
 import { UseFormReturnType } from "@mantine/form";
 import TransactionFormValues from "@modeling/transaction-form-values";
 import { SetStateAction } from "react";
@@ -30,7 +30,11 @@ const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionMod
   return (
     <form onSubmit={form.onSubmit(handleSubmit)} className="flex flex-col gap-3">
       <TypeSelect form={form} />
-      <DatePicker placeholder="Date" {...form.getInputProps("date")} />
+      <DatePickerInput
+        placeholder="Date"
+        {...form.getInputProps("date")}
+        popoverProps={{ withinPortal: true }}
+      />
       <NumberInput
         hideControls
         placeholder="Amount"

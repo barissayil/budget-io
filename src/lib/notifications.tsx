@@ -1,19 +1,19 @@
-import { showNotification, updateNotification } from "@mantine/notifications";
+import { notifications } from "@mantine/notifications";
 import { Check as CheckIcon } from "tabler-icons-react";
 
 export const showLoadingNotification = (id: string, title: string, message: string) => {
-  showNotification({
+  notifications.show({
     id,
     loading: true,
     title,
     message,
     autoClose: false,
-    disallowClose: true,
+    withCloseButton: false,
   });
 };
 
 export const updateToSuccessNotification = (id: string, title: string, message: string) => {
-  updateNotification({
+  notifications.update({
     id,
     color: "teal",
     title,
