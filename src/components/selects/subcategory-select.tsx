@@ -25,6 +25,7 @@ const SubcategorySelect = ({ form, type, category }: Props) => {
             form.setFieldValue("subcategory", subcategory);
             form.setFieldValue("details", "");
           }}
+          maxDropdownHeight={230}
         />
       ) : (
         <Select placeholder="Subcategory" data={[]} disabled={true} />

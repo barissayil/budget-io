@@ -25,6 +25,7 @@ const DetailsSelect = ({ form, type, category, subcategory }: Props) => {
           onChange={(details) => {
             form.setFieldValue("details", details);
           }}
+          maxDropdownHeight={280}
         />
       ) : (
         <Select placeholder="Details" data={[]} disabled={true} />
