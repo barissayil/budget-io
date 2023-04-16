@@ -42,6 +42,7 @@ const TransactionForm = ({ handleSubmit, form, formType, setOpenedTransactionMod
         min={0}
         max={10000}
         precision={2}
+        step={0.01}
       />
       <CategorySelect form={form} type={form.values.type} />
       <SubcategorySelect form={form} type={form.values.type} category={form.values.category} />
