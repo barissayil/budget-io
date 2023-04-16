@@ -44,7 +44,7 @@ const FilterableTransactionTable = ({
 
   return (
     <div className="flex flex-auto flex-col items-center gap-3">
-      <div className="flex w-56 flex-col gap-1">
+      <div className="flex w-60 flex-col gap-1">
         <TypeFilterSelect
           transactionFilters={transactionFilters}
           setTransactionFilters={setTransactionFilters}
