@@ -138,8 +138,8 @@ Cypress.Commands.add(
     if (month !== "CURRENT")
       cy.get(".mantine-DatePickerInput-calendarHeaderControlIcon")
         .eq(month === "PREVIOUS" ? 0 : 1)
-        .click();
-    cy.contains(getExactRegExp(String(dayOfTheMonth))).click();
+        .click({ waitForAnimations: false });
+    cy.contains(getExactRegExp(String(dayOfTheMonth))).click({ waitForAnimations: false });
 
     cy.get('input[placeholder*="Amount"]').type(String(amount));
 
@@ -147,8 +147,10 @@ Cypress.Commands.add(
       .get('input[placeholder*="Category"]')
       .as("CategorySelect")
       .click();
-    previousCategories.forEach((previousCategory) =>
-      cy.contains(previousCategory).should("be.visible")
+    cy.get(".transaction-data-select-dropdown-portal").within(() =>
+      previousCategories.forEach((previousCategory) =>
+        cy.contains(getExactRegExp(previousCategory)).should("be.visible")
+      )
     );
     cy.get("@CategorySelect").type(category).type("{downarrow}").type("{enter}");
 
@@ -156,18 +158,26 @@ Cypress.Commands.add(
       .get('input[placeholder*="Subcategory"]')
       .as("SubcategorySelect")
       .click();
-    previousSubcategories.forEach((previousSubcategory) =>
-      cy.contains(previousSubcategory).should("be.visible")
-    );
+    cy.get(".transaction-data-select-dropdown-portal")
+      .eq(1)
+      .within(() =>
+        previousSubcategories.forEach((previousSubcategory) =>
+          cy.contains(getExactRegExp(previousSubcategory)).should("be.visible")
+        )
+      );
     cy.get("@SubcategorySelect").type(subcategory).type("{downarrow}").type("{enter}");
 
     cy.wait("@getDetails", { timeout: 10000 })
       .get('input[placeholder*="Details"]')
       .as("DetailsSelect")
       .click();
-    previousDetails.forEach((previousDetailsEach) =>
-      cy.contains(previousDetailsEach).should("be.visible")
-    );
+    cy.get(".transaction-data-select-dropdown-portal")
+      .eq(2)
+      .within(() =>
+        previousDetails.forEach((previousDetailsEach) =>
+          cy.contains(getExactRegExp(previousDetailsEach)).should("be.visible")
+        )
+      );
     cy.get("@DetailsSelect").type(details).type("{downarrow}").type("{enter}");
 
     cy.contains(getExactRegExp("Add")).click();
