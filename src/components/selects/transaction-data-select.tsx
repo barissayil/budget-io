@@ -46,6 +46,7 @@ const TransactionDataSelect = ({
           return query;
         }}
         withinPortal
+        portalProps={{ className: "transaction-data-select-dropdown-portal" }}
       />
     </div>
   );
