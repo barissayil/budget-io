@@ -12,9 +12,16 @@ type Props = {
   swrKey: string;
   placeholder: string;
   onChange: (value: string) => void;
+  maxDropdownHeight: number;
 };
 
-const TransactionDataSelect = ({ form, swrKey, placeholder, onChange }: Props) => {
+const TransactionDataSelect = ({
+  form,
+  swrKey,
+  placeholder,
+  onChange,
+  maxDropdownHeight,
+}: Props) => {
   const { data: initialData } = useSWR<string[], Error>(swrKey);
   const [data, setData] = useState<string[]>([]);
   useEffect(() => {
@@ -29,7 +36,7 @@ const TransactionDataSelect = ({ form, swrKey, placeholder, onChange }: Props) =
         data={data}
         {...form.getInputProps(placeholder.toLowerCase())}
         onChange={onChange}
-        maxDropdownHeight={280}
+        maxDropdownHeight={maxDropdownHeight}
         searchable
         clearable
         creatable

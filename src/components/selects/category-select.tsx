@@ -21,6 +21,7 @@ const CategorySelect = ({ form, type }: Props) => {
         form.setFieldValue("category", category);
         form.setFieldValue("subcategory", "");
       }}
+      maxDropdownHeight={180}
     />
   );
 };
